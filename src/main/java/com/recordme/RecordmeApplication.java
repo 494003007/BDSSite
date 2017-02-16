@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = {"com.recordme.modules"})
 @EnableTransactionManagement
-@ComponentScan(basePackages = "com.recordme")
 public class RecordmeApplication{
 
 //	@Override

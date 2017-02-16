@@ -2,15 +2,22 @@ package com.recordme.modules.usermanage.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.recordme.modules.usermanage.entity.UserInfo;
+import com.recordme.modules.usermanage.services.UserService;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.crypto.hash.Md5Hash;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.security.SecureRandom;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by D on 2017/2/12.
@@ -18,11 +25,26 @@ import java.util.Map;
 @Controller
 @RequestMapping("/")
 public class AccountManageController {
-    @RequestMapping(value = "register")
-    public String register(@ModelAttribute UserInfo user){
-        System.out.println(JSON.toJSON(user));
+
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping(value = "register",method = RequestMethod.GET)
+    public String registerPage(@ModelAttribute UserInfo user){
+
         return "/usermanage/register";
     }
+    @RequestMapping(value = "register",method = RequestMethod.POST)
+    public String register(UserInfo user){
+        String salt = generateSalt();
+        user.setSalt(salt);
+        salt = user.getUsername() + salt;
+        user.setPassword(new Md5Hash(user.getPassword(), salt, 2).toString());
+        userService.save(user);
+        System.out.println(user.toString());
+        return "redirect:/usermanage/login";
+    }
+
 
     @RequestMapping(value="login",method= RequestMethod.POST)
     public String login(HttpServletRequest request, Map<String, Object> map) throws Exception {
@@ -56,5 +78,20 @@ public class AccountManageController {
     @RequestMapping(value="login",method= RequestMethod.GET)
     public String loginPage(){
         return "/usermanage/login";
+    }
+
+    private String generateSalt(){
+        Random RANDOM = new SecureRandom();
+        byte[] salt = new byte[16];
+        RANDOM.nextBytes(salt);
+        String str = null;
+        try {
+            str = new String(salt,"UTF-8");
+            str = new BASE64Encoder().encode(salt);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return str;
     }
 }

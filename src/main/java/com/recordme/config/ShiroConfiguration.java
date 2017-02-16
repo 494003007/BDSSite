@@ -4,6 +4,7 @@ import com.recordme.modules.usermanage.services.UserService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -19,6 +20,15 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfiguration {
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
+    }
+
+
 
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher(){
@@ -39,6 +49,8 @@ public class ShiroConfiguration {
 
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
 
+        filterChainDefinitionMap.put("/register","anon");
+
         //设置退出url
         filterChainDefinitionMap.put("/logout","logout");
 
@@ -54,6 +66,7 @@ public class ShiroConfiguration {
         return shiroFilterFactoryBean;
     }
 
+    @Bean
     public SecurityManager securityManager(){
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(realmImpl());
@@ -62,7 +75,6 @@ public class ShiroConfiguration {
 
     @Bean
     public Realm realmImpl() {
-        System.out.println("=============================" + 1);
         ShiroRealmImpl realm = new ShiroRealmImpl();
         realm.setCredentialsMatcher(hashedCredentialsMatcher());
         return realm;
