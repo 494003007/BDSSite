@@ -19,6 +19,8 @@
         <input id="password" name="password" type="password">
 
         <input type="submit" >
+        <a href="/register">注册</a>
+        ${msg}
     </form>
 </body>
 </html>

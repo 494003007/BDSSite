@@ -11,6 +11,7 @@
     <title></title>
 </head>
 <body>
+<a href="/register">登陆</a>
     <form method="post">
         <label for="username" >用户名</label>
         <input id="username" name="username" type="text">
