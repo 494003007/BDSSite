@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
+
 /**
  * Created by D on 2017/2/14.
  */
@@ -24,9 +26,10 @@ public class CRUDTest {
         userInfo.setUsername("testaaaaaaaa");
         userInfo.setPassword("sasasa");
         userInfo.setState((byte)0);
+        userInfo.setName("cai");
         userService.save(userInfo);
 
-        System.out.println(userService.findByUsername("testaaaaaaaa"));
+        System.out.println("----------------"+userService.findByName("cai"));
 
         userService.deleteAll();
     }

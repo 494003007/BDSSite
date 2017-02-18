@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RoleService extends BaseService<RoleDao, SysRole, Long> {
-
+    public SysRole findByRole(SysRole sysRole){return dao.findByRole(sysRole.getRole());}
 }
