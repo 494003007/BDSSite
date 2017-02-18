@@ -1,10 +1,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>角色分配</title>
 </head>
 <body>
+${s.uid}
+<c:forEach items="${userInfo.roleList}" var="role">
+    ${role.role}
+</c:forEach>
 <form method="post">
     <label>用户名</label>
     <input name="username" id="username"/>

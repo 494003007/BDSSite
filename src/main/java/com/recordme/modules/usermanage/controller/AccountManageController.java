@@ -84,18 +84,8 @@ public class AccountManageController {
     public String loginPage(){
         return "/usermanage/login";
     }
-    @RequestMapping(value = "roleDistribution",method = RequestMethod.GET)
-    public String roleDistributionPage(){
-        return "/usermanage/roleDistribution";
-    }
-    @RequestMapping(value = "roleDistribution",method = RequestMethod.POST)
-    public String roleDistribution(UserInfo userInfo, SysRole sysRole){
-       userInfo = userService.findByUsername(userInfo.getUsername());
-       userInfo.getRoleList().add(roleService.findByRole(sysRole));
-       userInfo.setRoleList(userInfo.getRoleList());
-       userService.save(userInfo);
-        return "/usermanage/roleDistribution";
-    }
+
+
     private String generateSalt(){
         Random RANDOM = new SecureRandom();
         byte[] salt = new byte[16];
