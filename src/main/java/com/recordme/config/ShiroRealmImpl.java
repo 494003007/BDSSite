@@ -14,6 +14,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -21,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 public class ShiroRealmImpl extends AuthorizingRealm {
-
+    private Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserService userService;
 
@@ -31,7 +33,7 @@ public class ShiroRealmImpl extends AuthorizingRealm {
 
         //获取用户名
         UserInfo user = (UserInfo) principalCollection.getPrimaryPrincipal();
-
+        log.info("<====================doGetAuthorizationInfo()=====================>");
 
         for(SysRole role:user.getRoleList()){
             authorizationInfo.addRole(role.getRole());
