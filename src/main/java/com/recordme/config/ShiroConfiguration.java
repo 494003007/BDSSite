@@ -2,6 +2,7 @@ package com.recordme.config;
 
 import com.recordme.modules.usermanage.services.UserService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -70,6 +71,8 @@ public class ShiroConfiguration {
     public SecurityManager securityManager(){
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(realmImpl());
+        //注入缓存管理器;
+        defaultWebSecurityManager.setCacheManager(ehCacheManager());
         return defaultWebSecurityManager;
     }
 
@@ -80,6 +83,12 @@ public class ShiroConfiguration {
         return realm;
     }
 
-
+    @Bean
+    public EhCacheManager ehCacheManager(){
+        System.out.println("ShiroConfiguration.getEhCacheManager()");
+        EhCacheManager cacheManager = new EhCacheManager();
+        cacheManager.setCacheManagerConfigFile("classpath:config/ehcache-shiro.xml");
+        return cacheManager;
+    }
 
 }
