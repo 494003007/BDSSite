@@ -79,6 +79,6 @@ public class SysRole implements Serializable{
     @Override
     public String toString() {
         return "SysRole [id=" + id + ", role=" + role + ", description=" + description + ", available=" + available
-                + ", permissions=" + permissions + "]";
+                ;
     }
 }

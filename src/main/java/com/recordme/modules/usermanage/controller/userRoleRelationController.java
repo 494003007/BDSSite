@@ -57,7 +57,6 @@ public class userRoleRelationController {
 
     @RequestMapping(value = "userRoleRelationList",method = RequestMethod.POST)
     public String roleDistribution(UserInfo userInfo, SysRole sysRole,Map<String,Object> map){
-
         return "/usermanage/userRoleRelationList";
     }
 

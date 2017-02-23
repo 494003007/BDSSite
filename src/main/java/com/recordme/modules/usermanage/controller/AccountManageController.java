@@ -1,16 +1,15 @@
 package com.recordme.modules.usermanage.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.recordme.modules.usermanage.entity.SysRole;
+
 import com.recordme.modules.usermanage.entity.UserInfo;
 import com.recordme.modules.usermanage.services.RoleService;
 import com.recordme.modules.usermanage.services.UserService;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
