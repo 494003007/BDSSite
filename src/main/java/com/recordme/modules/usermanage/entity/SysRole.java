@@ -5,6 +5,7 @@ package com.recordme.modules.usermanage.entity;
  */
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -29,6 +30,13 @@ public class SysRole implements Serializable{
     private String role; // 角色标识程序中判断使用,如"admin",这个是唯一的:
     private String description; // 角色描述,UI界面显示使用
     private Boolean available = Boolean.FALSE; // 是否可用,如果不可用将不会添加给用户
+    private String parent_role;//父角色
+    private Date create_time;//创建时间
+    private Long create_user;//创建者
+    private String role_descripe;//角色描述
+
+
+
 
     //角色 -- 权限关系：多对多关系;
     @ManyToMany(fetch=FetchType.EAGER)

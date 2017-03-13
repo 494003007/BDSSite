@@ -1,5 +1,8 @@
 package com.recordme.modules.usermanage.entity;
 
+import javafx.scene.chart.PieChart;
+
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -42,6 +45,43 @@ public class SysPermission implements Serializable{
     private Long parentId; //父编号
     private String parentIds; //父编号列表
     private Boolean available = Boolean.FALSE;
+
+    private String parent_premission;//父权限
+    private String premission_name;//权限名
+    private String premission_descrip;//权限描述
+    private Date creat_time;//创建时间
+
+    public String getParent_premission() {
+        return parent_premission;
+    }
+
+    public void setParent_premission(String parent_premission) {
+        this.parent_premission = parent_premission;
+    }
+
+    public String getPremission_name() {
+        return premission_name;
+    }
+
+    public void setPremission_name(String premission_name) {
+        this.premission_name = premission_name;
+    }
+
+    public String getPremission_descrip() {
+        return premission_descrip;
+    }
+
+    public void setPremission_descrip(String premission_descrip) {
+        this.premission_descrip = premission_descrip;
+    }
+
+    public Date getCreat_time() {
+        return creat_time;
+    }
+
+    public void setCreat_time(Date creat_time) {
+        this.creat_time = creat_time;
+    }
 
     @ManyToMany
     @JoinTable(name="SysRolePermission",joinColumns={@JoinColumn(name="permissionId")},inverseJoinColumns={@JoinColumn(name="roleId")})
