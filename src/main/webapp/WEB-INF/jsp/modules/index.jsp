@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.recordme.modules.common.Tool" %><%--
   Created by IntelliJ IDEA.
   User: D
   Date: 2017/2/23
@@ -11,6 +11,10 @@
     <title>Index</title>
 </head>
 <body>
+    Hello!${Tool.getUser().getUsername()}
+    <a href="/register">注册</a>
+    <a href="/login">登陆</a>
+    <a href="/userRoleRelationList">权限管理</a>
 
 </body>
 </html>
