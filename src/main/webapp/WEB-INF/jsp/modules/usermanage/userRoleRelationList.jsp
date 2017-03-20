@@ -18,7 +18,7 @@
                         ${role.role}
                     </c:forEach>
                 </td>
-                <td><a href="/userRoleRelationEdit/${userInfo.username}">修改</a></td>
+                <td><a href="userRoleRelationEdit/${userInfo.username}">修改</a></td>
             </tr>
         </c:forEach>
 

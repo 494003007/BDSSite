@@ -11,10 +11,12 @@
     <title>Index</title>
 </head>
 <body>
-    Hello!${Tool.getUser().getUsername()}
-    <a href="/register">注册</a>
+    Hello! ${Tool.getUser().getName()}
+
     <a href="/login">登陆</a>
-    <a href="/userRoleRelationList">权限管理</a>
+    <a href="user/list">用户管理</a>
+    <a href="AuthorizationManage/permissionList">权限管理</a>
+    <a href="AuthorizationManage/roleList">角色管理</a>
 
 </body>
 </html>

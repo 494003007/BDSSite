@@ -21,7 +21,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/AuthorizationManage")
-public class AuthorizationManage {
+public class AuthorizationManageController {
     @Autowired
     private PermissionService permissionService;
     @Autowired
@@ -81,18 +81,20 @@ public class AuthorizationManage {
         userInfo = userService.findByUsername(userInfo.getUsername());
         userInfo.getRoleList().add(roleService.findByRole(sysRole));
         userInfo.setRoleList(userInfo.getRoleList());
-
-        map.put("userInfo",userInfo);
-
-
-        userService.save(userInfo);
+        map.put("userInfo",userService.save(userInfo));
         return "/usermanage/userRoleRelationEdit";
     }
 
 
     @RequestMapping(value = "userRoleRelationList",method = RequestMethod.POST)
-    public String roleDistribution(UserInfo userInfo, SysRole sysRole,Map<String,Object> map){
+    public String roleDistribution(){
         return "/usermanage/userRoleRelationList";
     }
 
+    //////////////////////////////////////////////////////////////////////////
+    @RequestMapping(value = "roleList", method = RequestMethod.GET)
+    public String roleList(Map<String, Object> map){
+        map.put("roles",roleService.findAll());
+        return "/usermanage/roleList";
+    }
 }

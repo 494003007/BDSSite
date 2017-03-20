@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+
+    <div th:if="${username!= null}">
+        <p th:text="${username}">用户名</p>
+    </div>
+    <div th:unless="${username!= null}">
+        <a href="/login">登陆</a>
+    </div>
+    <a href="user/list">用户管理</a>
+    <a href="AuthorizationManage/permissionList">权限管理</a>
+    <a href="AuthorizationManage/roleList">角色管理</a>
+</body>
+</html>
