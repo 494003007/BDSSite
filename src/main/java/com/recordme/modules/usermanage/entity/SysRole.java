@@ -8,13 +8,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 
 /**
@@ -44,7 +38,7 @@ public class SysRole implements Serializable{
     private List<SysPermission> permissions;
 
     // 用户 - 角色关系定义;
-    @ManyToMany
+    @OneToMany
     @JoinTable(name="SysUserRole",joinColumns={@JoinColumn(name="roleId")},inverseJoinColumns={@JoinColumn(name="uid")})
     private List<UserInfo> userInfos;// 一个角色对应多个用户
 
