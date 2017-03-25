@@ -21,6 +21,7 @@ public class SysRole implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id@GeneratedValue
     private Long id; // 编号
+
     private String role; // 角色标识程序中判断使用,如"admin",这个是唯一的:
     private String description; // 角色描述,UI界面显示使用
     private Boolean available = Boolean.FALSE; // 是否可用,如果不可用将不会添加给用户
@@ -38,16 +39,59 @@ public class SysRole implements Serializable{
     private List<SysPermission> permissions;
 
     // 用户 - 角色关系定义;
-    @OneToMany
+    @ManyToMany
     @JoinTable(name="SysUserRole",joinColumns={@JoinColumn(name="roleId")},inverseJoinColumns={@JoinColumn(name="uid")})
     private List<UserInfo> userInfos;// 一个角色对应多个用户
 
     public List<UserInfo> getUserInfos() {
         return userInfos;
     }
+
     public void setUserInfos(List<UserInfo> userInfos) {
         this.userInfos = userInfos;
     }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getParent_role() {
+        return parent_role;
+    }
+
+    public void setParent_role(String parent_role) {
+        this.parent_role = parent_role;
+    }
+
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
+    }
+
+    public Long getCreate_user() {
+        return create_user;
+    }
+
+    public void setCreate_user(Long create_user) {
+        this.create_user = create_user;
+    }
+
+    public String getRole_descripe() {
+        return role_descripe;
+    }
+
+    public void setRole_descripe(String role_descripe) {
+        this.role_descripe = role_descripe;
+    }
+//    public List<UserInfo> getUserInfos() {
+//        return userInfos;
+//    }
+//    public void setUserInfos(List<UserInfo> userInfos) {
+//        this.userInfos = userInfos;
+//    }
     public Long getId() {
         return id;
     }

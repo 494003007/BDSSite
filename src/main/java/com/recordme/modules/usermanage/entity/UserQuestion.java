@@ -4,15 +4,58 @@ package com.recordme.modules.usermanage.entity; /*******************************
  * Purpose: Defines the Class UserQuestion
  ***********************************************************************/
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
-/** @pdOid c5ae05a5-8534-4c38-9c8d-45d6721072b8 */
-public class UserQuestion {
-   /** @pdOid e4e46e1f-7836-44a8-9a12-2ddda0b7b6b9 */
+/*
+* 密保问题
+* */
+@Entity
+public class UserQuestion implements Serializable {
+   private static final long serialVersionUID = 1L;
+   @Id
+   @GeneratedValue
    public int id;
-   /** @pdOid ea084ce7-967b-44ff-98d3-70fe73d1efb4 */
+   //问题
    public String question;
-   /** @pdOid 6f791e6e-0eec-435e-8a99-e22e2c6f6cb7 */
+   //答案
    public String answer;
 
+
+   @ManyToOne(fetch = FetchType.EAGER)//设置在“一方”pojo的外键字段上
+   @JoinColumn(name = "userId", referencedColumnName = "uid")//设置对应数据表的列名和引用的数据表的列名
+   private UserInfo user;
+
+   public UserInfo getUserId() {
+      return user;
+   }
+
+   public void setUserId(UserInfo userId) {
+      this.user = userId;
+   }
+
+   public int getId() {
+      return id;
+   }
+
+   public void setId(int id) {
+      this.id = id;
+   }
+
+   public String getQuestion() {
+      return question;
+   }
+
+   public void setQuestion(String question) {
+      this.question = question;
+   }
+
+   public String getAnswer() {
+      return answer;
+   }
+
+   public void setAnswer(String answer) {
+      this.answer = answer;
+   }
 }
