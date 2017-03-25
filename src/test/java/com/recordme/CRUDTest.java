@@ -31,6 +31,6 @@ public class CRUDTest {
 
         System.out.println("----------------"+userService.findByName("cai"));
 
-//        userService.deleteAll();
+        userService.delete(userInfo.getUid());
     }
 }
