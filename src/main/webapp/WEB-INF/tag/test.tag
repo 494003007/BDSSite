@@ -1,3 +1,0 @@
-<%--
-    Create by Ed_
-%>

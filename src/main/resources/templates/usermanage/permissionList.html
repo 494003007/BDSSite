@@ -14,6 +14,7 @@
         <td>链接</td>
         <td>类型</td>
         <td>操作</td>
+        <td><a th:href="@{/AuthorizationManage/permissionView}" >新增</a></td>
     </tr>
 
         <tr th:each="permission,stat:${permissions}">
@@ -24,6 +25,7 @@
             <td th:text="${permission.resourceType}">某权限的链接类型</td>
             <td><a th:href="@{/AuthorizationManage/permissionDelete(id=${permission.id})}" >删除</a></td>
             <td><a th:href="@{/AuthorizationManage/permissionView(id=${permission.id})}" >查看</a></td>
+            <td></td>
         </tr>
 
 </table>

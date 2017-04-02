@@ -17,11 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-/**
- * 用户信息.
- * @author Angel(QQ:412887952)
- * @version v.0.1
- */
+
 @Entity
 public class UserInfo implements Serializable{
     private static final long serialVersionUID = 1L;

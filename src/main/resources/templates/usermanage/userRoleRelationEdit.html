@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body >
+用户：<span th:value="${userInfo.username}"></span>
+角色列表：
+<table>
+    <tr>
+        <td>角色名</td>
+    </tr>
+
+        <tr th:each="role,stat:${userInfo.roleList}">
+            <td th:value="${role.role}"></td>
+        </tr>
+
+</table>
+
+<form method="post">
+    <label>用户名</label>
+    <input name="username" id="username"/>
+    <label>添加角色</label>
+    <input name="role" id="role"/>
+    <input type="submit"/>
+</form>
+</body>
+</html>

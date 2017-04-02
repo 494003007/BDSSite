@@ -8,6 +8,7 @@ import com.recordme.modules.usermanage.services.RoleService;
 import com.recordme.modules.usermanage.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,7 @@ public class AuthorizationManageController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    ////////////////////////权限增删查改/////////////////////////////
 
     @RequestMapping(value = "permissionList", method = RequestMethod.GET)
     public String permissionList(Map<String, Object> map){
@@ -60,7 +62,31 @@ public class AuthorizationManageController {
         return "redirect:/AuthorizationManage/permissionView?id=" + permission.getId();
     }
 
-    ///////////////////////////////////////////////////
+
+    //////////////////////////角色增删查改//////////////////////////////////
+    @RequestMapping(value = "roleList", method = RequestMethod.GET)
+    public String roleList(Map<String, Object> map){
+        map.put("roles",roleService.findAll());
+        return "/usermanage/roleList";
+    }
+
+    @RequestMapping(value = "roleView", method = RequestMethod.GET)
+    public String roleView(Model model,Long id){
+        if(id != null){
+            model.addAttribute("role",roleService.findOne(id));
+        }else{
+            model.addAttribute("role",new SysRole());
+        }
+
+        return "/usermanage/roleView";
+    }
+
+    @RequestMapping(value = "roleUpdate", method = RequestMethod.POST)
+    public String roleUpdate(Model model,SysRole role){
+        roleService.save(role);
+        return "redirect:/AuthorizationManage/roleView?id=" + role.getId();
+    }
+    ////////////////////////用户角色增删查改/////////////////////////////
 
     @RequestMapping(value = "userRoleRelationEdit/{username}",method = RequestMethod.GET)
     public String userRoleRelationEditPage(@PathVariable("username")String username, Map<String,Object> map){
@@ -89,12 +115,5 @@ public class AuthorizationManageController {
     @RequestMapping(value = "userRoleRelationList",method = RequestMethod.POST)
     public String roleDistribution(){
         return "/usermanage/userRoleRelationList";
-    }
-
-    //////////////////////////////////////////////////////////////////////////
-    @RequestMapping(value = "roleList", method = RequestMethod.GET)
-    public String roleList(Map<String, Object> map){
-        map.put("roles",roleService.findAll());
-        return "/usermanage/roleList";
     }
 }
