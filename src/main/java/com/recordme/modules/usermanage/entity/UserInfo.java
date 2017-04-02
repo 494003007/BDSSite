@@ -6,16 +6,11 @@ package com.recordme.modules.usermanage.entity;
 
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 
 @Entity
@@ -24,20 +19,91 @@ public class UserInfo implements Serializable{
     @Id@GeneratedValue
     private long uid;//用户id;
 
+
     @Column(unique=true)
     private String username;//账号.
 
     private String name;//名称（昵称或者真实姓名，不同系统不同定义）
-
     private String password; //密码;
     private String salt;//加密密码的盐
 
+    private String true_name;//真实姓名
+    private String birth_date;//出生日期
+    private String country;//国家
+    private String email;//邮件
+    private String qq;
+    private String phone;
+    private int info_shield;//信息屏蔽设置
+    private int sex;
+    private String address;
+    private String we_chat_account;//微信账号
+    private String ip_address;//ip地址
+    private Date new_time;//创建时间
+    private Date last_login_time;//最后一次登陆
+
     private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
 
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")//指向多的那方的pojo的关联外键字段
+    private List<UserQuestion> userQuestions;
 
-    @ManyToMany(fetch=FetchType.EAGER)//优先加载
-    @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns ={@JoinColumn(name = "roleId") })
+    @ManyToMany(mappedBy = "userInfos")//立即从数据库中进行加载数据;
+//    @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns ={@JoinColumn(name = "roleId") })
     private List<SysRole> roleList;// 一个用户具有多个角色
+
+
+//    用户 -- 收藏关系：多对多关系;
+    @ManyToMany(mappedBy = "userInfos")
+//    @JoinTable(name="SysCollectionUser",joinColumns={@JoinColumn(name="collectionId")},inverseJoinColumns={@JoinColumn(name="uid")})
+    private List<CollectionProfession> collectionProfessions;
+
+    @OneToMany(mappedBy = "fromUser")
+    private List<ShortMessage> receiveMessage;
+
+    @OneToMany(mappedBy = "toUser")
+    private List<ShortMessage> sendMessage;
+
+    @OneToMany(mappedBy = "operateUser")
+    private List<OperateLog> operateLogs;
+
+    public List<ShortMessage> getReceiveMessage() {
+        return receiveMessage;
+    }
+
+    public void setReceiveMessage(List<ShortMessage> receiveMessage) {
+        this.receiveMessage = receiveMessage;
+    }
+
+    public List<ShortMessage> getSendMessage() {
+        return sendMessage;
+    }
+
+    public void setSendMessage(List<ShortMessage> sendMessage) {
+        this.sendMessage = sendMessage;
+    }
+
+    public List<OperateLog> getOperateLogs() {
+        return operateLogs;
+    }
+
+    public void setOperateLogs(List<OperateLog> operateLogs) {
+        this.operateLogs = operateLogs;
+    }
+
+    public List<CollectionProfession> getCollectionProfessions() {
+        return collectionProfessions;
+    }
+
+    public void setCollectionProfessions(List<CollectionProfession> collectionProfessions) {
+        this.collectionProfessions = collectionProfessions;
+    }
+
+    public List<UserQuestion> getUserQuestions() {
+        return userQuestions;
+    }
+
+    public void setUserQuestions(List<UserQuestion> userQuestions) {
+        this.userQuestions = userQuestions;
+    }
 
     public List<SysRole> getRoleList() {
         return roleList;
@@ -94,6 +160,115 @@ public class UserInfo implements Serializable{
     public void setState(byte state) {
         this.state = state;
     }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getTrue_name() {
+        return true_name;
+    }
+
+    public void setTrue_name(String true_name) {
+        this.true_name = true_name;
+    }
+
+    public String getBirth_date() {
+        return birth_date;
+    }
+
+    public void setBirth_date(String birth_date) {
+        this.birth_date = birth_date;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getInfo_shield() {
+        return info_shield;
+    }
+
+    public void setInfo_shield(int info_shield) {
+        this.info_shield = info_shield;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getWe_chat_account() {
+        return we_chat_account;
+    }
+
+    public void setWe_chat_account(String we_chat_account) {
+        this.we_chat_account = we_chat_account;
+    }
+
+    public String getIp_address() {
+        return ip_address;
+    }
+
+    public void setIp_address(String ip_address) {
+        this.ip_address = ip_address;
+    }
+
+    public Date getNew_time() {
+        return new_time;
+    }
+
+    public void setNew_time(Date new_time) {
+        this.new_time = new_time;
+    }
+
+    public Date getLast_login_time() {
+        return last_login_time;
+    }
+
+    public void setLast_login_time(Date last_login_time) {
+        this.last_login_time = last_login_time;
+    }
+
 
     /**
      * 密码盐.
