@@ -1,8 +1,6 @@
 package com.recordme.modules.usermanage.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,7 +24,7 @@ public class NomalUserResume implements Serializable{
     //奖项
     public String prize;
     //自我描述
-    public String describeself;
+    public String describeSelf;
     //爱好
     public String hobby;
     //期望工作地点
@@ -49,6 +47,10 @@ public class NomalUserResume implements Serializable{
     public Date graduateTime;
     //是否兼职
     public int partTimeJob;
+
+    @ManyToOne(fetch = FetchType.EAGER)//设置在“一方”pojo的外键字段上
+    @JoinColumn(name = "userId", referencedColumnName = "uid")//设置对应数据表的列名和引用的数据表的列名
+    private UserInfo user;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -102,13 +104,15 @@ public class NomalUserResume implements Serializable{
         this.prize = prize;
     }
 
-    public String getDescribeself() {
-        return describeself;
+    public String getDescribeSelf() {
+        return describeSelf;
     }
 
-    public void setDescribeself(String describeself) {
-        this.describeself = describeself;
+    public void setDescribeSelf(String describeSelf) {
+        this.describeSelf = describeSelf;
     }
+
+
 
     public String getHobby() {
         return hobby;
