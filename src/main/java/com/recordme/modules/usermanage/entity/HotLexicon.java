@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
+ * 热词
  * Created by keben on 2017-03-21.
  */
 @Entity

@@ -43,9 +43,21 @@ public class UserInfo implements Serializable{
 
     private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
 
+    //个人密保
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")//指向多的那方的pojo的关联外键字段
     private List<UserQuestion> userQuestions;
 
+    //个人简历
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "user")//指向多的那方的pojo的关联外键字段
+    private List<NomalUserResume> nomalUserResumes;
+
+
+    //HR简历
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "user")//指向多的那方的pojo的关联外键字段
+    private List<HrReleaseRecruit> hrReleaseRecruits;
+
+
+    //用户角色关系
     @ManyToMany(mappedBy = "userInfos")//立即从数据库中进行加载数据;
 //    @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns ={@JoinColumn(name = "roleId") })
     private List<SysRole> roleList;// 一个用户具有多个角色
@@ -56,12 +68,17 @@ public class UserInfo implements Serializable{
 //    @JoinTable(name="SysCollectionUser",joinColumns={@JoinColumn(name="collectionId")},inverseJoinColumns={@JoinColumn(name="uid")})
     private List<CollectionProfession> collectionProfessions;
 
+    //站内信发信人关系
     @OneToMany(mappedBy = "fromUser")
     private List<ShortMessage> receiveMessage;
 
+
+    //站内信收信人关系
     @OneToMany(mappedBy = "toUser")
     private List<ShortMessage> sendMessage;
 
+
+    //操作日志
     @OneToMany(mappedBy = "operateUser")
     private List<OperateLog> operateLogs;
 

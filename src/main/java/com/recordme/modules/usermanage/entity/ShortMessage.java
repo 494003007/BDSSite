@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 /**
+ * 站内信
  * Created by keben on 2017-03-21.
  */
 @Entity
