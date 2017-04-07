@@ -28,7 +28,7 @@ public class UserInfo implements Serializable{
     private String salt;//加密密码的盐
 
     private String true_name;//真实姓名
-    private String birth_date;//出生日期
+    private Date birth_date;//出生日期
     private String country;//国家
     private String email;//邮件
     private String qq;
@@ -190,12 +190,12 @@ public class UserInfo implements Serializable{
         this.true_name = true_name;
     }
 
-    public String getBirth_date() {
-        return birth_date;
+    public void setBirth_date(Date birth_date) {
+        this.birth_date = birth_date;
     }
 
-    public void setBirth_date(String birth_date) {
-        this.birth_date = birth_date;
+    public Date getBirth_date() {
+        return birth_date;
     }
 
     public String getCountry() {

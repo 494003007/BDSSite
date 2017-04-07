@@ -40,6 +40,8 @@ public class AccountManageController {
     }
     @RequestMapping(value = "register",method = RequestMethod.POST)
     public String register(UserInfo user){
+        user.setInfo_shield(0);
+        user.setState((byte)1);
         String salt = generateSalt();
         user.setSalt(salt);
         salt = user.getUsername() + salt;
@@ -52,6 +54,7 @@ public class AccountManageController {
 
     @RequestMapping(value="login",method= RequestMethod.POST)
     public String login(HttpServletRequest request, Map<String, Object> map) throws Exception {
+
         System.out.println("HomeController.login()");
         // 登录失败从request中获取shiro处理的异常信息。
         // shiroLoginFailure:就是shiro异常类的全类名.
@@ -86,9 +89,9 @@ public class AccountManageController {
 
 
     private String generateSalt(){
-        Random RANDOM = new SecureRandom();
+        Random random = new SecureRandom();
         byte[] salt = new byte[16];
-        RANDOM.nextBytes(salt);
+        random.nextBytes(salt);
         String str = null;
         try {
             str = new String(salt,"UTF-8");

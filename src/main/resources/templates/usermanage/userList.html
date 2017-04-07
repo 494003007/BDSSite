@@ -29,7 +29,7 @@
         <tr th:each="user,stat:${userInfo}">
             <td th:text="${user.uid}">id</td>
             <td th:text="${user.username}">username</td>
-            <td th:text="${user.truename}">嘭嘭嘭</td>
+            <td th:text="${user.true_name}">嘭嘭嘭</td>
             <td th:text="${user.sex == 1}?'男':'女'">男</td>
             <td th:text="${user.address}">地址</td>
             <td th:text="${user.we_chat_account}">微信账号</td>
@@ -39,14 +39,14 @@
                 <td th:case="'2'">用户被锁定</td>
             </span>
 
-            <td th:text="${#dates.format(user.birth_date, 'yyyy-MM-dd')}">出生日期</td>
+            <td th:text="${user.birth_date != null} ? ${#dates.format(user.birth_date, 'yyyy-MM-dd HH:mm:ss')}">出生日期</td>
             <td th:text="${user.country}">国家</td>
             <td th:text="${user.email}">电子邮件</td>
             <td th:text="${user.qq}">qq</td>
             <td th:text="${user.phone}">电话号码</td>
 
-            <td th:text="${user.last_login_time}">1970.0.0 19:00:00</td>
-            <td th:text="${user.new_time}">1970.0.0 19:00:00</td>
+            <td th:text="${user.last_login_time != null} ? ${#dates.format(user.last_login_time, 'yyyy-MM-dd HH:mm:ss')}">1970.0.0 19:00:00</td>
+            <td th:text="${user.new_time != null} ? ${#dates.format(user.new_time, 'yyyy-MM-dd HH:mm:ss')}">1970.0.0 19:00:00</td>
             <td th:text="${user.ip_address}">127.0.0.1</td>
             <td><a th:href="@{/user/view(uid=${user.uid})}">查看</a></td>
         </tr>
