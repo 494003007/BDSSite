@@ -53,6 +53,12 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/register","anon");
 
         filterChainDefinitionMap.put("/index","anon");
+
+        filterChainDefinitionMap.put("/css/**","anon");
+
+        filterChainDefinitionMap.put("/js/**","anon");
+
+        filterChainDefinitionMap.put("/fonts/**","anon");
         //设置退出url
         filterChainDefinitionMap.put("/logout","logout");
 
