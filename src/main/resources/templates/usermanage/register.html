@@ -17,7 +17,12 @@
         <div class="input-control text full-size" data-role="input"><label th:for="true_name">真实姓名</label><input id="true_name" name="true_name" class="" type="text"  /></div><br/><br/>
         <div class="input-control text full-size" data-role="input"><label th:for="country">城市</label><input id="country" name="country" class="" type="text"  /></div><br/><br/>
         <div class="input-control text full-size" data-role="input"><label th:for="email">电子邮箱</label><input id="email" name="email" class="" type="text"  /></div><br/><br/>
-        <div class="input-control text full-size" data-role="input"><label th:for="sex">性别</label><input id="sex" name="sex" class="" type="text"  /></div><br/><br/>
+        <div class="input-control full-size select" data-role="input"><label th:for="sex">性别</label>
+            <select th:name="sex">
+                <option th:value="1">男</option>
+                <option th:value="0">女</option>
+            </select>
+        </div><br/><br/>
 
         <br/>
 

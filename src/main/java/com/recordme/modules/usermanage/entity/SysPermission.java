@@ -35,34 +35,8 @@ public class SysPermission implements Serializable{
     private String parentIds; //父编号列表
     private Boolean available = Boolean.FALSE;
 
-    private String parent_permission;//父权限
-    private String permission_name;//权限名
-    private String permission_describe;//权限描述
+
     private Date create_time;//创建时间
-
-    public String getParent_permission() {
-        return parent_permission;
-    }
-
-    public void setParent_permission(String parent_permission) {
-        this.parent_permission = parent_permission;
-    }
-
-    public String getPermission_name() {
-        return permission_name;
-    }
-
-    public void setPermission_name(String permission_name) {
-        this.permission_name = permission_name;
-    }
-
-    public String getPermission_describe() {
-        return permission_describe;
-    }
-
-    public void setPermission_describe(String permission_describe) {
-        this.permission_describe = permission_describe;
-    }
 
     public Date getCreate_time() {
         return create_time;
