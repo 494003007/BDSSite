@@ -46,7 +46,7 @@ public class HrReleaseRecruit implements Serializable{
     //公司类型
     public String companyType;
     //企业描述/自我
-    public String selfDescripe;
+    public String selfDescribe;
     //公司职责
     public String workDuty;
     //岗位要求
@@ -164,12 +164,12 @@ public class HrReleaseRecruit implements Serializable{
         this.companyType = companyType;
     }
 
-    public String getSelfDescripe() {
-        return selfDescripe;
+    public String getSelfDescribe() {
+        return selfDescribe;
     }
 
-    public void setSelfDescripe(String selfDescripe) {
-        this.selfDescripe = selfDescripe;
+    public void setSelfDescribe(String selfDescribe) {
+        this.selfDescribe = selfDescribe;
     }
 
     public String getWorkDuty() {

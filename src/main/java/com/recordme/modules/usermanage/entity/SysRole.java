@@ -28,7 +28,7 @@ public class SysRole implements Serializable{
     private String parent_role;//父角色
     private Date create_time;//创建时间
     private Long create_user;//创建者
-    private String role_descripe;//角色描述
+    private String role_describe;//角色描述
 
 
 
@@ -79,12 +79,12 @@ public class SysRole implements Serializable{
         this.create_user = create_user;
     }
 
-    public String getRole_descripe() {
-        return role_descripe;
+    public String getRole_describe() {
+        return role_describe;
     }
 
-    public void setRole_descripe(String role_descripe) {
-        this.role_descripe = role_descripe;
+    public void setRole_describe(String role_describe) {
+        this.role_describe = role_describe;
     }
 //    public List<UserInfo> getUserInfos() {
 //        return userInfos;

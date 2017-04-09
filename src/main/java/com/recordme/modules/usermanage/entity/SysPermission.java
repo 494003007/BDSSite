@@ -1,7 +1,5 @@
 package com.recordme.modules.usermanage.entity;
 
-import javafx.scene.chart.PieChart;
-
 import java.sql.Date;
 import java.util.List;
 
@@ -10,12 +8,7 @@ import java.util.List;
  */
 
 import java.io.Serializable;
-import java.util.List;
 
-
-
-import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,11 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-/**
- * 权限实体类;
- * @author Angel(QQ:412887952)
- * @version v.0.1
- */
+
 @Entity
 public class SysPermission implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -46,41 +35,41 @@ public class SysPermission implements Serializable{
     private String parentIds; //父编号列表
     private Boolean available = Boolean.FALSE;
 
-    private String parent_premission;//父权限
-    private String premission_name;//权限名
-    private String premission_descrip;//权限描述
-    private Date creat_time;//创建时间
+    private String parent_permission;//父权限
+    private String permission_name;//权限名
+    private String permission_describe;//权限描述
+    private Date create_time;//创建时间
 
-    public String getParent_premission() {
-        return parent_premission;
+    public String getParent_permission() {
+        return parent_permission;
     }
 
-    public void setParent_premission(String parent_premission) {
-        this.parent_premission = parent_premission;
+    public void setParent_permission(String parent_permission) {
+        this.parent_permission = parent_permission;
     }
 
-    public String getPremission_name() {
-        return premission_name;
+    public String getPermission_name() {
+        return permission_name;
     }
 
-    public void setPremission_name(String premission_name) {
-        this.premission_name = premission_name;
+    public void setPermission_name(String permission_name) {
+        this.permission_name = permission_name;
     }
 
-    public String getPremission_descrip() {
-        return premission_descrip;
+    public String getPermission_describe() {
+        return permission_describe;
     }
 
-    public void setPremission_descrip(String premission_descrip) {
-        this.premission_descrip = premission_descrip;
+    public void setPermission_describe(String permission_describe) {
+        this.permission_describe = permission_describe;
     }
 
-    public Date getCreat_time() {
-        return creat_time;
+    public Date getCreate_time() {
+        return create_time;
     }
 
-    public void setCreat_time(Date creat_time) {
-        this.creat_time = creat_time;
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 
     @ManyToMany

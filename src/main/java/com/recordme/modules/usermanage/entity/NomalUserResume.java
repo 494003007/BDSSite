@@ -42,7 +42,7 @@ public class NomalUserResume implements Serializable{
     //职位
     public String profession;
     //进入大学时间
-    public Date startUnivercityTime;
+    public Date startUniversityTime;
     //毕业时间
     public Date graduateTime;
     //是否兼职
@@ -178,12 +178,12 @@ public class NomalUserResume implements Serializable{
         this.profession = profession;
     }
 
-    public Date getStartUnivercityTime() {
-        return startUnivercityTime;
+    public Date getStartUniversityTime() {
+        return startUniversityTime;
     }
 
-    public void setStartUnivercityTime(Date startUnivercityTime) {
-        this.startUnivercityTime = startUnivercityTime;
+    public void setStartUniversityTime(Date startUniversityTime) {
+        this.startUniversityTime = startUniversityTime;
     }
 
     public Date getGraduateTime() {
