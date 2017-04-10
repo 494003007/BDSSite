@@ -1,32 +1,24 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout :: header (pageTitle='权限管理')">
 
-</head>
-<body>
-<table>
-    <tr>
-        <td>权限id</td>
-        <td>权限名</td>
-        <td>权限字符串</td>
-        <td>链接</td>
-        <td>类型</td>
-        <td>操作</td>
-        <td><a th:href="@{/AuthorizationManage/permissionView}" >新增</a></td>
-    </tr>
 
+    <table class="table border bordered striped">
+        <thead>
+            <tr>
+                <th>权限id</th>
+                <th>权限名</th>
+                <th>权限字符串</th>
+                <th>链接</th>
+                <th>类型</th>
+                <th>操作</th>
+            </tr>
+        </thead>
         <tr th:each="permission,stat:${permissions}">
             <td th:text="${permission.id}">某权限id</td>
             <td th:text="${permission.name}">某权限名</td>
             <td th:text="${permission.permission}">某权限字串</td>
             <td th:text="${permission.url}">某权限对应的链接</td>
             <td th:text="${permission.resourceType}">某权限的链接类型</td>
-            <td><a th:href="@{/AuthorizationManage/permissionDelete(id=${permission.id})}" >删除</a></td>
-            <td><a th:href="@{/AuthorizationManage/permissionView(id=${permission.id})}" >查看</a></td>
-            <td></td>
+            <td><a th:href="@{/AuthorizationManage/permissionDelete(id=${permission.id})}" >删除</a><a th:href="@{/AuthorizationManage/permissionView(id=${permission.id})}" >查看</a></td>
         </tr>
 
-</table>
-</body>
-</html>
+    </table>
+    <a href="/AuthorizationManage/permissionView" class="button" >新增</a></th>
