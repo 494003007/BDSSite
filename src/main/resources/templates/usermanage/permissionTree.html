@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: header (pageTitle='权限树')">
+
+</head>
+<body>
+<div class="treeview"
+     data-role="treeview"
+     id="role_tree">
+
+</div>
+<script type="text/javascript">
+
+    function tree_add_root(name,id){
+        var tree = $("#role_tree").data("treeview");
+        tree.addLeaf(false, name,{
+            mode: 'checkbox',
+            checked: false,
+            name: 'permission',
+            value: id,
+            id:'permission'+id
+        });
+    }
+    function tree_add_leaf(parentId,name,id){
+        var tree = $("#role_tree").data("treeview");
+        var node = tree.element.find("[data-value='"+ parentId + "']" );
+        tree.addLeaf(node, name,{
+            mode: 'checkbox',
+            checked: false,
+            name: 'permission',
+            value: id,
+            id:'permission'+id
+        });
+    }
+</script>
+<script>
+    $.ajax({
+        type: "GET",
+        url: "/AuthorizationManage/permissionData",
+        data: null,
+        dataType: "json",
+        success: function(data){
+            $.each(data, function(commentIndex, comment){
+                if(comment['parentId'] === null){
+                    tree_add_root(comment['name'],comment['id']);
+                }else{
+                    tree_add_leaf(comment['parentId'],comment['name'],comment['id']);
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

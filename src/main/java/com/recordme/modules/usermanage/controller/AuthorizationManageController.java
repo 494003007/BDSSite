@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
@@ -115,5 +116,17 @@ public class AuthorizationManageController {
     @RequestMapping(value = "userRoleRelationList",method = RequestMethod.POST)
     public String roleDistribution(){
         return "/usermanage/userRoleRelationList";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "permissionData", method = RequestMethod.GET)
+    public Iterable
+            <com.recordme.modules.usermanage.entity.SysPermission> permissionData(){
+        return permissionService.findAll();
+    }
+
+    @RequestMapping(value = "permissionTree")
+    public String permissionTree(){
+        return "usermanage/permissionTree";
     }
 }

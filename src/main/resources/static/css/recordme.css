@@ -26,9 +26,9 @@
 }
 @font-face {
     font-family: 'metro';
-    src: url('fonts/metro.eot'); /* IE9 Compat Modes */
-    src: url('fonts/metro.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('fonts/metro.woff') format('woff'), /* Modern Browsers */
-    url('fonts/metro.ttf')  format('truetype'), /* Safari, Android, iOS */
-    url('fonts/metro.svg#metro') format('svg'); /* Legacy iOS */
+    src: url('../fonts/metro.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/metro.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/metro.woff') format('woff'), /* Modern Browsers */
+    url('../fonts/metro.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/metro.svg#metro') format('svg'); /* Legacy iOS */
 }

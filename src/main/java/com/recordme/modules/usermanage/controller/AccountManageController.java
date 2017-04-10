@@ -49,7 +49,7 @@ public class AccountManageController {
         user.setPassword(new Md5Hash(user.getPassword(), salt, 2).toString());
         userService.save(user);
         System.out.println(user.toString());
-        return "redirect:/usermanage/login";
+        return "redirect:/login";
     }
 
 
@@ -80,12 +80,12 @@ public class AccountManageController {
         }
         map.put("msg", msg);
         // 此方法不处理登录成功,由shiro进行处理.
-        return "/usermanage/login";
+        return "/login";
     }
 
     @RequestMapping(value="login",method= RequestMethod.GET)
     public String loginPage(){
-        return "/usermanage/login";
+        return "redirect:/index";
     }
 
 

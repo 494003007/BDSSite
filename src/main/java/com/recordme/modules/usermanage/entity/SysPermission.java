@@ -1,5 +1,7 @@
 package com.recordme.modules.usermanage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class SysPermission implements Serializable{
     private String permission; //权限字符串,menu例子：role:*，button例子：role:create,role:update,role:delete,role:view
     private Long parentId; //父编号
     private String parentIds; //父编号列表
-    private Boolean available = Boolean.FALSE;
+    private Boolean available = Boolean.FALSE;//是否显示
 
 
     private Date create_time;//创建时间
@@ -46,6 +48,7 @@ public class SysPermission implements Serializable{
         this.create_time = create_time;
     }
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name="SysRolePermission",joinColumns={@JoinColumn(name="permissionId")},inverseJoinColumns={@JoinColumn(name="roleId")})
     private List<SysRole> roles;

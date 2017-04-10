@@ -18,7 +18,7 @@ public class HomePageController {
     public String index(Model model){
         UserInfo userInfo = Tool.getUser();
         if(userInfo != null){
-            model.addAttribute("username",userInfo.getName());
+            model.addAttribute("userInfo",userInfo);
         }
 
         return "index";
