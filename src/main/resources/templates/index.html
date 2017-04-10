@@ -5,82 +5,108 @@
 
 </head>
 <body>
+
     <div class="app-bar" data-role="appbar">
-        <a class="app-bar-element" href="...">Home</a>
-        <span class="app-bar-divider"></span>
-        <ul class="app-bar-menu">
-            <li><a href="">Home</a></li>
-            <li>
-                <a href="" class="dropdown-toggle">Products</a>
-                <ul class="d-menu" data-role="dropdown">
-                    <li><a href="">Windows 10</a></li>
-                    <li><a href="">Spartan</a></li>
-                    <li><a href="">Outlook</a></li>
-                    <li><a href="">Office 2015</a></li>
-                    <li class="divider"></li>
-                    <li><a href="" class="dropdown-toggle">Other Products</a>
-                        <ul class="d-menu" data-role="dropdown">
-                            <li><a href="">Internet Explorer 10</a></li>
-                            <li><a href="">Skype</a></li>
-                            <li><a href="">Surface</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li><a href="">Support</a></li>
-            <li><a href="">Help</a></li>
-        </ul>
-        <div class="app-bar-element place-right">
-            <a class="dropdown-toggle fg-white">
-                <span th:class="${userInfo != null}?'mif-user':'mif-enter'"></span>
-                <b th:remove="tag" th:text="${userInfo != null}?${userInfo.name}:'登陆'"></b>
-            </a>
-            <div th:if="${userInfo== null}" class="app-bar-drop-container bg-white fg-dark place-right"
-                 data-role="dropdown" data-no-close="true">
-                <div class="padding20">
-                    <form th:action="@{/login}" th:method="POST">
-                        <h4 class="text-light">登陆</h4>
-                        <div class="input-control text">
-                            <span class="mif-user prepend-icon"></span>
-                            <input id="username" name="username" type="text">
-                        </div>
-                        <div class="input-control text">
-                            <span class="mif-lock prepend-icon"></span>
-                            <input id="password" name="password" type="password">
-                        </div>
-                        <label class="input-control checkbox small-check">
-                            <input type="checkbox">
-                            <span class="check"></span>
-                            <span class="caption">Remember me</span>
-                        </label>
-                        <div class="form-actions input-control">
-                            <button type="submit" class="button primary">登陆</button>
-                            <button class="button" onclick="window.open('/register')">注册</button>
-                            <p th:text="${msg}" th:if="${msg}"></p>
-                        </div>
-                    </form>
+        <div class="container">
+            <a class="app-bar-element" href="">Home</a>
+            <span class="app-bar-divider"></span>
+            <ul class="app-bar-menu">
+                <li><a href="">Home</a></li>
+                <li>
+                    <a href="" class="dropdown-toggle">Products</a>
+                    <ul class="d-menu" data-role="dropdown">
+                        <li><a href="">Windows 10</a></li>
+                        <li><a href="">Spartan</a></li>
+                        <li><a href="">Outlook</a></li>
+                        <li><a href="">Office 2015</a></li>
+                        <li class="divider"></li>
+                        <li><a href="" class="dropdown-toggle">Other Products</a>
+                            <ul class="d-menu" data-role="dropdown">
+                                <li><a href="">Internet Explorer 10</a></li>
+                                <li><a href="">Skype</a></li>
+                                <li><a href="">Surface</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="">Support</a></li>
+                <li><a href="">Help</a></li>
+            </ul>
+            <div class="app-bar-element place-right">
+                <a class="dropdown-toggle fg-white">
+                    <span th:class="${userInfo != null}?'mif-user':'mif-enter'"></span>
+                    <b th:remove="tag" th:text="${userInfo != null}?${userInfo.name}:'登陆'"></b>
+                </a>
+                <div th:if="${userInfo== null}" class="app-bar-drop-container bg-white fg-dark place-right"
+                     data-role="dropdown" data-no-close="true">
+                    <div class="padding20">
+                        <form th:action="@{/login}" th:method="POST">
+                            <h4 class="text-light">登陆</h4>
+                            <div class="input-control text">
+                                <span class="mif-user prepend-icon"></span>
+                                <input id="username" name="username" type="text">
+                            </div>
+                            <div class="input-control text">
+                                <span class="mif-lock prepend-icon"></span>
+                                <input id="password" name="password" type="password">
+                            </div>
+                            <label class="input-control checkbox small-check">
+                                <input type="checkbox">
+                                <span class="check"></span>
+                                <span class="caption">Remember me</span>
+                            </label>
+                            <div class="form-actions input-control">
+                                <button type="submit" class="button primary">登陆</button>
+                                <button class="button" onclick="window.open('/register')">注册</button>
+                                <p th:text="${msg}" th:if="${msg}"></p>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div th:if="${userInfo != null}" class="app-bar-drop-container bg-white fg-dark place-right"
-                 data-role="dropdown" data-no-close="true">
-                <div class="padding20">
+                <div th:if="${userInfo != null}" class="app-bar-drop-container bg-white fg-dark place-right"
+                     data-role="dropdown" data-no-close="true">
+                    <div class="padding20">
 
-                    <h4 class="text-light">个人信息</h4>
-                    <div class="input-control text">
-                        <span >用户：</span>
-                        <span th:text="${userInfo.name}"></span>
+                        <h4 class="text-light">个人信息</h4>
+                        <div class="input-control text">
+                            <span >用户：</span>
+                            <span th:text="${userInfo.name}"></span>
+                        </div>
+                        <div class="form-actions">
+                            <button onclick="window.open('/logout')" class="button">Logout</button>
+
+                        </div>
+
                     </div>
-                    <div class="form-actions">
-                        <button onclick="window.open('/logout')" class="button">Logout</button>
-
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-    <a href="user/list">用户管理</a>
-    <a href="AuthorizationManage/permissionList">权限管理</a>
-    <a href="AuthorizationManage/roleList">角色管理</a>
+    <div class="container page-content">
+        <div id="pageDiv"></div>
+        <a class="jump" href="user/list" >用户管理</a>
+        <a class="jump" href="AuthorizationManage/permissionList">权限管理</a>
+        <a class="jump" href="AuthorizationManage/roleList">角色管理</a>
+
+    </div>
+    <script>
+        function catchA() {
+            var links = document.querySelectorAll('a.jump');
+            Array.prototype.forEach.call(links, function (link) {
+                link.addEventListener('click', function (evt) {
+                    evt.preventDefault();
+                    $("#pageDiv").load(this.href,function(response,status,xhr){
+                            catchA();
+                        }
+                    );
+
+                });
+            });
+        }
+        $(document).ready(function(){
+            catchA();
+        });
+
+    </script>
 </body>
 </html>

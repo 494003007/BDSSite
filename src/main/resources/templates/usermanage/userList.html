@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout :: header (pageTitle='用户管理')">
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
+      <!--xmlns:th="http://www.thymeleaf.org">-->
+<!--<head th:replace="fragments/layout :: header (pageTitle='用户管理')">-->
 
-</head>
-<body>
+<!--</head>-->
+<!--<body>-->
     <table>
         <tr>
             <td>用户ID</td>
@@ -47,9 +47,9 @@
             <td th:text="${user.last_login_time != null} ? ${#dates.format(user.last_login_time, 'yyyy-MM-dd HH:mm:ss')}">1970.0.0 19:00:00</td>
             <td th:text="${user.new_time != null} ? ${#dates.format(user.new_time, 'yyyy-MM-dd HH:mm:ss')}">1970.0.0 19:00:00</td>
             <td th:text="${user.ip_address}">127.0.0.1</td>
-            <td><a th:href="@{/user/view(uid=${user.uid})}">查看</a></td>
+            <td><a class="jump" th:href="@{/user/view(uid=${user.uid})}">查看</a></td>
         </tr>
 
     </table>
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
