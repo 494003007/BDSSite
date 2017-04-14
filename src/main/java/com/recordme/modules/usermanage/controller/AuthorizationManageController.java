@@ -6,6 +6,7 @@ import com.recordme.modules.usermanage.entity.UserInfo;
 import com.recordme.modules.usermanage.services.PermissionService;
 import com.recordme.modules.usermanage.services.RoleService;
 import com.recordme.modules.usermanage.services.UserService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,7 @@ public class AuthorizationManageController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
-    ////////////////////////权限增删查改/////////////////////////////
+    /**************      权限增删查改      **************/
 
     @RequestMapping(value = "permissionList", method = RequestMethod.GET)
     public String permissionList(Map<String, Object> map){
@@ -67,7 +68,7 @@ public class AuthorizationManageController {
     }
 
 
-    //////////////////////////角色增删查改//////////////////////////////////
+    /**************      角色增删查改      **************/
     @RequestMapping(value = "roleList", method = RequestMethod.GET)
     public String roleList(Map<String, Object> map){
         map.put("roles",roleService.findAll());
@@ -99,36 +100,41 @@ public class AuthorizationManageController {
         roleService.save(role);
         return "redirect:/AuthorizationManage/roleView?id=" + role.getId();
     }
-    ////////////////////////用户角色增删查改/////////////////////////////
 
-    @RequestMapping(value = "userRoleRelationEdit/{username}",method = RequestMethod.GET)
-    public String userRoleRelationEditPage(@PathVariable("username")String username, Map<String,Object> map){
-        UserInfo userInfo = userService.findByUsername(username);
-        map.put("userInfo",userInfo);
-        return "/usermanage/userRoleRelationEdit";
+
+    /**************      用户增删查改      **************/
+    @RequestMapping(value = "userInfoList", method = RequestMethod.GET)
+    public String userInfoList(Map<String, Object> map){
+        map.put("userInfos",userService.findAll());
+        return "/usermanage/userInfoList";
     }
 
-    @RequestMapping(value = "userRoleRelationList",method = RequestMethod.GET)
-    public String roleDistributionPage(Map<String,Object> map){
-        List<UserInfo> list = (List<UserInfo>) userService.findAll();
-        map.put("userInfoList",list);
-        return "/usermanage/userRoleRelationList";
+    @RequestMapping(value = "userInfoView", method = RequestMethod.GET)
+    public String userInfoView(Model model,Long uid){
+        if(uid != null){
+            model.addAttribute("userInfo",userService.findOne(uid));
+        }else{
+            model.addAttribute("userInfo",new UserInfo());
+        }
+
+        return "/usermanage/userInfoView";
     }
 
-    @RequestMapping(value = "userRoleRelationEdit/{username}",method = RequestMethod.POST)
-    public String userRoleRelationEdit(@PathVariable("username")String username, UserInfo userInfo, SysRole sysRole, Map<String,Object> map){
-        userInfo = userService.findByUsername(userInfo.getUsername());
-        userInfo.getRoleList().add(roleService.findByRole(sysRole));
-        userInfo.setRoleList(userInfo.getRoleList());
-        map.put("userInfo",userService.save(userInfo));
-        return "/usermanage/userRoleRelationEdit";
-    }
+    @RequestMapping(value = "userInfoUpdate", method = RequestMethod.POST)
+    public String userInfoUpdate(Model model,UserInfo userInfo,String roles){
+        System.out.println(roles);
+        if(roles != null){
+            List<SysRole> roleList = new ArrayList<>();
 
-
-    @RequestMapping(value = "userRoleRelationList",method = RequestMethod.POST)
-    public String roleDistribution(){
-        return "/usermanage/userRoleRelationList";
+            for(String role : roles.split(",")){
+                roleList.add(roleService.findById(Long.parseLong(role)));
+            }
+            userInfo.setRoles(roleList);
+        }
+        userService.save(userInfo);
+        return "redirect:/AuthorizationManage/userInfoView?id=" + userInfo.getUid();
     }
+    /**************      权限角色增删查改      **************/
 
     @ResponseBody
     @RequestMapping(value = "permissionData", method = RequestMethod.POST)
@@ -151,5 +157,30 @@ public class AuthorizationManageController {
             model.addAttribute("roleId",roleId);
         }
         return "usermanage/permissionTree";
+    }
+
+    /**************      角色用户增删查改      **************/
+
+    @ResponseBody
+    @RequestMapping(value = "roleData", method = RequestMethod.POST)
+    public HashMap<String,Object> roleData(String userInfoId){
+        HashMap<String,Object> result = new HashMap<>();
+        if(userInfoId != null){
+            UserInfo userInfo  = userService.findOne(Long.parseLong(userInfoId));
+            if(userInfo.getRoles() != null){
+
+                result.put("hadRoles",userInfo.getRoles());
+            }
+        }
+        result.put("allRoles",roleService.findAll());
+        return result;
+    }
+
+    @RequestMapping(value = "roleTree")
+    public String roleTree(Model model,String userInfoId){
+        if(userInfoId != null){
+            model.addAttribute("userInfoId",userInfoId);
+        }
+        return "usermanage/roleTree";
     }
 }

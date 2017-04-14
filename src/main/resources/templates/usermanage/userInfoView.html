@@ -5,7 +5,7 @@
 
 </head>
 <body>
-    <form th:action="@{/user/update}" th:method="post">
+    <form th:action="@{/AuthorizationManage/userInfoUpdate}" th:method="post">
         <input id="uid" name="uid" class="" type="hidden" th:value="${userInfo.uid}" />
         <label th:for="address">地址</label><input id="address" name="address" class="" type="text" th:value="${userInfo.address}" />
         <label th:for="birth_date">生日</label><input id="birth_date" name="birth_date" class="" type="date" th:value="${userInfo.birth_date}" />
@@ -24,7 +24,15 @@
         <label th:for="true_name">真实姓名</label><input id="true_name" name="true_name" class="" type="text" th:value="${userInfo.true_name}" />
         <label th:for="username">用户名</label><input id="username" name="username" class="" type="text" th:value="${userInfo.username}" />
         <label th:for="we_chat_account">微信账号</label><input id="we_chat_account" name="we_chat_account" class="" type="text" th:value="${userInfo.we_chat_account}" />
+        <input class="button" type="button" th:onclick="'editRole('+ ${userInfo.uid} +')'" value="编辑角色" />
+        <div id="roleEditor"></div>
         <input th:type="submit" th:title="提交" />
     </form>
+    <script>
+        function editRole(userInfoId) {
+            $("#roleEditor").load("/AuthorizationManage/roleTree?userInfoId=" + userInfoId);
+        }
+    </script>
 </body>
+
 </html>

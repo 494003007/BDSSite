@@ -2,6 +2,7 @@ package com.recordme.modules.usermanage.services;
 
 import com.recordme.modules.common.BaseService;
 import com.recordme.modules.usermanage.dao.RoleDao;
+import com.recordme.modules.usermanage.entity.SysPermission;
 import com.recordme.modules.usermanage.entity.SysRole;
 
 import org.springframework.stereotype.Service;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RoleService extends BaseService<RoleDao, SysRole, Long> {
-
+    public SysRole findById(Long id){
+        return dao.findById(id);
+    }
     public SysRole findByRole(SysRole sysRole){
         return dao.findByRole(sysRole.getRole());}
 }

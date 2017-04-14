@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout :: header (pageTitle='权限树')">
+<head th:replace="fragments/layout :: header (pageTitle='角色树')">
 
 </head>
 <body>
 <div class="treeview"
      data-role="treeview"
-     id="permission_tree">
+     id="role_tree">
 
 </div>
 <script type="text/javascript">
 
     function tree_add_root(name,id,isChecked){
-        var tree = $("#permission_tree").data("treeview");
+        var tree = $("#role_tree").data("treeview");
         tree.addLeaf(false, name,{
             mode: 'checkbox',
             checked: isChecked,
-            name: 'permission',
+            name: 'roles',
             value: id,
-            id:'permission'+id
+            id:'roles'+id
         });
     }
     function tree_add_leaf(parentId,name,id,isChecked){
-        var tree = $("#permission_tree").data("treeview");
+        var tree = $("#role_tree").data("treeview");
         var node = tree.element.find("[data-value='"+ parentId + "']" );
         tree.addLeaf(node, name,{
             mode: 'checkbox',
             checked: isChecked,
-            name: 'permission',
+            name: 'roles',
             value: id,
-            id:'permission'+id
+            id:'roles'+id
         });
     }
 </script>
@@ -38,19 +38,19 @@
 <script th:inline="javascript">
     $.ajax({
         type: "POST",
-        url: "/AuthorizationManage/permissionData",
-        data: [[${roleId}?'roleId=' + ${roleId}:null]],//模板引擎 内联表达式
+        url: "/AuthorizationManage/roleData",
+        data: [[${userInfoId}?'userInfoId=' + ${userInfoId}:null]],//模板引擎 内联表达式
         dataType: "json",
         success: function(data){
             var hadSelected = [];
-            $.each(data['hadPermission'], function(commentIndex, comment){
+            $.each(data['hadRoles'], function(commentIndex, comment){
                 hadSelected.push(comment['id']);
             });
-            $.each(data['allPermission'], function(commentIndex, comment){
-                if(comment['parentId'] === null){
-                    tree_add_root(comment['name'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
+            $.each(data['allRoles'], function(commentIndex, comment){
+                if(comment['parentRole'] === null){
+                    tree_add_root(comment['role'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
                 }else{
-                    tree_add_leaf(comment['parentId'],comment['name'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
+                    tree_add_leaf(comment['parentRole'],comment['role'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
                 }
             });
         }

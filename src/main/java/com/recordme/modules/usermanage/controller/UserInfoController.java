@@ -25,20 +25,20 @@ public class UserInfoController {
 //        return "usermanage/userAdd";
 //    }
 
-    @RequestMapping("list")
-    public String userList(Model model){
-        model.addAttribute("userInfo",userService.findAll());
-        return "usermanage/userList";
-    }
-
-    @RequestMapping("view")
-    public String userView(Model model,Long uid){
-        if(uid != null){
-            model.addAttribute("userInfo",userService.findByUid(uid));
-        }else{
-            model.addAttribute("userInfo",new UserInfo());
-        }
-
-        return "usermanage/userView";
-    }
+//    @RequestMapping("list")
+//    public String userList(Model model){
+//        model.addAttribute("userInfo",userService.findAll());
+//        return "usermanage/userList";
+//    }
+//
+//    @RequestMapping("view")
+//    public String userView(Model model,Long uid){
+//        if(uid != null){
+//            model.addAttribute("userInfo",userService.findByUid(uid));
+//        }else{
+//            model.addAttribute("userInfo",new UserInfo());
+//        }
+//
+//        return "usermanage/userView";
+//    }
 }

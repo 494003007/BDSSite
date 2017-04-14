@@ -60,7 +60,7 @@ public class UserInfo implements Serializable{
     //用户角色关系
     @ManyToMany(mappedBy = "userInfos")//立即从数据库中进行加载数据;
 //    @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns ={@JoinColumn(name = "roleId") })
-    private List<SysRole> roleList;// 一个用户具有多个角色
+    private List<SysRole> roles;// 一个用户具有多个角色
 
 
 //    用户 -- 收藏关系：多对多关系;
@@ -122,12 +122,12 @@ public class UserInfo implements Serializable{
         this.userQuestions = userQuestions;
     }
 
-    public List<SysRole> getRoleList() {
-        return roleList;
+    public List<SysRole> getRoles() {
+        return roles;
     }
 
-    public void setRoleList(List<SysRole> roleList) {
-        this.roleList = roleList;
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
     }
 
     public long getUid() {
