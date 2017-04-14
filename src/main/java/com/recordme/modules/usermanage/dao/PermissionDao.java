@@ -16,6 +16,5 @@ import java.util.List;
 public interface PermissionDao extends CrudRepository<SysPermission, Long> {
     SysPermission findById(Long id);
 
-    @Query("SELECT permission_id FROM sys_role_permission where role_id = ?1")
-    List<Long> findRolePermissionList(Long roleId);
+
 }

@@ -42,11 +42,15 @@
         data: [[${roleId}?'roleId=' + ${roleId}:null]],//模板引擎 内联表达式
         dataType: "json",
         success: function(data){
+            var hadSelected = [];
+            $.each(data['hadPermission'], function(commentIndex, comment){
+                hadSelected.push(comment['id']);
+            });
             $.each(data['allPermission'], function(commentIndex, comment){
                 if(comment['parentId'] === null){
-                    tree_add_root(comment['name'],comment['id']);
+                    tree_add_root(comment['name'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
                 }else{
-                    tree_add_leaf(comment['parentId'],comment['name'],comment['id']);
+                    tree_add_leaf(comment['parentId'],comment['name'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
                 }
             });
         }

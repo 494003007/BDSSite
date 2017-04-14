@@ -137,6 +137,7 @@ public class AuthorizationManageController {
         if(roleId != null){
             SysRole sysRole  = roleService.findOne(Long.parseLong(roleId));
             if(sysRole.getPermissions() != null){
+
                 result.put("hadPermission",sysRole.getPermissions());
             }
         }
