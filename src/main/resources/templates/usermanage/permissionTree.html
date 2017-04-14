@@ -12,36 +12,37 @@
 </div>
 <script type="text/javascript">
 
-    function tree_add_root(name,id){
+    function tree_add_root(name,id,isChecked){
         var tree = $("#role_tree").data("treeview");
         tree.addLeaf(false, name,{
             mode: 'checkbox',
-            checked: false,
+            checked: isChecked,
             name: 'permission',
             value: id,
             id:'permission'+id
         });
     }
-    function tree_add_leaf(parentId,name,id){
+    function tree_add_leaf(parentId,name,id,isChecked){
         var tree = $("#role_tree").data("treeview");
         var node = tree.element.find("[data-value='"+ parentId + "']" );
         tree.addLeaf(node, name,{
             mode: 'checkbox',
-            checked: false,
+            checked: isChecked,
             name: 'permission',
             value: id,
             id:'permission'+id
         });
     }
 </script>
-<script>
+
+<script th:inline="javascript">
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/AuthorizationManage/permissionData",
-        data: null,
+        data: [[${roleId}?'roleId=' + ${roleId}:null]],//模板引擎 内联表达式
         dataType: "json",
         success: function(data){
-            $.each(data, function(commentIndex, comment){
+            $.each(data['allPermission'], function(commentIndex, comment){
                 if(comment['parentId'] === null){
                     tree_add_root(comment['name'],comment['id']);
                 }else{

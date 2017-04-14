@@ -16,11 +16,17 @@
 
             <option th:value="true" th:selected="${role.available}">可用</option>
         </select>
-
+        <input class="button" type="button" th:onclick="'editPermission('+ ${role.id} +')'" value="编辑权限" />
+        <div id="permissionEditor"></div>
         <input type="submit" />
 
 
 
     </form>
+    <script>
+        function editPermission(roleId) {
+            $("#permissionEditor").load("/AuthorizationManage/permissionTree?roleId=" + roleId);
+        }
+    </script>
 </body>
 </html>

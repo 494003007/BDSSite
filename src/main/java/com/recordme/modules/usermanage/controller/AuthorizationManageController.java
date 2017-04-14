@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.management.relation.Role;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,7 +86,16 @@ public class AuthorizationManageController {
     }
 
     @RequestMapping(value = "roleUpdate", method = RequestMethod.POST)
-    public String roleUpdate(Model model,SysRole role){
+    public String roleUpdate(Model model,SysRole role,String permission){
+        System.out.println(permission);
+        if(permission != null){
+            List<SysPermission> permissionList = new ArrayList<>();
+
+            for(String permissio : permission.split(",")){
+                permissionList.add(permissionService.findById(Long.parseLong(permissio)));
+            }
+            role.setPermissions(permissionList);
+        }
         roleService.save(role);
         return "redirect:/AuthorizationManage/roleView?id=" + role.getId();
     }
@@ -119,14 +131,24 @@ public class AuthorizationManageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "permissionData", method = RequestMethod.GET)
-    public Iterable
-            <com.recordme.modules.usermanage.entity.SysPermission> permissionData(){
-        return permissionService.findAll();
+    @RequestMapping(value = "permissionData", method = RequestMethod.POST)
+    public HashMap<String,Object> permissionData(String roleId){
+        HashMap<String,Object> result = new HashMap<>();
+        if(roleId != null){
+            SysRole sysRole  = roleService.findOne(Long.parseLong(roleId));
+            if(sysRole.getPermissions() != null){
+                result.put("hadPermission",sysRole.getPermissions());
+            }
+        }
+        result.put("allPermission",permissionService.findAll());
+        return result;
     }
 
     @RequestMapping(value = "permissionTree")
-    public String permissionTree(){
+    public String permissionTree(Model model,String roleId){
+        if(roleId != null){
+            model.addAttribute("roleId",roleId);
+        }
         return "usermanage/permissionTree";
     }
 }
