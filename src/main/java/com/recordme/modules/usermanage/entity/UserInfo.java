@@ -5,6 +5,9 @@ package com.recordme.modules.usermanage.entity;
  */
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
@@ -28,6 +31,7 @@ public class UserInfo implements Serializable{
     private String salt;//加密密码的盐
 
     private String true_name;//真实姓名
+    @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date birth_date;//出生日期
     private String country;//国家
     private String email;//邮件
@@ -38,7 +42,9 @@ public class UserInfo implements Serializable{
     private String address;
     private String we_chat_account;//微信账号
     private String ip_address;//ip地址
+    @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date new_time;//创建时间
+    @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date last_login_time;//最后一次登陆
 
     private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.

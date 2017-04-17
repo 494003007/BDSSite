@@ -4,6 +4,8 @@ package com.recordme.modules.usermanage.entity;
  * Created by edward on 17-2-14.
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
@@ -39,6 +41,7 @@ public class SysRole implements Serializable{
     private List<SysPermission> permissions;
 
     // 用户 - 角色关系定义;
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name="SysUserRole",joinColumns={@JoinColumn(name="roleId")},inverseJoinColumns={@JoinColumn(name="uid")})
     private List<UserInfo> userInfos;// 一个角色对应多个用户

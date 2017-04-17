@@ -47,10 +47,10 @@
                 hadSelected.push(comment['id']);
             });
             $.each(data['allRoles'], function(commentIndex, comment){
-                if(comment['parentRole'] === null){
+                if(comment['parent_role'] === null){
                     tree_add_root(comment['role'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
                 }else{
-                    tree_add_leaf(comment['parentRole'],comment['role'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
+                    tree_add_leaf(comment['parent_role'],comment['role'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
                 }
             });
         }

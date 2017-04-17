@@ -168,7 +168,6 @@ public class AuthorizationManageController {
         if(userInfoId != null){
             UserInfo userInfo  = userService.findOne(Long.parseLong(userInfoId));
             if(userInfo.getRoles() != null){
-
                 result.put("hadRoles",userInfo.getRoles());
             }
         }
