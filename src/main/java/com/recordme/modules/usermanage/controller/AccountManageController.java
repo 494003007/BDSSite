@@ -80,12 +80,12 @@ public class AccountManageController {
         }
         map.put("msg", msg);
         // 此方法不处理登录成功,由shiro进行处理.
-        return "/login";
+        return "usermanage/login";
     }
 
     @RequestMapping(value="login",method= RequestMethod.GET)
     public String loginPage(){
-        return "redirect:/index";
+        return "usermanage/login";
     }
 
 

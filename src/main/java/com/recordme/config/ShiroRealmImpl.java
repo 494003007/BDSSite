@@ -35,7 +35,7 @@ public class ShiroRealmImpl extends AuthorizingRealm {
         UserInfo user = (UserInfo) principalCollection.getPrimaryPrincipal();
         log.info("<====================doGetAuthorizationInfo()=====================>");
 
-        for(SysRole role:user.getRoleList()){
+        for(SysRole role:user.getRoles()){
             authorizationInfo.addRole(role.getRole());
             for(SysPermission p:role.getPermissions()){
                 authorizationInfo.addStringPermission(p.getPermission());
