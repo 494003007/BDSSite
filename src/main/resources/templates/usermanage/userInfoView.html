@@ -1,5 +1,5 @@
 
-<body>
+    <a class="button jump" href="AuthorizationManage/userInfoList">返回</a>
     <form th:action="@{/AuthorizationManage/userInfoUpdate}" th:method="post">
         <input id="uid" name="uid" class="" type="hidden" th:value="${userInfo.uid}" />
         <label th:for="address">地址</label><input id="address" name="address" class="" type="text" th:value="${userInfo.address}" />
