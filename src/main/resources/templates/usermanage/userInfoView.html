@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout :: header (pageTitle='用户编辑')">
 
-</head>
 <body>
     <form th:action="@{/AuthorizationManage/userInfoUpdate}" th:method="post">
         <input id="uid" name="uid" class="" type="hidden" th:value="${userInfo.uid}" />
@@ -33,6 +28,3 @@
             $("#roleEditor").load("/AuthorizationManage/roleTree?userInfoId=" + userInfoId);
         }
     </script>
-</body>
-
-</html>

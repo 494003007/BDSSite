@@ -13,12 +13,12 @@
             <ul class="app-bar-menu">
                 <li><a href="">Home</a></li>
                 <li>
-                    <a href="" class="dropdown-toggle">Products</a>
+                    <a href="" class="dropdown-toggle">系统管理</a>
                     <ul class="d-menu" data-role="dropdown">
-                        <li><a href="">Windows 10</a></li>
-                        <li><a href="">Spartan</a></li>
-                        <li><a href="">Outlook</a></li>
-                        <li><a href="">Office 2015</a></li>
+                        <li><a class="jump" href="AuthorizationManage/userInfoList">用户管理</a></li>
+                        <li><a class="jump" href="AuthorizationManage/permissionList">权限管理</a></li>
+                        <li><a class="jump" href="AuthorizationManage/roleList">角色管理</a></li>
+
                         <li class="divider"></li>
                         <li><a href="" class="dropdown-toggle">Other Products</a>
                             <ul class="d-menu" data-role="dropdown">
@@ -90,23 +90,35 @@
 
     </div>
     <script>
-        function catchA() {
-            var links = document.querySelectorAll('a.jump');
-            Array.prototype.forEach.call(links, function (link) {
-                link.addEventListener('click', function (evt) {
-                    evt.preventDefault();
-                    $("#pageDiv").load(this.href,function(response,status,xhr){
-                            catchA();
-                        }
-                    );
+        var status = true;
+        var handle = function (evt) {
+            if(status){
+                status = false;
+                evt.preventDefault();
+                var div = $('#pageDiv');
+                div.innerHTML = "";
+                div.load(this.href,function(response,status,xhr){
+                        var links = document.querySelectorAll('a.jump');
+                        catchA(links);
 
-                });
+                    }
+                );
+                status = true;
+            }
+
+
+        };
+        $(document).ready(function(){
+            var links = document.querySelectorAll('a.jump');
+            catchA(links);
+        });
+        function catchA(links){
+            Array.prototype.forEach.call(links, function (link) {
+                link.removeEventListener('click', handle);
+                link.addEventListener('click', handle );
             });
         }
-        $(document).ready(function(){
-            catchA();
-        });
-
     </script>
+
 </body>
 </html>

@@ -51,7 +51,7 @@ public class ShiroConfiguration {
 
         filterChainDefinitionMap.put("/register","anon");
 
-        filterChainDefinitionMap.put("/index","anon");
+
 
         filterChainDefinitionMap.put("/css/**","anon");
 
