@@ -2,7 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout :: header (pageTitle='搜索')">
-
+    <meta charset="utf-8" />
+    <title th:text="${pageTitle}">Template title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="/css/metro.min.css" rel="stylesheet" />
+    <link href="/css/metro-icons.min.css" rel="stylesheet" />
+    <link href="/css/recordme.css" rel="stylesheet" />
+    <script src="/js/jquery.js"></script>
+    <script src="/js/metro.min.js"></script>
 </head>
 <body>
     <div class="grid">
@@ -12,16 +19,38 @@
         <div class="row">
             <div class="cell">
                 <div class="input-control text " data-role="input"></div>
-                <input type="text" id="jobName" />
+                <input type="text" id="keyWord"/>
                 <button class="button"><span class="mif-search"></span></button>
-                <div id="resultContent"></div>
+                <div id="resultContent">
+                    <div>
+                        <div><h1>Java高级工程师</h1></div>
+                        <div>
+                            <p>
+                                职位简介
+                            </p>
+                        </div>
+                        <div>
+                            来源：
+                        </div>
+                        <div>
+                            进入
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         function search() {
-            
+            var keyWord = $("#keyWord").value;
+            $.post("api/search", { keyWord: keyWord} ,function(data) {
+                var resultC = $("#resultContent");
+                resultC.innerHTML = "";
+                $.each(data, function(index, value, array) {
+
+                });
+            });
         }
     </script>
 </body>
