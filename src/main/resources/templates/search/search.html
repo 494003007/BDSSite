@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: header (pageTitle='搜索')">
+
+</head>
+<body>
+    <div class="grid">
+        <div class="row">
+            <div class="cell" style="height: 30%"></div>
+        </div>
+        <div class="row">
+            <div class="cell">
+                <div class="input-control text " data-role="input"></div>
+                <input type="text" id="jobName" />
+                <button class="button"><span class="mif-search"></span></button>
+                <div id="resultContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function search() {
+            
+        }
+    </script>
+</body>
+</html>
