@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -27,7 +28,9 @@ public class UserInfo implements Serializable{
     private String username;//账号.
 
     private String name;//名称（昵称或者真实姓名，不同系统不同定义）
+    @Column(nullable = false)
     private String password; //密码;
+    @Column(nullable = false)
     private String salt;//加密密码的盐
 
     private String true_name;//真实姓名
@@ -63,9 +66,17 @@ public class UserInfo implements Serializable{
     private List<HrReleaseRecruit> hrReleaseRecruits;
 
 
-    //用户角色关系
-    @ManyToMany(mappedBy = "userInfos")//立即从数据库中进行加载数据;
-//    @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns ={@JoinColumn(name = "roleId") })
+    @ManyToMany
+    /*
+    *
+    *
+    *
+    *            谁删这一句，我就跟谁急
+    *
+    *
+    *
+    * */
+    @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns ={@JoinColumn(name = "roleId") })
     private List<SysRole> roles;// 一个用户具有多个角色
 
 

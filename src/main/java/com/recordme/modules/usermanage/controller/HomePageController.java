@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Controller
 public class HomePageController {
-    @RequestMapping(value = "index")
+    @RequestMapping(value = {"index","/"})
     public String index(Model model){
         UserInfo userInfo = Tool.getUser();
         if(userInfo != null){
@@ -23,4 +23,5 @@ public class HomePageController {
 
         return "index";
     }
+
 }

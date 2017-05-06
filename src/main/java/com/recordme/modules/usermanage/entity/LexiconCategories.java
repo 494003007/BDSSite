@@ -15,11 +15,10 @@ public class LexiconCategories implements Serializable{
     @Id
     @GeneratedValue
     private long id;//主键.
-    private String parentNod;//父节点
-    private String node;//当前节点
-    private String profession;//职业
-    private String description;//职业描述
+    private String parentNode;//父节点
 
+    private String classification;//职业
+    private String description;//职业描述
     public long getId() {
         return id;
     }
@@ -28,28 +27,20 @@ public class LexiconCategories implements Serializable{
         this.id = id;
     }
 
-    public String getParentNod() {
-        return parentNod;
+    public String getParentNode() {
+        return parentNode;
     }
 
-    public void setParentNod(String parentNod) {
-        this.parentNod = parentNod;
+    public void setParentNode(String parentNode) {
+        this.parentNode = parentNode;
     }
 
-    public String getNode() {
-        return node;
+    public String getClassification() {
+        return classification;
     }
 
-    public void setNode(String node) {
-        this.node = node;
-    }
-
-    public String getProfession() {
-        return profession;
-    }
-
-    public void setProfession(String profession) {
-        this.profession = profession;
+    public void setClassification(String classification) {
+        this.classification = classification;
     }
 
     public String getDescription() {
@@ -59,4 +50,7 @@ public class LexiconCategories implements Serializable{
     public void setDescription(String description) {
         this.description = description;
     }
+
+
+
 }
