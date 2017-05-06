@@ -1,6 +1,5 @@
 package com.recordme.config;
 
-import com.recordme.modules.usermanage.dao.UserDao;
 import com.recordme.modules.usermanage.entity.SysPermission;
 import com.recordme.modules.usermanage.entity.SysRole;
 import com.recordme.modules.usermanage.entity.UserInfo;
@@ -14,9 +13,14 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.io.IOException;
 
 /**
  * Created by D on 2017/2/15.
@@ -27,6 +31,7 @@ public class ShiroRealmImpl extends AuthorizingRealm {
     @Autowired
     private UserService userService;
 
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
@@ -35,7 +40,7 @@ public class ShiroRealmImpl extends AuthorizingRealm {
         UserInfo user = (UserInfo) principalCollection.getPrimaryPrincipal();
         log.info("<====================doGetAuthorizationInfo()=====================>");
 
-        for(SysRole role:user.getRoleList()){
+        for(SysRole role:user.getRoles()){
             authorizationInfo.addRole(role.getRole());
             for(SysPermission p:role.getPermissions()){
                 authorizationInfo.addStringPermission(p.getPermission());
@@ -64,7 +69,6 @@ public class ShiroRealmImpl extends AuthorizingRealm {
                 ByteSource.Util.bytes(user.getCredentialsSalt()),//salt=username+salt
                 getName()  //realm name
         );
-
         return authenticationInfo;
     }
 
