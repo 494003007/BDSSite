@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout :: header (pageTitle='角色编辑')">
 
-</head>
-<body>
-    <a href="/AuthorizationManage/roleList">返回列表</a>
+    <a class="jump" href="/AuthorizationManage/roleList">返回列表</a>
     <form action="/AuthorizationManage/roleUpdate" method="post">
         <input th:value="${role.id}" type="hidden" name="id"/>
         <label for="role">名称</label> <input th:value="${role.role}" type="text" id="role" name="role"/>
@@ -28,5 +22,3 @@
             $("#permissionEditor").load("/AuthorizationManage/permissionTree?roleId=" + roleId);
         }
     </script>
-</body>
-</html>
