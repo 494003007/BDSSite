@@ -2,6 +2,7 @@ package com.recordme.modules.usermanage.controller;
 
 
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import java.util.Map;
 /**
  * Created by D on 2017/5/6.
  */
+@Controller
 @RequestMapping("api")
 public class APIController {
     private String searchUrlAppend(Map<String,Object> param){

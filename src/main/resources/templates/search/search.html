@@ -18,9 +18,11 @@
         </div>
         <div class="row">
             <div class="cell">
-                <div class="input-control text " data-role="input"></div>
-                <input type="text" id="keyWord"/>
-                <button class="button"><span class="mif-search"></span></button>
+                <div class="input-control text " data-role="input">
+                    <input type="text" id="keyWord"/>
+                    <button class="button" onclick="search()"><span class="mif-search"></span></button>
+                </div>
+
                 <div id="resultContent">
                     <div>
                         <div><h1>Java高级工程师</h1></div>
@@ -47,7 +49,7 @@
             $.post("api/search", { keyWord: keyWord} ,function(data) {
                 var resultC = $("#resultContent");
                 resultC.innerHTML = "";
-                $.each(data, function(index, value, array) {
+                $.each(data['response']['docs'], function(index, value, array) {
 
                 });
             });
