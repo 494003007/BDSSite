@@ -36,7 +36,16 @@ public class UserInfo implements Serializable{
     private String true_name;//真实姓名
     @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date birth_date;//出生日期
-    private String country;//国家
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    private String city;//国家
     private String email;//邮件
     private String qq;
     private String phone;
@@ -213,14 +222,6 @@ public class UserInfo implements Serializable{
 
     public Date getBirth_date() {
         return birth_date;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getEmail() {

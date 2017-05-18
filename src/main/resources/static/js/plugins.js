@@ -261,7 +261,7 @@ $(function() {
                     
                     var validator = $("#wizard-validation").validate({
                             rules: {
-                                login: {
+                                username: {
                                     required: true,
                                     minlength: 2,
                                     maxlength: 8
@@ -281,11 +281,11 @@ $(function() {
                                     required: true,
                                     email: true
                                 },
-                                name: {
+                                true_name: {
                                     required: true,
                                     maxlength: 10
                                 },
-                                adress: {
+                                city: {
                                     required: true
                                 }
                             }
