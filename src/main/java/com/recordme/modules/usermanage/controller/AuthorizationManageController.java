@@ -3,6 +3,7 @@ package com.recordme.modules.usermanage.controller;
 import com.recordme.modules.usermanage.entity.SysPermission;
 import com.recordme.modules.usermanage.entity.SysRole;
 import com.recordme.modules.usermanage.entity.UserInfo;
+import com.recordme.modules.usermanage.services.OperateLogService;
 import com.recordme.modules.usermanage.services.PermissionService;
 import com.recordme.modules.usermanage.services.RoleService;
 import com.recordme.modules.usermanage.services.UserService;
@@ -34,6 +35,8 @@ public class AuthorizationManageController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private OperateLogService operateLogService;
     /**************      权限增删查改      **************/
 
     @RequestMapping(value = "permissionList", method = RequestMethod.GET)
@@ -182,4 +185,34 @@ public class AuthorizationManageController {
         }
         return "usermanage/roleTree";
     }
+
+    /**************      管理日志增删查改      **************/
+
+    @ResponseBody
+    @RequestMapping(value = "operateLogData",method = RequestMethod.GET)
+    public HashMap<String,Object> operateLogData(String userInfoId){
+        HashMap<String,Object> result = new HashMap<>();
+        if(userInfoId != null){
+            UserInfo userInfo  = userService.findOne(Long.parseLong(userInfoId));
+            if(userInfo.getOperateLogs() != null){
+                result.put("hadOperateLogs",userInfo.getOperateLogs());
+            }
+        }
+        result.put("allOperateLogs",operateLogService.findAll());
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "operateLogDelete",method = RequestMethod.GET)
+    public HashMap<String,Object> operateLogDelete(String operateLogId){
+        HashMap<String,Object> result = new HashMap<>();
+        if(operateLogId!=null){
+            operateLogService.delete(Long.parseLong(operateLogId));
+        }
+        result.put("allOperateLogs",operateLogService.findAll());
+        return result;
+    }
+
+
+
 }

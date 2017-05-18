@@ -19,6 +19,14 @@ public class OperateLog implements Serializable {
     @ManyToOne@JoinColumn(name = "operateUser")
     private UserInfo operateUser;
 
+    public UserInfo getOperateUser() {
+        return operateUser;
+    }
+
+    public void setOperateUser(UserInfo operateUser) {
+        this.operateUser = operateUser;
+    }
+
     private String operateContent;
     private Date operateTime;
 

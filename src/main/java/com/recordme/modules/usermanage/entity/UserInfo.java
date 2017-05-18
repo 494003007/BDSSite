@@ -6,6 +6,7 @@ package com.recordme.modules.usermanage.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -105,6 +106,7 @@ public class UserInfo implements Serializable{
 
 
     //操作日志
+    @JsonIgnore
     @OneToMany(mappedBy = "operateUser")
     private List<OperateLog> operateLogs;
 
