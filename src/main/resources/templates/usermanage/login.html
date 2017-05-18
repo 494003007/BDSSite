@@ -81,20 +81,9 @@
 
 
 <!DOCTYPE html>
-<html lang="en" class="body-full-height">
-<head>
-    <!-- META SECTION -->
-    <title>Joli Admin - Responsive Bootstrap Admin Template</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <!-- END META SECTION -->
-
-    <!-- CSS INCLUDE -->
-    <link rel="stylesheet" type="text/css" id="theme" href="/css/theme-default.css"/>
-    <!-- EOF CSS INCLUDE -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org" class="body-full-height">
+<head th:replace="fragments/layout :: header (pageTitle='登陆')">
 </head>
 <body>
 <!--<div class="app-bar bg-cyan" data-role="appbar">-->
@@ -104,7 +93,11 @@
     <div class="login-box animated fadeInDown">
         <div class="login-logo"></div>
         <div class="login-body">
-            <div class="login-title"><strong>Log In</strong> to your account</div>
+            <div class="login-title">
+                <strong>Log In</strong> to your account
+                <span id="errorBox"></span>
+            </div>
+
             <form action="/loginI" class="form-horizontal" method="post">
                 <div class="form-group">
                     <div class="col-md-12">
@@ -143,7 +136,7 @@
         </div>
         <div class="login-footer">
             <div class="pull-left">
-                &copy; 2014 AppName
+                &copy; 易职搜
             </div>
             <div class="pull-right">
                 <a href="#">About</a> |
@@ -154,7 +147,12 @@
     </div>
 
 </div>
-
+<script th:inline="javascript">
+    msg = [[${msg} ? ${msg}:'']];
+    if(msg === "accountOrPwdError"){
+        document.getElementById("errorBox").innerHTML = "<label class='error'>账号或密码错误</label>";
+    }
+</script>
 </body>
 </html>
 

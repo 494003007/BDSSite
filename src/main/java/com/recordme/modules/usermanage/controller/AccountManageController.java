@@ -75,12 +75,12 @@ public class AccountManageController {
             return "redirect:index";
         }catch (IncorrectCredentialsException e){
             System.out.println("IncorrectCredentialsException -- > 密码不正确：");
-            msg = "IncorrectCredentialsException -- > 密码不正确：";
+            msg = "accountOrPwdError";
         }catch (UnknownAccountException e){
             System.out.println("UnknownAccountException -- > 账号不存在：");
-            msg = "UnknownAccountException -- > 账号不存在：";
+            msg = "accountOrPwdError";
         }catch (Exception e){
-            msg = "else >> "+e;
+            msg = "unknowError";
             System.out.println("else -- >" + e);
         }
 
