@@ -4,7 +4,7 @@
         <input id="uid" name="uid" class="" type="hidden" th:value="${userInfo.uid}" />
         <label th:for="address">地址</label><input id="address" name="address" class="" type="text" th:value="${userInfo.address}" />
         <label th:for="birth_date">生日</label><input id="birth_date" name="birth_date" class="" type="date" th:value="${userInfo.birth_date}" />
-        <label th:for="country">城市</label><input id="country" name="country" class="" type="text" th:value="${userInfo.country}" />
+        <label th:for="city">城市</label><input id="city" name="city" class="" type="text" th:value="${userInfo.city}" />
         <label th:for="email">电子邮箱</label><input id="email" name="email" class="" type="text" th:value="${userInfo.email}" />
         <label th:for="info_shield">消息过滤</label><input id="info_shield" name="info_shield" class="" type="text" th:value="${userInfo.info_shield}" />
         <label th:for="ip_address">ip地址</label><input id="ip_address" name="ip_address" class="" type="text" th:value="${userInfo.ip_address}" />
@@ -23,6 +23,9 @@
         <div id="roleEditor"></div>
         <input th:type="submit" th:title="提交" />
     </form>
+    <div th:include="fragments/layout :: allHasJs" th:remove="tag">
+
+    </div>
     <script>
         function editRole(userInfoId) {
             $("#roleEditor").load("/AuthorizationManage/roleTree?userInfoId=" + userInfoId);
