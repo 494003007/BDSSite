@@ -6,15 +6,25 @@ import com.recordme.modules.usermanage.entity.OperateLog;
 import com.recordme.modules.usermanage.entity.UserInfo;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+
 /**
  * Created by keben on 2017-05-17.
  */
 @Service
 public class OperateLogService extends BaseService<OperateLogDao, OperateLog, Long> {
+
+
     public OperateLog findById(Long id){
         return dao.findById(id);
     }
-    OperateLog findByoperateUser(UserInfo userInfo){
+    public OperateLog findByoperateUser(UserInfo userInfo){
         return dao.findByoperateUser(userInfo);
     }
+    public OperateLog findByoperateTime(Date date){
+        return dao.findByoperateTime(date);
+    }
+//    public OperateLog findByOperateTimeBetween(Date )
+
+
 }
