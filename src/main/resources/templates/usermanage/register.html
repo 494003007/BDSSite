@@ -132,10 +132,8 @@
 <!-- END PAGE CONTAINER -->
 
 <!-- START SCRIPTS -->
-<!-- START PLUGINS -->
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+<!-- START SCRIPTS -->
+<div th:include="fragments/layout :: allHasJs" th:remove="tag"></div>
 <!-- END PLUGINS -->
 
 <!-- THIS PAGE PLUGINS -->
@@ -148,10 +146,8 @@
 <!-- END PAGE PLUGINS -->
 
 <!-- START TEMPLATE -->
-<script type="text/javascript" src="js/settings.js"></script>
-
-<script type="text/javascript" src="js/plugins.js"></script>
-<script type="text/javascript" src="js/actions.js"></script>
+<div th:include="fragments/layout :: templateJs" th:remove="tag">
+</div>
 <!-- END TEMPLATE -->
 <!-- END SCRIPTS -->
 </body>
