@@ -13,6 +13,9 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,11 +26,12 @@ import sun.misc.BASE64Encoder;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.SecureRandom;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
-
 /**
  * Created by D on 2017/2/12.
  */
@@ -59,8 +63,9 @@ public class AccountManageController {
 
 
         @RequestMapping(value="loginI",method= RequestMethod.POST)
-    public String login(String username,String password,Boolean rememberMe,HttpServletRequest request, Map<String, Object> map) throws Exception {
+    public String login(String username, String password, Boolean rememberMe, HttpServletRequest request, Map<String, Object> map, HttpSession httpSession) throws Exception {
         Subject subject = SecurityUtils.getSubject();
+
 
         UsernamePasswordToken upt;
         if(rememberMe != null && rememberMe){
@@ -73,6 +78,7 @@ public class AccountManageController {
 
         try{
             subject.login(upt);
+            httpSession.setAttribute(username, userService.findByUsername(username));
             return "redirect:index";
         }catch (IncorrectCredentialsException e){
             System.out.println("IncorrectCredentialsException -- > 密码不正确：");
@@ -105,6 +111,23 @@ public class AccountManageController {
     @RequestMapping(value = "retrieve",method = RequestMethod.POST)
     public String retrievePassword( HttpServletRequest request, Map<String, Object> map){
         System.out.println("**********");
+        JavaMailSenderImpl senderImpl = new JavaMailSenderImpl();
+        senderImpl.setHost("smtp.163.com");
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo("toEmail@sina.com");// bnuzeasyjob bnuzeasyjob0
+        mailMessage.setFrom("m18923955429@163.com");//m18923955429@163.com注册成功！
+        mailMessage.setSubject(" 测试简单文本邮件发送！ ");
+        mailMessage.setText(" 测试我的简单邮件发送机制！！ ");
+        senderImpl.setUsername(" userName "); // 根据自己的情况,设置username
+        senderImpl.setPassword(" password "); // 根据自己的情况, 设置password
+        Properties prop = new Properties();
+        prop.put("mail.smtp.auth", "true"); // 将这个参数设为true，让服务器进行认证,认证用户名和密码是否正确
+        prop.put("mail.smtp.timeout", "25000");
+        senderImpl.setJavaMailProperties(prop);
+        // 发送邮件
+        senderImpl.send(mailMessage);
+
+        System.out.println(" 邮件发送成功.. ");
         return "usermanage/retrieve";
     }
 
