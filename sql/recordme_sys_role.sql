@@ -1,1 +1,0 @@
-INSERT INTO recordme.sys_role (available, create_time, create_user, description, parent_role, role, role_describe) VALUES (true, null, null, '11', null, 'admin', null);
