@@ -114,12 +114,12 @@ public class AccountManageController {
         JavaMailSenderImpl senderImpl = new JavaMailSenderImpl();
         senderImpl.setHost("smtp.163.com");
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo("toEmail@sina.com");// bnuzeasyjob bnuzeasyjob0
-        mailMessage.setFrom("m18923955429@163.com");//m18923955429@163.com注册成功！
+        mailMessage.setTo("c494003007@qq.com");// bnuzeasyjob bnuzeasyjob0
+        mailMessage.setFrom("18923955429@163.com");//m18923955429@163.com注册成功！
         mailMessage.setSubject(" 测试简单文本邮件发送！ ");
         mailMessage.setText(" 测试我的简单邮件发送机制！！ ");
-        senderImpl.setUsername(" userName "); // 根据自己的情况,设置username
-        senderImpl.setPassword(" password "); // 根据自己的情况, 设置password
+        senderImpl.setUsername("18923955429@163.com"); // 根据自己的情况,设置username
+        senderImpl.setPassword("bnuzeasyjob0"); // 根据自己的情况, 设置password
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", "true"); // 将这个参数设为true，让服务器进行认证,认证用户名和密码是否正确
         prop.put("mail.smtp.timeout", "25000");
