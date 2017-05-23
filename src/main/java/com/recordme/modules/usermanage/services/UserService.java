@@ -18,6 +18,9 @@ public class UserService extends BaseService<UserDao, UserInfo, Long> {
     public UserInfo findByName(String name){
         return dao.findByName(name);
     }
+    public UserInfo findByEmail(String email){
+        return dao.findByEmail(email);
+    }
 
     public UserInfo findByUid(Long uid){
         return dao.findByUid(uid);

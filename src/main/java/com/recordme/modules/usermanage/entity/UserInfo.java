@@ -47,6 +47,7 @@ public class UserInfo implements Serializable{
     }
 
     private String city;//国家
+    @Column(nullable = false,unique = true)
     private String email;//邮件
     private String qq;
     private String phone;

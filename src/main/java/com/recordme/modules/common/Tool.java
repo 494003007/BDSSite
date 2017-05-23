@@ -13,4 +13,5 @@ public class Tool {
         Subject currentUser = SecurityUtils.getSubject();
         return (UserInfo)currentUser.getPrincipal();
     }
+
 }

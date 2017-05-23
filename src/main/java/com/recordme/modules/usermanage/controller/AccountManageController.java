@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import sun.misc.BASE64Encoder;
 
 
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
@@ -32,6 +35,8 @@ import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
+import java.util.UUID;
+
 /**
  * Created by D on 2017/2/12.
  */
@@ -39,6 +44,8 @@ import java.util.Random;
 @RequestMapping("/")
 public class AccountManageController {
 
+    @Autowired
+    private JavaMailSenderImpl javaMailSender;
     @Autowired
     private UserService userService;
     @Autowired
@@ -109,26 +116,45 @@ public class AccountManageController {
     }
 
     @RequestMapping(value = "retrieve",method = RequestMethod.POST)
-    public String retrievePassword( HttpServletRequest request, Map<String, Object> map){
+    public String retrievePassword( String email,HttpServletRequest request, Map<String, Object> map){
         System.out.println("**********");
-        JavaMailSenderImpl senderImpl = new JavaMailSenderImpl();
-        senderImpl.setHost("smtp.163.com");
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo("c494003007@qq.com");// bnuzeasyjob bnuzeasyjob0
-        mailMessage.setFrom("18923955429@163.com");//m18923955429@163.com注册成功！
-        mailMessage.setSubject(" 测试简单文本邮件发送！ ");
-        mailMessage.setText(" 测试我的简单邮件发送机制！！ ");
-        senderImpl.setUsername("18923955429@163.com"); // 根据自己的情况,设置username
-        senderImpl.setPassword("bnuzeasyjob0"); // 根据自己的情况, 设置password
-        Properties prop = new Properties();
-        prop.put("mail.smtp.auth", "true"); // 将这个参数设为true，让服务器进行认证,认证用户名和密码是否正确
-        prop.put("mail.smtp.timeout", "25000");
-        senderImpl.setJavaMailProperties(prop);
+        //##################################################################################################//
+        UserInfo user = userService.findByEmail(email);
+        String salt = generateSalt();
+        user.setSalt(salt);
+        salt = user.getUsername() + salt;
+        String newPassword = generateRetrievePassword();
+        String savePassword = new Md5Hash(newPassword, salt, 2).toString();
+        user.setPassword(savePassword);
+        userService.save(user);
+        //##################################################################################################//
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        try {
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setFrom(new InternetAddress("18923955429@163.com", "易职搜", "UTF-8"));
+            mimeMessageHelper.setSubject("[易职搜]请重置您的密码!");
+            StringBuilder str = new StringBuilder("<html><head></head><body><h1>");
+            str.append("Hello!<br/>");
+            str.append("您的新密码为:<br/>"+newPassword);
+            str.append("</h1></body></html>");
+            // true 表示启用html
+            mimeMessageHelper.setText(str.toString(),true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         // 发送邮件
-        senderImpl.send(mailMessage);
+        javaMailSender.send(mimeMessage);
 
-        System.out.println(" 邮件发送成功.. ");
-        return "usermanage/retrieve";
+        System.out.println("邮件已发送");
+        return "usermanage/retrieveSuccess";
+    }
+
+    private String generateRetrievePassword(){
+        String secretKey = UUID.randomUUID().toString();
+        return new BASE64Encoder().encode(secretKey.getBytes()).substring(0, ((int) (Math.random()*6)+8));
     }
 
     private String generateSalt(){

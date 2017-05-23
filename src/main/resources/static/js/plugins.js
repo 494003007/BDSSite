@@ -269,12 +269,12 @@ $(function() {
                                 password: {
                                     required: true,
                                     minlength: 5,
-                                    maxlength: 10
+                                    maxlength: 16
                                 },
                                 repassword: {
                                     required: true,
                                     minlength: 5,
-                                    maxlength: 10,
+                                    maxlength: 16,
                                     equalTo: "#password"
                                 },
                                 email: {
