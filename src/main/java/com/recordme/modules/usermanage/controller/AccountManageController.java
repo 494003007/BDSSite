@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import sun.misc.BASE64Encoder;
@@ -88,6 +89,16 @@ public class AccountManageController {
         return "usermanage/login";
     }
 
+    @RequestMapping(value = "retrieve",method = RequestMethod.GET)
+    public String retrievePasswordPage(){
+        return "usermanage/retrieve";
+    }
+
+    @RequestMapping(value = "retrieve",method = RequestMethod.POST)
+    public String retrievePassword( HttpServletRequest request, Map<String, Object> map){
+        System.out.println("**********");
+        return "usermanage/retrieve";
+    }
 
     private String generateSalt(){
         Random random = new SecureRandom();
