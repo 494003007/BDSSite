@@ -1,0 +1,22 @@
+
+<table class="table border bordered striped">
+    <tr>
+        <td>id</td>
+        <td>操作内容</td>
+        <td>操作时间</td>
+        <td>操作用户</td>
+
+
+    </tr>
+    <tr th:each="operateLog,stat:${operateLogs}">
+        <td th:text="${operateLog.id}"></td>
+        <td th:text="${operateLog.operateContent}"></td>
+        <td th:text="${operateLog.operateTime}"></td>
+        <td th:text="${operateLog.operateUser.name}"></td>
+        <td>
+            <!--<a class="jump" th:href="@{/AuthorizationManage/operateLogDelete(id=${operateLog.id})}" >删除</a>-->
+
+        </td>
+        <td></td>
+    </tr>
+</table>

@@ -40,7 +40,7 @@
             </span>
 
             <td th:text="${userInfo.birth_date != null} ? ${#dates.format(userInfo.birth_date, 'yyyy-MM-dd HH:mm:ss')}">出生日期</td>
-            <td th:text="${userInfo.country}">国家</td>
+            <td th:text="${userInfo.city}">国家</td>
             <td th:text="${userInfo.email}">电子邮件</td>
             <td th:text="${userInfo.qq}">qq</td>
             <td th:text="${userInfo.phone}">电话号码</td>

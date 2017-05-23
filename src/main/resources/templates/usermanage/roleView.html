@@ -17,6 +17,9 @@
 
 
     </form>
+    <div th:include="fragments/layout :: allHasJs" th:remove="tag">
+
+    </div>
     <script>
         function editPermission(roleId) {
             $("#permissionEditor").load("/AuthorizationManage/permissionTree?roleId=" + roleId);
