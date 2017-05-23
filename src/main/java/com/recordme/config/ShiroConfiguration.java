@@ -53,6 +53,8 @@ public class ShiroConfiguration {
 
         filterChainDefinitionMap.put("/register","anon");
 
+        filterChainDefinitionMap.put("/retrieve","anon");
+
         filterChainDefinitionMap.put("/Search","anon");
 
         filterChainDefinitionMap.put("/index","anon");
