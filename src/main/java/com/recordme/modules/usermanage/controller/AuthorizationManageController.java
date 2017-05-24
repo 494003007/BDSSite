@@ -10,6 +10,7 @@ import com.recordme.modules.usermanage.services.UserService;
 import com.recordme.modules.usermanage.entity.OperateLog;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -188,83 +189,54 @@ public class AuthorizationManageController {
     /**************      管理日志增删查改      **************/
 
 
-    @RequestMapping(value = "operateLogList", method = RequestMethod.GET)
-    public String operateLogList(Map<String, Object> map){
-        map.put("operateLogs",operateLogService.findAll());
+//    @RequestMapping(value = "operateLogList", method = RequestMethod.GET)
+//    public String operateLogList(Map<String, Object> map){
+//        map.put("operateLogs",operateLogService.findAll());
+//        return "/usermanage/operateLogList";
+//    }
+
+
+    /**************      管理日志用户增删查改      **************/
+
+    @RequestMapping(value = "operateLogList",method = RequestMethod.GET)
+    public String operateLogList(Map<String, Object> map,String userInfoId,Date date){
+
+        OperateLog operateLog = new OperateLog();
+        if(userInfoId != null){
+            UserInfo userInfo  = userService.findOne(Long.parseLong(userInfoId));
+            operateLog.setOperateUser(userInfo);
+        }
+        if(date!=null){
+            operateLog.setOperateTime(date);
+
+        }
+        Example<OperateLog> example = Example.of(operateLog);
+        map.put("operateLogs",operateLogService.findAll(example));
         return "/usermanage/operateLogList";
     }
 
 
-    /**************      管理日志用户增删查改      **************/
-    @ResponseBody
-    @RequestMapping(value = "operateLogData",method = RequestMethod.GET)
-    public HashMap<String,Object> operateLogData(String userInfoId){
-        HashMap<String,Object> result = new HashMap<>();
-        if(userInfoId != null){
-            UserInfo userInfo  = userService.findOne(Long.parseLong(userInfoId));
-            if(userInfo.getOperateLogs() != null){
-                result.put("hadOperateLogs",userInfo.getOperateLogs());
-            }
-        }
-        result.put("allOperateLogs",operateLogService.findAll());
-        return result;
-    }
-
-    @RequestMapping(value = "operateLogDate",method = RequestMethod.GET)
-    public HashMap<String,Object> operateLogDate(Date date){
-        HashMap<String,Object> result = new HashMap<>();
-        if(date!=null){
-            result.put("dateOperateLogs",operateLogService.findByoperateTime(date));
-        }
-        return result;
-    }
-
-    @RequestMapping(value = "operateLogDateScope",method = RequestMethod.GET)
-    public HashMap<String,Object> operateLogDateScope(Date start,Date end){
-        HashMap<String,Object> result = new HashMap<>();
-        ArrayList<OperateLog> list = new ArrayList<>();
-
-        Calendar startDate = Calendar.getInstance();
-        Calendar endDate = Calendar.getInstance();
-        startDate.setTime(start);
-        endDate.setTime(end);
-
-        if(startDate!=null&&endDate!=null){
-            if (startDate.after(endDate)) {
-                Calendar swap = startDate;
-                startDate = endDate;
-                endDate = swap;
-            }
-            int days = endDate.get(Calendar.DAY_OF_YEAR) - startDate.get(Calendar.DAY_OF_YEAR);
-            int y2 = endDate.get(Calendar.YEAR);
-            if (startDate.get(Calendar.YEAR) != y2) {
-                startDate = (Calendar) startDate.clone();
-                do {
-                    days += startDate.getActualMaximum(Calendar.DAY_OF_YEAR);//得到当年的实际天数
-                    startDate.add(Calendar.YEAR, 1);
-                } while (startDate.get(Calendar.YEAR) != y2);
-            }
-
-
-            for(int i=0;i<days;i++){
-//                list.add(operateLogService.findByoperateTime(startDate.getTime()))
-            }
-
-            result.put("dateScopeOperateLogs",list);
-        }
-        return result;
-    }
-
-//    @ResponseBody
-//    @RequestMapping(value = "operateLogDelete",method = RequestMethod.GET)
-//    public HashMap<String,Object> operateLogDelete(String operateLogId){
+    /**************      管理日志日期增删查改      **************/
+//    @RequestMapping(value = "operateLogList",method = RequestMethod.GET)
+//    public HashMap<String,Object> operateLogDate(Date date){
 //        HashMap<String,Object> result = new HashMap<>();
-//        if(operateLogId!=null){
-//            operateLogService.delete(Long.parseLong(operateLogId));
+//        if(date!=null){
+//            result.put("operateLogs",operateLogService.findByoperateTime(date));
 //        }
-//        result.put("allOperateLogs",operateLogService.findAll());
 //        return result;
 //    }
+
+//    @RequestMapping(value = "operateLogDateScope",method = RequestMethod.GET)
+//    public HashMap<String,Object> operateLogDateScope(Date start,Date end){
+//        HashMap<String,Object> result = new HashMap<>();
+//        if(start!=null&&end!=null){
+//            result.put("operateLogs",operateLogService.findByOperateTimeBetween(start,end));
+//        }
+//        return result;
+//    }
+
+
+
 
 
 

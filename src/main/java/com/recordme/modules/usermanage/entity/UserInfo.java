@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 public class UserInfo implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id@GeneratedValue
-    private long uid;//用户id;
+    private Long uid;//用户id;
 
 
     @Column(unique=true)

@@ -1,5 +1,27 @@
 
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/theme-default.css" />
+</head>
+<body style="height: 500px;">
+<form action="" method="get">
+    <div class="input-group">
+        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+        <input name="date" type="text" class="form-control datepicker" value="2014-11-01"/>
+    </div>
+
+    <input type="text" name="userInfoId" />
+    <input type="submit"/>
+
+
+</form>
+
+
 <table class="table border bordered striped">
+
+
     <tr>
         <td>id</td>
         <td>操作内容</td>
@@ -14,9 +36,34 @@
         <td th:text="${operateLog.operateTime}"></td>
         <td th:text="${operateLog.operateUser.name}"></td>
         <td>
-            <!--<a class="jump" th:href="@{/AuthorizationManage/operateLogDelete(id=${operateLog.id})}" >删除</a>-->
+            <a class="jump"
+               th:href="@{/AuthorizationManage/operateLogList(userInfoId=${operateLog.id},data=2014-11-01)}">查询</a>
 
         </td>
         <td></td>
     </tr>
 </table>
+
+<script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap.min.js"></script>
+<!-- END PLUGINS -->
+
+<!-- THIS PAGE PLUGINS -->
+<script type='text/javascript' src='/js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-file-input.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript" src="/js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+<!-- END THIS PAGE PLUGINS -->
+
+<!-- START TEMPLATE -->
+<script type="text/javascript" src="/js/settings.js"></script>
+
+<script type="text/javascript" src="/js/plugins.js"></script>
+<script type="text/javascript" src="/js/actions.js"></script>
+</body>
+</html>
+
