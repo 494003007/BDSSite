@@ -202,7 +202,9 @@ public class AuthorizationManageController {
     public String operateLogList(Map<String, Object> map,String userInfoId,Date date){
 
         OperateLog operateLog = new OperateLog();
-        if(userInfoId != null){
+        System.out.println(userInfoId);
+        System.out.println("".equals(userInfoId)+"-------------------------------------------");
+        if((!"".equals(userInfoId))&&userInfoId != null){
             UserInfo userInfo  = userService.findOne(Long.parseLong(userInfoId));
             operateLog.setOperateUser(userInfo);
         }
