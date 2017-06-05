@@ -10,13 +10,14 @@
     <link href="/css/recordme.css" rel="stylesheet" />
     <script src="/js/jquery.js"></script>
     <script src="/js/metro.min.js"></script>
+
 </head>
 <body>
     <div class="grid">
-        <div class="row">
+        <div class="row cells12">
             <div class="cell" style="height: 30%"></div>
         </div>
-        <div class="row">
+        <div class="row cells12">
             <div class="cell">
                 <div class="input-control text " data-role="input">
                     <input type="text" id="keyWord"/>
@@ -25,7 +26,9 @@
 
                 <div id="resultContent">
                     <div>
-                        <div><h1>Java高级工程师</h1></div>
+                        <a href="http://www.baidu.com">
+                            <div><h1>Java高级工程师</h1></div>
+                        </a>
                         <div>
                             <p>
                                 职位简介
@@ -37,6 +40,7 @@
                         <div>
                             进入
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -44,15 +48,26 @@
     </div>
 
     <script>
+        function generResultDiv(jobObj) {
+            var html = [];
+            html.push('<div><a href="');
+            html.push(jobObj['url']);
+            html.push('"><div><h1>');
+            html.push(jobObj['job_name'][0]);
+            html.push('</h1></div></a><div><p>');
+            html.push(jobObj['job_description'][0]);
+            html.push('</p></div>');
+            return html.join("");
+        }
         function search() {
             var keyWord = $("#keyWord").value;
             $.post("api/search", { keyWord: keyWord} ,function(data) {
                 var resultC = $("#resultContent");
                 resultC.innerHTML = "";
                 $.each(data['response']['docs'], function(index, value, array) {
-
+                    resultC.append(generResultDiv(value));
                 });
-            });
+            },"json");
         }
     </script>
 </body>

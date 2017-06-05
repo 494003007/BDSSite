@@ -12,6 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class PermissionService extends BaseService<PermissionDao, SysPermission, Long> {
     public SysPermission findById(Long id){
-        return dao.findById(id);
+        return dao.getOne(id);
     }
 }

@@ -1,10 +1,25 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
-      <!--xmlns:th="http://www.thymeleaf.org">-->
-<!--<head th:replace="fragments/layout :: header (pageTitle='用户管理')">-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: header (pageTitle='用户管理')">
 
-<!--</head>-->
-<!--<body>-->
+</head>
+<body>
+    <div class="page-container page-navigation-toggled">
+
+        <!-- START PAGE SIDEBAR -->
+        <div th:include="fragments/layout :: sideBar" th:remove="tag"></div>
+        <!-- END PAGE SIDEBAR -->
+
+        <!-- PAGE CONTENT -->
+        <div class="page-content">
+
+            <!-- START X-NAVIGATION VERTICAL -->
+            <div th:include="fragments/layout :: contentTop" th:remove="tag"></div>
+            <!-- END X-NAVIGATION VERTICAL -->
+
+        <!-- END PAGE CONTENT -->
+        </div>
     <table class="table border bordered striped">
         <thead>
             <tr>
@@ -52,5 +67,5 @@
         </tr>
 
     </table>
-<!--</body>-->
-<!--</html>-->
+</body>
+</html>

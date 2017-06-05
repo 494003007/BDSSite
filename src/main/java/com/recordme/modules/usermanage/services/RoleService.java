@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleService extends BaseService<RoleDao, SysRole, Long> {
     public SysRole findById(Long id){
-        return dao.findById(id);
+        return dao.getOne(id);
     }
     public SysRole findByRole(SysRole sysRole){
         return dao.findByRole(sysRole.getRole());}

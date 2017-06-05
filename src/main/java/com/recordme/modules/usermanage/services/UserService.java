@@ -23,6 +23,6 @@ public class UserService extends BaseService<UserDao, UserInfo, Long> {
     }
 
     public UserInfo findByUid(Long uid){
-        return dao.findByUid(uid);
+        return dao.getOne(uid);
     }
 }
