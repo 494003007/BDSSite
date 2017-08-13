@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 课程表
  * Created by D.
  */
-
+@Entity
 public class Subject implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id@GeneratedValue
