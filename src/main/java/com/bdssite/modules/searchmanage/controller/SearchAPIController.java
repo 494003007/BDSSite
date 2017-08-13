@@ -1,4 +1,4 @@
-package com.bdssite.modules.usermanage.controller;
+package com.bdssite.modules.searchmanage.controller;
 
 
 
