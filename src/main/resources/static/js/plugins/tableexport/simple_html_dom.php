@@ -67,12 +67,12 @@ define('MAX_FILE_SIZE', 600000);
 // -----------------------------------------------------------------------------
 // get html dom from file
 // $maxlen is defined in the code as PHP_STREAM_COPY_ALL which is defined as -1.
-function file_get_html($url, $use_include_path = false, $context=null, $offset = -1, $maxLen=-1, $lowercase = true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=true, $defaultBRText=DEFAULT_BR_TEXT, $defaultSpanText=DEFAULT_SPAN_TEXT)
+function file_get_html($url, $use_include_path = false, $context=null, $total = -1, $maxLen=-1, $lowercase = true, $forceTagsClosed=true, $target_charset = DEFAULT_TARGET_CHARSET, $stripRN=true, $defaultBRText=DEFAULT_BR_TEXT, $defaultSpanText=DEFAULT_SPAN_TEXT)
 {
     // We DO force the tags to be terminated.
     $dom = new simple_html_dom(null, $lowercase, $forceTagsClosed, $target_charset, $stripRN, $defaultBRText, $defaultSpanText);
     // For sourceforge users: uncomment the next line and comment the retreive_url_contents line 2 lines down if it is not already done.
-    $contents = file_get_contents($url, $use_include_path, $context, $offset);
+    $contents = file_get_contents($url, $use_include_path, $context, $total);
     // Paperg - use our own mechanism for getting the contents as we want to control the timeout.
     //$contents = retrieve_url_contents($url);
     if (empty($contents) || strlen($contents) > MAX_FILE_SIZE)
@@ -685,7 +685,7 @@ class simple_html_dom_node
         if (is_object($debugObject)) {$debugObject->debugLog(2, "Matches Array: ", $matches);}
 
         $selectors = array();
-        $result = array();
+        $rows = array();
         //print_r($matches);
 
         foreach ($matches as $m) {
@@ -706,14 +706,14 @@ class simple_html_dom_node
             //elements that do NOT have the specified attribute
             if (isset($key[0]) && $key[0]==='!') {$key=substr($key, 1); $no_key=true;}
 
-            $result[] = array($tag, $key, $val, $exp, $no_key);
+            $rows[] = array($tag, $key, $val, $exp, $no_key);
             if (trim($m[7])===',') {
-                $selectors[] = $result;
-                $result = array();
+                $selectors[] = $rows;
+                $rows = array();
             }
         }
-        if (count($result)>0)
-            $selectors[] = $result;
+        if (count($rows)>0)
+            $selectors[] = $rows;
         return $selectors;
     }
 
@@ -933,9 +933,9 @@ class simple_html_dom_node
         // ridiculously far future development
         // If the class or id is specified in a SEPARATE css file thats not on the page, go get it and do what we were just doing for the ones on the page.
 
-        $result = array('height' => $height,
+        $rows = array('height' => $height,
                         'width' => $width);
-        return $result;
+        return $rows;
     }
 
     // camel naming conventions

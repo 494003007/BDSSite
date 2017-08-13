@@ -34,7 +34,7 @@ fi
 if [ "$1" = "config" ]; then
 	echo "graph_title Page load time"
 	echo "graph_args --base 1000"
-	#echo "graph_args --base 1000 --upper-limit 5"
+	#echo "graph_args --base 1000 --upper-page 5"
 	echo "graph_vlabel time in seconds"
 	echo "graph_category http"
 	echo "graph_scale no"

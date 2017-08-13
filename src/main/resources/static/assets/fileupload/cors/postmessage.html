@@ -56,16 +56,16 @@ $(window).on('message', function (e) {
         });
         s.data = f;
     }
-    $.ajax(s).always(function (result, statusText, jqXHR) {
+    $.ajax(s).always(function (rows, statusText, jqXHR) {
         if (!jqXHR.done) {
-            jqXHR = result;
-            result = null;
+            jqXHR = rows;
+            rows = null;
         }
         e.source.postMessage({
             id: s.id,
             status: jqXHR.status,
             statusText: statusText,
-            result: result,
+            rows: rows,
             headers: jqXHR.getAllResponseHeaders()
         }, e.origin);
     });

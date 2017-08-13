@@ -201,7 +201,7 @@ class elFinder {
 	private $_fakeRoot = '';
 	
 	/**
-	 * Command result to send to client
+	 * Command rows to send to client
 	 *
 	 * @var array
 	 **/

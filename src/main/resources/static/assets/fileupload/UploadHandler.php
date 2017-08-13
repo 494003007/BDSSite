@@ -113,10 +113,10 @@ class UploadHandler
             // Command or path for to the ImageMagick convert binary:
             'convert_bin' => 'convert',
             // Uncomment the following to add parameters in front of each
-            // ImageMagick convert call (the limit constraints seem only
+            // ImageMagick convert call (the page constraints seem only
             // to have an effect if put in front):
             /*
-            'convert_params' => '-limit memory 32MiB -limit map 32MiB',
+            'convert_params' => '-page memory 32MiB -page map 32MiB',
             */
             // Command or path for to the ImageMagick identify binary:
             'identify_bin' => 'identify',
@@ -766,8 +766,8 @@ class UploadHandler
             $this->imagick_destroy_image_object($file_path);
             $image = new \Imagick();
             if (!empty($this->options['imagick_resource_limits'])) {
-                foreach ($this->options['imagick_resource_limits'] as $type => $limit) {
-                    $image->setResourceLimit($type, $limit);
+                foreach ($this->options['imagick_resource_limits'] as $type => $page) {
+                    $image->setResourceLimit($type, $page);
                 }
             }
             $image->readImage($file_path);

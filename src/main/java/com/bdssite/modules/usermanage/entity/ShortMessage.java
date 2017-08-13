@@ -1,0 +1,68 @@
+package com.bdssite.modules.usermanage.entity;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Date;
+
+/**
+ * 站内信
+ * Created by keben on 2017-03-21.
+ */
+@Entity
+public class ShortMessage implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id@GeneratedValue
+    private Long id;
+
+    //内容
+    private String content;
+    //发送时间
+    private Date sendTime;
+
+    @ManyToOne@JoinColumn(name = "fromUser")
+    private UserInfo fromUser;
+
+    @ManyToOne@JoinColumn(name = "toUser")
+    private UserInfo toUser;
+
+    public UserInfo getFromUser() {
+        return fromUser;
+    }
+
+    public void setFromUser(UserInfo fromUser) {
+        this.fromUser = fromUser;
+    }
+
+    public UserInfo getToUser() {
+        return toUser;
+    }
+
+    public void setToUser(UserInfo toUser) {
+        this.toUser = toUser;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Date getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(Date sendTime) {
+        this.sendTime = sendTime;
+    }
+}
