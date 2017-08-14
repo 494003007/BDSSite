@@ -64,20 +64,24 @@ public class UserInfo implements Serializable{
     private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
 
     //个人密保
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "user")//指向多的那方的pojo的关联外键字段
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "user")//指向多的那方的pojo的关联外键字段
     private List<UserQuestion> userQuestions;
 
     //个人简历
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "user")//指向多的那方的pojo的关联外键字段
     private List<NomalUserResume> nomalUserResumes;
 
 
     //HR简历
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "user")//指向多的那方的pojo的关联外键字段
     private List<HrReleaseRecruit> hrReleaseRecruits;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
     /*
     *
     *
@@ -93,16 +97,19 @@ public class UserInfo implements Serializable{
 
 //    用户 -- 收藏关系：多对多关系;
     @ManyToMany(mappedBy = "userInfos")
+    @JsonIgnore
 //    @JoinTable(name="SysCollectionUser",joinColumns={@JoinColumn(name="collectionId")},inverseJoinColumns={@JoinColumn(name="uid")})
     private List<CollectionProfession> collectionProfessions;
 
     //站内信发信人关系
     @OneToMany(mappedBy = "fromUser")
+    @JsonIgnore
     private List<ShortMessage> receiveMessage;
 
 
     //站内信收信人关系
     @OneToMany(mappedBy = "toUser")
+    @JsonIgnore
     private List<ShortMessage> sendMessage;
 
 
@@ -318,8 +325,7 @@ public class UserInfo implements Serializable{
 
     @Override
     public String toString() {
-        return "UserInfo [uid=" + uid + ", username=" + username + ", name=" + name + ", password=" + password
-                + ", salt=" + salt + ", state=" + state + "]";
+        return "UserInfo [uid=" + uid + ", username=" + username + ", name=" + name + ", state=" + state + "]";
     }
 
 
