@@ -30,8 +30,10 @@ public class UserInfo implements Serializable{
 
     private String name;//名称（昵称或者真实姓名，不同系统不同定义）
     @Column(nullable = false)
+    @JsonIgnore
     private String password; //密码;
     @Column(nullable = false)
+    @JsonIgnore
     private String salt;//加密密码的盐
 
     private String true_name;//真实姓名
@@ -54,7 +56,9 @@ public class UserInfo implements Serializable{
     private int info_shield;//信息屏蔽设置
     private int sex;
     private String address;
+    @JsonIgnore
     private String we_chat_account;//微信账号
+    @JsonIgnore
     private String ip_address;//ip地址
     @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date new_time;//创建时间
@@ -81,7 +85,6 @@ public class UserInfo implements Serializable{
 
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnore
     /*
     *
     *

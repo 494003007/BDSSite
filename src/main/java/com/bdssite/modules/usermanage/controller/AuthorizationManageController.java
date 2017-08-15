@@ -42,6 +42,13 @@ public class AuthorizationManageController {
     private RoleService roleService;
     @Autowired
     private OperateLogService operateLogService;
+
+    @RequestMapping(value = "/currentUser", method = RequestMethod.POST)
+    @ResponseBody
+    public UserInfo userInfo(){
+        return CommonTool.getUser();
+    }
+
     /**************      权限增删查改      **************/
 
     @RequestMapping(value = "permissionList", method = RequestMethod.GET)
@@ -78,11 +85,21 @@ public class AuthorizationManageController {
         return new EntityDto<>(RequestStatus.SUCCESS,result);
     }
 
+    //TODO:未完成功能 暂且返回所有权限
     @RequestMapping(value = "permissions/byRole/{id}", method = RequestMethod.GET)
     @ResponseBody
     public EntityDto<SysPermission> permissionsByRole(@PathVariable Long id){
         SysPermission result = permissionService.findOne(id);
         return new EntityDto<>(RequestStatus.SUCCESS,result);
+    }
+
+    //TODO:未完成功能 暂且返回所有权限
+    @RequestMapping(value = "permissions/byUid/{uid}", method = RequestMethod.POST)
+    @ResponseBody
+    public ListDto<SysPermission> permissionsByUid(@PathVariable Long uid){
+        Iterable<SysPermission> result = permissionService.findAll();
+        return new ListDto<>(RequestStatus.SUCCESS, CommonTool.iterableToList(result));
+
     }
 
     @RequestMapping(value = "permissionDelete", method = RequestMethod.POST)
@@ -155,6 +172,7 @@ public class AuthorizationManageController {
 
 
     /**************      用户增删查改      **************/
+
     @RequestMapping(value = "userInfoList", method = RequestMethod.GET)
     public String userInfoList(Map<String, Object> map){
         map.put("userInfos",userService.findAll());

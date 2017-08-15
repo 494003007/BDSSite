@@ -144,3 +144,9 @@ AlertBox.prototype.clearAlert = function () {
     this.container.innerHTML = "";
 };
 
+function isExist(jqueryDom) {
+    if(jqueryDom.length>=1){
+        return true;
+    }
+    return false;
+}
