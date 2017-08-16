@@ -265,24 +265,50 @@ public class AuthorizationManageController {
 
     /**************      管理日志用户增删查改      **************/
 
-    @RequestMapping(value = "operateLogList",method = RequestMethod.GET)
-    public String operateLogList(Map<String, Object> map,String userInfoId,Date date){
+    @RequestMapping(value = "operateLogList", method = RequestMethod.GET)
+    public String operateLogList(Map<String, Object> map){
+        return "/usermanage/operateLogList";
+    }
 
-        OperateLog operateLog = new OperateLog();
-        System.out.println(userInfoId);
+    @RequestMapping(value = "operateLogList/all",method = RequestMethod.GET)
+    @ResponseBody
+    public ListDto<OperateLog> operateLogList(String userInfoId,Date date){
+
+        OperateLog result = new OperateLog();
+        System.out.println("userId: "+userInfoId);
+        System.out.println("Date: "+date);
         System.out.println("".equals(userInfoId)+"-------------------------------------------");
         if((!"".equals(userInfoId))&&userInfoId != null){
             UserInfo userInfo  = userService.findOne(Long.parseLong(userInfoId));
-            operateLog.setOperateUser(userInfo);
+            result.setOperateUser(userInfo);
         }
         if(date!=null){
-            operateLog.setOperateTime(date);
+            result.setOperateTime(date);
 
         }
-        Example<OperateLog> example = Example.of(operateLog);
-        map.put("operateLogs",operateLogService.findAll(example));
-        return "/usermanage/operateLogList";
+        Example<OperateLog> example = Example.of(result);
+        Iterable<OperateLog> resultDto = operateLogService.findAll(example);
+//        map.put("operateLogs", operateLogService.findAll(example));
+        return new ListDto<>(RequestStatus.SUCCESS, CommonTool.iterableToList(resultDto));
+//        return "/usermanage/operateLogList";
     }
+
+    @RequestMapping(value = "operateLogs", method = RequestMethod.GET)
+    @ResponseBody
+    public PagingDto<OperateLog> operateLogs(Integer limit, Integer offset){
+        if(limit == null){
+            limit = 10;
+        }
+        if (offset == null){
+            offset = 0;
+        }else{
+            offset /= limit;
+        }
+        Page<OperateLog> result = operateLogService.queryAllOperateLogPaging(limit,offset);
+        return new PagingDto<>(RequestStatus.SUCCESS,result);
+    }
+
+
 
 
     /**************      管理日志日期增删查改      **************/
