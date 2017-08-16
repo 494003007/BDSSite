@@ -19,6 +19,16 @@ public class ShortMessage implements Serializable {
     //发送时间
     private Date sendTime;
 
+    public int getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(int isRead) {
+        this.isRead = isRead;
+    }
+
+    private int isRead;
+
     @ManyToOne@JoinColumn(name = "fromUser")
     private UserInfo fromUser;
 
