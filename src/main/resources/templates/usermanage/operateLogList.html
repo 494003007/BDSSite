@@ -49,6 +49,46 @@
             <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a>  管理日志</h2>
         </div>
 
+        <!--搜索框-->
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>搜索</h3>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                                <input id="userid" type="text" class="form-control" placeholder="请输入操作者id"/>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <span class="input-group-addon add-on"><span class="fa fa-calendar"></span></span>
+                                <input id="date" type="text" class="form-control datepicker" value="请输入日期"/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                        </div>
+
+
+                        <div class="col-md-2">
+
+                                <button style="float: right" type="button" class="btn btn-success" onclick="send()"><span class="fa fa-refresh"></span> 搜索</button>
+
+                        </div>
+                        <div class="col-md-2">
+
+                            <button style="float: left" type="button" class="btn btn-success" onclick="alloperateLog()"><span class="fa fa-refresh"></span> 查看全部</button>
+
+                        </div>
+                   </div>
+                </form>
+            </div>
+        </div>
+        <!-- END BREADCRUMB -->
         <!--状态提示框-->
         <div id="alertBoxDiv"></div>
          <!--PAGE CONTENT WRAPPER -->
@@ -189,6 +229,9 @@
             field: 'operateTime',
             title: '日期'
         }, {
+            field: 'exception',
+            title: '异常操作'
+        },{
             field: 'uid',
             title: '操作人员id'
         }],
@@ -196,6 +239,35 @@
     });
     var alertBox = new AlertBox('alertBoxDiv');
 
+    function send() {
+//        alert($('#userid').val());
+        var userid= $('#userid').val();
+        var date= $('#date').val();
+        var options = $('#operateLogDataTable').bootstrapTable('refresh', {
+            url: "/AuthorizationManage/operateLogs",
+            dataType: "json",
+            query:
+            {
+                userid:userid,
+                date:date
+            }
+        });
+
+        var alertBox = new AlertBox('alertBoxDiv');
+
+    }
+
+    function alloperateLog() {
+//        alert("dsbflksdnflsdf");
+        var options = $('#operateLogDataTable').bootstrapTable('refresh', {
+            url: "/AuthorizationManage/operateLogs",
+            dataType: "json",
+
+        });
+
+        var alertBox = new AlertBox('alertBoxDiv');
+
+    }
 
 
 </script>

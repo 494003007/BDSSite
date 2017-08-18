@@ -293,9 +293,25 @@ public class AuthorizationManageController {
 //        return "/usermanage/operateLogList";
     }
 
+//    @RequestMapping(value = "operateLogs", method = RequestMethod.GET)
+//    @ResponseBody
+//    public PagingDto<OperateLog> operateLogs(Integer limit, Integer offset){
+//        if(limit == null){
+//            limit = 10;
+//        }
+//        if (offset == null){
+//            offset = 0;
+//        }else{
+//            offset /= limit;
+//        }
+//        Page<OperateLog> result = operateLogService.queryAllOperateLogPaging(limit,offset);
+//        return new PagingDto<>(RequestStatus.SUCCESS,result);
+//    }
+
+
     @RequestMapping(value = "operateLogs", method = RequestMethod.GET)
     @ResponseBody
-    public PagingDto<OperateLog> operateLogs(Integer limit, Integer offset){
+    public PagingDto<OperateLog> operateLogs( Long userid, Date date,Integer limit, Integer offset){
         if(limit == null){
             limit = 10;
         }
@@ -304,9 +320,21 @@ public class AuthorizationManageController {
         }else{
             offset /= limit;
         }
-        Page<OperateLog> result = operateLogService.queryAllOperateLogPaging(limit,offset);
-        return new PagingDto<>(RequestStatus.SUCCESS,result);
+        OperateLog result = new OperateLog();
+        if((!"".equals(userid))&&userid != null){
+
+            result.setUid(userid);
+        }
+        if(date!=null){
+            result.setOperateTime(date);
+
+        }
+        Example<OperateLog> example = Example.of(result);
+        Page<OperateLog> out = operateLogService.queryAllOperateLogPaging(example,limit,offset);
+        return new PagingDto<>(RequestStatus.SUCCESS,out);
     }
+
+
 
 
 

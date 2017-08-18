@@ -37,9 +37,9 @@ public class OperateLogService extends BaseService<OperateLogDao,OperateLog,Long
         return dao.findAll(new PageRequest(offset,limit));
     }
 
-//    public Page<OperateLog> queryAllOperateLogPaging(Example<OperateLog> operateLogExample,int limit, int offset){
-//        return dao.findAll(operateLogExample,new PageRequest(offset,limit));
-//    }
+    public Page<OperateLog> queryAllOperateLogPaging(Example<OperateLog> operateLogExample,int limit, int offset){
+        return dao.findAll(operateLogExample,new PageRequest(offset,limit));
+    }
 
 
 }

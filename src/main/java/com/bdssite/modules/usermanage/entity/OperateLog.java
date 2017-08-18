@@ -38,6 +38,16 @@ public class OperateLog implements Serializable {
     private Long uid;
     private String operateContent;
     private Date operateTime;
+    @Column(columnDefinition="varchar(128) default 'NoExcepetion'")
+    private String exception;
+
+    public String getException() {
+        return exception;
+    }
+
+    public void setException(String exception) {
+        this.exception = exception;
+    }
 
     public Long getId() {
         return id;
