@@ -3,8 +3,7 @@
 
  Create by D
  **/
-var userData;
-var userPermissions;
+
 
 if(isExist($('#naviBarDiv'))){
     getUserData();
@@ -14,56 +13,6 @@ if(isExist($('#naviBarDiv'))){
         generateNavibar();
     }
 }
-
-
-function getUserData(){
-    userData = $.cookie('userData');
-    if(!userData){
-        $.ajax(
-            {
-                url:'/AuthorizationManage/currentUser',
-                type: 'POST',
-                async: false,
-                success:function (data) {
-                    if(data){
-                        userData = data;
-                        $.cookie('userData',JSON.stringify(data),{path:'/'});
-                    }
-                },
-                error:function (e) {
-                    alert("获取用户信息失败");
-                }
-
-            }
-        )
-    }else{
-        userData = JSON.parse(userData);
-    }
-}
-
-function getPermissions(){
-    userPermissions = $.cookie('userPermissions');
-    if(!userPermissions){
-        $.ajax(
-            {
-                url:'/AuthorizationManage/permissions/byUid/' + userData['uid'],
-                type: 'POST',
-                async: false,
-                success:function (data) {
-                    userPermissions = data['entityList'];
-                    $.cookie('userPermissions',JSON.stringify(data['entityList']),{path:'/'});
-                },
-                error:function (e) {
-                    alert("获取权限信息失败");
-                }
-
-            }
-        )
-    }else{
-        userPermissions = JSON.parse(userPermissions);
-    }
-}
-
 
 
 function fillNavibarInformation() {

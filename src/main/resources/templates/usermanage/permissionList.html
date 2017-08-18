@@ -228,10 +228,13 @@
                 if(data['statusCode'] === 1000){
                     alertBox.addNewAlert('success',"操作成功","你所做的修改已生效");
                     $('#permissionDataTable').bootstrapTable('refresh');
+
                 }else{
                     alertBox.addNewAlert('danger',"操作失败",data['message']);
                     $('#permissionDataTable').bootstrapTable('refresh');
                 }
+                reflashUserData();
+                
             },
             error:function (e) {
 
@@ -256,6 +259,7 @@
                     alertBox.addNewAlert('danger',"操作失败",data['message']);
                     $('#permissionDataTable').bootstrapTable('refresh');
                 }
+                reflashUserData();
             },
             error:function (e) {
                 console.log("fillFormUseAjax:Error:Ajax request error");
