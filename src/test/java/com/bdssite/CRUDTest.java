@@ -1,6 +1,7 @@
 package com.bdssite;
 
 import com.bdssite.modules.usermanage.entity.UserInfo;
+import com.bdssite.modules.usermanage.services.ShortMessageService;
 import com.bdssite.modules.usermanage.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,17 +19,21 @@ public class CRUDTest {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ShortMessageService shortMessageService;
     @Test
     public void userServiceTest() {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUsername("testaaaaaaaa");
-        userInfo.setPassword("sasasa");
-        userInfo.setState((byte)0);
-        userInfo.setName("cai");
-        userService.save(userInfo);
-
-        System.out.println("----------------"+userService.findByName("cai"));
-
-        userService.delete(userInfo.getUid());
+//        UserInfo userInfo = new UserInfo();
+//        userInfo.setUsername("testaaaaaaaa");
+//        userInfo.setPassword("sasasa");
+//        userInfo.setState((byte)0);
+//        userInfo.setName("cai");
+//        userService.save(userInfo);
+//
+//        System.out.println("----------------"+userService.findByName("cai"));
+//
+//        userService.delete(userInfo.getUid());
+        shortMessageService.findByToUser((userService.findByUid((long) 1)));
+        System.out.println("111111111111111111111111");
     }
 }

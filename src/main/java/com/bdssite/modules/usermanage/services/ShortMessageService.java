@@ -5,6 +5,7 @@ import com.bdssite.modules.usermanage.dao.RoleDao;
 import com.bdssite.modules.usermanage.dao.ShortMessageDao;
 import com.bdssite.modules.usermanage.entity.ShortMessage;
 import com.bdssite.modules.usermanage.entity.SysRole;
+import com.bdssite.modules.usermanage.entity.UserInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,11 @@ import java.util.List;
 @Service
 public class ShortMessageService  extends BaseService<ShortMessageDao, ShortMessage, Long> {
 
-    public List<ShortMessage> findByToUser(Long id){
-        return dao.findByToUser(id);
+    public List<ShortMessage> findByToUser(UserInfo userInfo){
+        return dao.findByToUser(userInfo);
     }
 
-    public List<ShortMessage> findByFromUser(Long id){
-        return dao.findByFromUser(id);
+    public List<ShortMessage> findByFromUser(UserInfo userInfo){
+        return dao.findByFromUser(userInfo);
     }
 }
