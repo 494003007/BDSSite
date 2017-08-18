@@ -7,12 +7,14 @@ import com.bdssite.modules.usermanage.entity.ShortMessage;
 import com.bdssite.modules.usermanage.entity.SysRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by Ed_cc on 2017/8/16.
  */
+@Service
 public class ShortMessageService  extends BaseService<ShortMessageDao, ShortMessage, Long> {
 
     public List<ShortMessage> findByToUser(Long id){
