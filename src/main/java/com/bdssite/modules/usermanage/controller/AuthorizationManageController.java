@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -312,6 +313,7 @@ public class AuthorizationManageController {
     @RequestMapping(value = "operateLogs", method = RequestMethod.GET)
     @ResponseBody
     public PagingDto<OperateLog> operateLogs( Long userid, Date date,Integer limit, Integer offset){
+
         if(limit == null){
             limit = 10;
         }
@@ -325,10 +327,20 @@ public class AuthorizationManageController {
 
             result.setUid(userid);
         }
+
+        System.out.println(date);
         if(date!=null){
+//            SimpleDateFormat sdf=new SimpleDateFormat();
+//            String str=sdf.format(date);
+//            if ("".equals(str)) {
+//                date = null;
+//                System.out.println(date);
+//                result.setOperateTime(date);
+//            }else
             result.setOperateTime(date);
 
         }
+
         Example<OperateLog> example = Example.of(result);
         Page<OperateLog> out = operateLogService.queryAllOperateLogPaging(example,limit,offset);
         return new PagingDto<>(RequestStatus.SUCCESS,out);

@@ -65,7 +65,7 @@
                         <div class="col-md-2">
                             <div class="input-group">
                                 <span class="input-group-addon add-on"><span class="fa fa-calendar"></span></span>
-                                <input id="date" type="text" class="form-control datepicker" value="请输入日期"/>
+                                <input id="date" type="text" class="form-control datepicker" placeholder="请输入日期"/>
                             </div>
                         </div>
 
@@ -240,17 +240,27 @@
     var alertBox = new AlertBox('alertBoxDiv');
 
     function send() {
-//        alert($('#userid').val());
+
         var userid= $('#userid').val();
         var date= $('#date').val();
-        var options = $('#operateLogDataTable').bootstrapTable('refresh', {
-            url: "/AuthorizationManage/operateLogs",
-            dataType: "json",
-            query:
-            {
+        var query;
+        if(""==date){
+            query = {
+                userid:userid,
+
+            }
+//            alert("''");
+        }else {
+            query ={
                 userid:userid,
                 date:date
             }
+//            alert("null");
+        }
+        var options = $('#operateLogDataTable').bootstrapTable('refresh', {
+            url: "/AuthorizationManage/operateLogs",
+            dataType: "json",
+            query:query
         });
 
         var alertBox = new AlertBox('alertBoxDiv');

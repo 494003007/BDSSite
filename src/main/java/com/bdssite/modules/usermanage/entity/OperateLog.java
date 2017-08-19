@@ -1,5 +1,7 @@
 package com.bdssite.modules.usermanage.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -37,6 +39,7 @@ public class OperateLog implements Serializable {
 
     private Long uid;
     private String operateContent;
+    @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date operateTime;
     @Column(columnDefinition="varchar(128) default 'NoExcepetion'")
     private String exception;
