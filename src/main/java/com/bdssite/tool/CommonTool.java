@@ -5,6 +5,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -31,4 +33,13 @@ public class CommonTool {
         iterable.forEach(list::add);
         return list;
     }
+    /**
+     * 将带逗号的字符串分割成字符串数组
+     */
+    public static String[] stringToStringArray(String string){
+        return string.split(",|，");
+    }
+
+
+
 }
