@@ -73,31 +73,33 @@ public class AccountManageController {
     public String login(String username, String password, Boolean rememberMe, HttpServletRequest request, Map<String, Object> map, HttpSession httpSession) throws Exception {
         Subject subject = SecurityUtils.getSubject();
 
-
-        UsernamePasswordToken upt;
-        if(rememberMe != null && rememberMe){
-            upt = new UsernamePasswordToken(username,password,rememberMe);
-        }else{
-            upt = new UsernamePasswordToken(username,password);
-        }
-
         String msg = "";
 
-        try{
-            subject.login(upt);
-            httpSession.setAttribute(username, userService.findByUsername(username));
-            return "redirect:index";
-        }catch (IncorrectCredentialsException e){
-            System.out.println("IncorrectCredentialsException -- > 密码不正确：");
-            msg = "accountOrPwdError";
-        }catch (UnknownAccountException e){
-            System.out.println("UnknownAccountException -- > 账号不存在：");
-            msg = "accountOrPwdError";
-        }catch (Exception e){
-            msg = "unknowError";
-            System.out.println("else -- >" + e);
+        UserInfo userInfo = userService.findByUsername(username);
+        if(userInfo.getState() == (byte)2){
+            msg = "accountLockedError";
+        }else{
+            UsernamePasswordToken upt;
+            if(rememberMe != null && rememberMe){
+                upt = new UsernamePasswordToken(username,password,rememberMe);
+            }else{
+                upt = new UsernamePasswordToken(username,password);
+            }
+            try{
+                subject.login(upt);
+                httpSession.setAttribute(username, userService.findByUsername(username));
+                return "redirect:index";
+            }catch (IncorrectCredentialsException e){
+                System.out.println("IncorrectCredentialsException -- > 密码不正确：");
+                msg = "accountOrPwdError";
+            }catch (UnknownAccountException e){
+                System.out.println("UnknownAccountException -- > 账号不存在：");
+                msg = "accountOrPwdError";
+            }catch (Exception e){
+                msg = "unknowError";
+                System.out.println("else -- >" + e);
+            }
         }
-
 
 
         map.put("msg", msg);

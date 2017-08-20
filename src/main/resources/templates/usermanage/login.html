@@ -94,7 +94,7 @@ xmlns:th="http://www.thymeleaf.org" class="body-full-height">
         <div class="login-logo"></div>
         <div class="login-body">
             <div class="login-title">
-                <strong>Log In</strong> to your account
+                <strong>登陆</strong> 你的账号
                 <span id="errorBox"></span>
             </div>
 
@@ -111,26 +111,24 @@ xmlns:th="http://www.thymeleaf.org" class="body-full-height">
                 </div>
                 <div class="form-group">
                     <div class="col-md-6">
-                        <a href="/retrieve" class="btn btn-link btn-block">Forgot your password?</a>
+                        <a href="/retrieve" style="font-size: 19px;" class="btn btn-link btn-block">忘记了你的密码?</a>
                     </div>
                     <div class="col-md-6">
-                        <input class="btn btn-info btn-block" type="submit" value="Log in">
+                        <input class="btn btn-info btn-block" type="submit" value="登陆">
                     </div>
                 </div>
                 <div class="login-or">OR</div>
                 <div class="form-group">
-                    <div class="col-md-4">
-                        <button class="btn btn-info btn-block btn-twitter"><span class="fa fa-twitter"></span> Twitter</button>
+                    <div class="col-md-6">
+                        <button class="btn btn-info btn-block btn-qq"><span class="fa fa-qq"></span> QQ登陆</button>
                     </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-info btn-block btn-facebook"><span class="fa fa-facebook"></span> Facebook</button>
+                    <div class="col-md-6">
+                        <button class="btn btn-info btn-block btn-wechat"><span class="fa fa-wechat"></span> 微信登陆</button>
                     </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-info btn-block btn-google"><span class="fa fa-google-plus"></span> Google</button>
-                    </div>
+
                 </div>
                 <div class="login-subtitle">
-                    Don't have an account yet? <a href="/register">Create an account</a>
+                    如果你还没有账号 你可以 <a href="/register">注册账号</a>
                 </div>
             </form>
         </div>
@@ -139,9 +137,8 @@ xmlns:th="http://www.thymeleaf.org" class="body-full-height">
                 &copy; 易职搜
             </div>
             <div class="pull-right">
-                <a href="#">About</a> |
-                <a href="#">Privacy</a> |
-                <a href="#">Contact Us</a>
+                <a href="#">关于</a> |
+                <a href="#">Privacy</a>
             </div>
         </div>
     </div>
@@ -151,6 +148,8 @@ xmlns:th="http://www.thymeleaf.org" class="body-full-height">
     msg = [[${msg} ? ${msg}:'']];
     if(msg === "accountOrPwdError"){
         document.getElementById("errorBox").innerHTML = "<label class='error'>账号或密码错误</label>";
+    }else if(msg === "accountLockedError"){
+        document.getElementById("errorBox").innerHTML = "<label class='error'>账号已被锁定</label>";
     }
 </script>
 </body>
