@@ -2,70 +2,284 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout :: header (pageTitle='用户管理')">
+    <!-- META SECTION -->
+    <title>Joli Admin - Responsive Bootstrap Admin Template</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- END META SECTION -->
+
+    <!-- CSS INCLUDE -->
+    <link rel="stylesheet" type="text/css"  href="/css/theme-default.css"/>
+    <link rel="stylesheet" type="text/css"  href="/css/bootstrap-table.min.css"/>
+    <!-- EOF CSS INCLUDE -->
 </head>
+
+
 <body>
-    <div class="page-container page-navigation-toggled">
 
-        <!-- START PAGE SIDEBAR -->
-        <div th:include="fragments/layout :: sideBar" th:remove="tag"></div>
-        <!-- END PAGE SIDEBAR -->
 
-        <!-- PAGE CONTENT -->
-        <div class="page-content">
 
-            <!-- START X-NAVIGATION VERTICAL -->
-            <div th:include="fragments/layout :: contentTop" th:remove="tag"></div>
-            <!-- END X-NAVIGATION VERTICAL -->
+<!-- START PAGE CONTAINER -->
+<div class="page-container page-navigation-toggled">
 
-        <!-- END PAGE CONTENT -->
+    <!-- START PAGE SIDEBAR -->
+    <div th:include="fragments/layout :: sideBar" th:remove="tag"></div>
+    <!-- END PAGE SIDEBAR -->
+
+
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+        <!-- START X-NAVIGATION VERTICAL -->
+        <div th:include="fragments/layout :: contentTop" th:remove="tag"></div>
+        <!-- END X-NAVIGATION VERTICAL -->
+
+        <!-- START BREADCRUMB -->
+        <ul class="breadcrumb">
+            <li ><a href="index">首页</a></li>
+            <li class="active">用户列表</li>
+        </ul>
+        <!-- END BREADCRUMB -->
+
+        <div class="page-title">
+            <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a>  用户列表</h2>
         </div>
-    <table class="table border bordered striped">
-        <thead>
-            <tr>
-                <th>用户ID</th>
-                <th>用户名</th>
-                <th>真实姓名</th>
-                <th>性别</th>
-                <th>地址</th>
-                <th>微信账号</th>
-                <th>状态</th>
-                <th>出生日期</th>
-                <th>国家</th>
-                <th>邮件</th>
-                <th>qq</th>
-                <th>电话号码</th>
-                <th>最后登录时间</th>
-                <th>创建时间</th>
-                <th>ip地址</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tr th:each="userInfo,stat:${userInfos}">
-            <td th:text="${userInfo.uid}">id</td>
-            <td th:text="${userInfo.username}">username</td>
-            <td th:text="${userInfo.true_name}">嘭嘭嘭</td>
-            <td th:text="${userInfo.sex == 1}?'男':'女'">男</td>
-            <td th:text="${userInfo.address}">地址</td>
-            <td th:text="${userInfo.we_chat_account}">微信账号</td>
-            <span th:switch="${userInfo.state}">
-                <td th:case="'0'">创建未验证</td>
-                <td th:case="'1'">正常</td>
-                <td th:case="'2'">用户被锁定</td>
-            </span>
 
-            <td th:text="${userInfo.birth_date != null} ? ${#dates.format(userInfo.birth_date, 'yyyy-MM-dd HH:mm:ss')}">出生日期</td>
-            <td th:text="${userInfo.city}">国家</td>
-            <td th:text="${userInfo.email}">电子邮件</td>
-            <td th:text="${userInfo.qq}">qq</td>
-            <td th:text="${userInfo.phone}">电话号码</td>
+        <!--状态提示框-->
+        <div id="alertBoxDiv"></div>
+        <!-- PAGE CONTENT WRAPPER -->
+        <div class="page-content-wrap">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <!--<div id="toolbar">-->
+                            <!--<button id="remove" class="btn btn-default" onclick="newPermissionModel()" >-->
+                            <!--<i class="glyphicon glyphicon-plus"></i> 新增权限-->
+                            <!--</button>-->
+                            <!--</div>-->
+                            <table id="userInfoDataTable" class="table">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END PAGE CONTENT WRAPPER -->
+    </div>
+    <!-- END PAGE CONTENT -->
+</div>
+<!-- END PAGE CONTAINER -->
 
-            <td th:text="${userInfo.last_login_time != null} ? ${#dates.format(userInfo.last_login_time, 'yyyy-MM-dd HH:mm:ss')}">1970.0.0 19:00:00</td>
-            <td th:text="${userInfo.new_time != null} ? ${#dates.format(userInfo.new_time, 'yyyy-MM-dd HH:mm:ss')}">1970.0.0 19:00:00</td>
-            <td th:text="${userInfo.ip_address}">127.0.0.1</td>
-            <td><a class="jump" th:href="@{/AuthorizationManage/userInfoView(uid=${userInfo.uid})}">查看</a></td>
-        </tr>
+<!--<div class="modal fade" id="permissionModal" tabindex="-1" role="dialog">-->
+    <!--<div class="modal-dialog" role="document" id="permissionModalDialog">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+                <!--<h4 class="modal-title" id="permissionModalLabel">权限编辑</h4>-->
+            <!--</div>-->
+            <!--<form  method="post" class="form-horizontal" role="form" id="permissionForm">-->
+                <!--<div class="modal-body">-->
 
-    </table>
+                    <!--<input id="id" name="id" value="" type="hidden" />-->
+                    <!--<input id="parentId" name="parentId" value="" type="hidden" />-->
+                    <!--<input id="parentIds" name="parentIds" value="" type="hidden" />-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="name" class="col-sm-2 control-label">权限名:</label>-->
+                        <!--<div class="col-sm-10">-->
+                            <!--<input type="text" name="name" class="form-control" id="name"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="permission" class="col-sm-2 control-label">权限字符串:</label>-->
+                        <!--<div class="col-sm-10">-->
+                            <!--<input type="text" name="permission" class="form-control" id="permission"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="url" class="col-sm-2 control-label">链接</label>-->
+                        <!--<div class="col-sm-10">-->
+                            <!--<input type="text" name="url" class="form-control" id="url"/>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="resourceType" class="col-sm-2 control-label">资源类型</label>-->
+                        <!--<div class="col-sm-10">-->
+                            <!--<select id="resourceType"  name="resourceType" class="form-control" style="-webkit-appearance:menulist">-->
+                                <!--<option value="menu">menu</option>-->
+                                <!--<option value="button">button</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="available" class="col-sm-2 control-label">是否可见</label>-->
+                        <!--<div class="col-sm-10">-->
+                            <!--<select id="available" name="available" class="form-control dropdown-toggle" style="-webkit-appearance:menulist">-->
+                                <!--<option value="true">可见</option>-->
+                                <!--<option value="false">不可见</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+                    <!--<button id="modalButton" type="button" onclick="permissionDataUpdate()" class="btn btn-primary">提交更改</button>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+    <!--</div>-->
+<!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
+
+
+
+<div th:include="fragments/layout :: messageBox" th:remove="tag">
+
+</div>
+
+
+<!-- START SCRIPTS -->
+<div th:include="fragments/layout :: allHasJs" th:remove="tag">
+
+</div>
+
+<!-- START THIS PAGE PLUGINS-->
+<script type='text/javascript' src='/js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="/js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+
+<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
+<script type="text/javascript" src="/js/plugins/rickshaw/d3.v3.js"></script>
+<script type="text/javascript" src="/js/plugins/rickshaw/rickshaw.min.js"></script>
+<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
+<script type='text/javascript' src='/js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+<script type="text/javascript" src="/js/plugins/owl/owl.carousel.min.js"></script>
+
+<script type="text/javascript" src="/js/plugins/moment.min.js"></script>
+<script type="text/javascript" src="/js/plugins/daterangepicker/daterangepicker.js"></script>
+
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-table-zh-CN.min.js"></script>
+
+<!-- END THIS PAGE PLUGINS-->
+
+<!-- START TEMPLATE -->
+<div th:include="fragments/layout :: templateJs" th:remove="tag"></div>
+<!-- END TEMPLATE -->
+<!-- END SCRIPTS -->
+<script>
+//$.ajax({
+//    url: "/AuthorizationManage/userInfos",
+//    dataType: "json",
+//    success:function (value) {
+//
+//    }
+//})
+
+
+    $('#userInfoDataTable').bootstrapTable({
+        url: "/AuthorizationManage/userInfos",
+        dataType: "json",
+        pagination:true,
+        sidePagination: "server",
+        columns: [{
+            field:'uid',
+            title:'用户id'
+        }
+        ,{
+            field: 'roles',
+            title: '角色',
+            formatter:function(value,row,index){
+                alert(value[0]['role']);
+            }
+
+        }
+        ],
+        toolbar:'#toolbar'
+    });
+    var alertBox = new AlertBox('alertBoxDiv');
+
+
+
+//
+//    function permissionModalDisplay(permissionId){
+//        $('#id').attr("disabled",false);
+//        $('#parentId').attr("disabled",false);
+//        $('#parentIds').attr("disabled",false);
+//        fillFormUseAjax({
+//            url:'/AuthorizationManage/permissions/' + permissionId
+//        },$('#permissionForm'));
+//        $("#permissionModal").modal("show");
+//        $("#permissionModalDialog").css("z-index", "1500");
+//    }
+
+//    function permissionDataUpdate() {
+//        ajaxFormSubmit({
+//            url:'/AuthorizationManage/permissionUpdate',
+//            type:'post',
+//            success:function (data) {
+//                $("#permissionModal").modal("hide");
+//                if(data['statusCode'] === 1000){
+//                    alertBox.addNewAlert('success',"操作成功","你所做的修改已生效");
+//                    $('#userInfoDataTable').bootstrapTable('refresh');
+//
+//                }else{
+//                    alertBox.addNewAlert('danger',"操作失败",data['message']);
+//                    $('#userInfoDataTable').bootstrapTable('refresh');
+//                }
+//                reflashUserData();
+//
+//            },
+//            error:function (e) {
+//
+//            }
+//        },'permissionForm')
+//    }
+//    function permissionDelete(permissionId){
+//        if(!window.confirm("确认删除该权限吗")){
+//            return false;
+//        }
+//        $.ajax({
+//            url:'/AuthorizationManage/permissionDelete',
+//            type: 'POST',
+//            data:{
+//                id:permissionId
+//            },
+//            success:function (data) {
+//                if(data['statusCode'] === 1000){
+//                    alertBox.addNewAlert('success',"操作成功","已删除所选记录");
+//                    $('#userInfoDataTable').bootstrapTable('refresh');
+//                }else{
+//                    alertBox.addNewAlert('danger',"操作失败",data['message']);
+//                    $('#userInfoDataTable').bootstrapTable('refresh');
+//                }
+//                reflashUserData();
+//            },
+//            error:function (e) {
+//                console.log("fillFormUseAjax:Error:Ajax request error");
+//            }
+//        });
+//    }
+//    function newPermissionModel(){
+//        $('#permissionForm')[0].reset();
+//        $('#id').attr("disabled",true);
+//        $('#parentId').attr("disabled",true);
+//        $('#parentIds').attr("disabled",true);
+//        $("#permissionModal").modal("show");
+//        $("#permissionModalDialog").css("z-index", "1500");
+//    }
+</script>
 </body>
 </html>
+
+
+
+
+
+

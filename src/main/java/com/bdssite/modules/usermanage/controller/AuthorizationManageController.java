@@ -174,11 +174,27 @@ public class AuthorizationManageController {
 
     /**************      用户增删查改      **************/
 
+
     @RequestMapping(value = "userInfoList", method = RequestMethod.GET)
     public String userInfoList(Map<String, Object> map){
-        map.put("userInfos",userService.findAll());
         return "/usermanage/userInfoList";
     }
+
+    @RequestMapping(value = "userInfos", method = RequestMethod.GET)
+    @ResponseBody
+    public PagingDto<UserInfo> userInfos(Integer limit, Integer offset){
+        if(limit == null){
+            limit = 10;
+        }
+        if (offset == null){
+            offset = 0;
+        }else{
+            offset /= limit;
+        }
+        Page<UserInfo> result = userService.queryAllUserInfoPaging(limit,offset);
+        return new PagingDto<>(RequestStatus.SUCCESS,result);
+    }
+
 
     @RequestMapping(value = "userInfoView", method = RequestMethod.GET)
     public String userInfoView(Model model,Long uid){

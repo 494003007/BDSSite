@@ -9,7 +9,7 @@ import java.util.List;
  * Created by keben on 2017-03-21.
  */
 @Entity
-public class CollectionProfession implements Serializable {
+public class  CollectionProfession implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id @GeneratedValue
     private Long id;

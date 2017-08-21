@@ -8,6 +8,7 @@ import com.bdssite.modules.usermanage.entity.ShortMessage;
 import com.bdssite.modules.usermanage.entity.UserInfo;
 import com.bdssite.modules.usermanage.services.PermissionService;
 import com.bdssite.modules.usermanage.services.ShortMessageService;
+import com.bdssite.modules.usermanage.services.UserService;
 import com.bdssite.tool.CommonTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,9 @@ public class ShortMessageController {
 
     @Autowired
     private ShortMessageService shortMessageService;
+
+    @Autowired
+    private UserService userService;
 
     //TODO:收信箱控制器
     @RequestMapping(value = {"/inbox/{id}"},method = RequestMethod.GET)
@@ -93,5 +97,4 @@ public class ShortMessageController {
         shortMessageService.deleteByIdIn(idsCollection);
         return new OperationDto(RequestStatus.SUCCESS);
     }
-
 }
