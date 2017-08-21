@@ -4,6 +4,7 @@ import com.bdssite.modules.usermanage.entity.ShortMessage;
 import com.bdssite.modules.usermanage.entity.UserInfo;
 import com.bdssite.modules.usermanage.services.ShortMessageService;
 import com.bdssite.modules.usermanage.services.UserService;
+import org.hibernate.Hibernate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +39,21 @@ public class CRUDTest {
 //        System.out.println("----------------"+userService.findByName("cai"));
 //
 //        userService.delete(userInfo.getUid());
-        Collection<Long> list = new ArrayList();
-        list.add(Long.valueOf(1));
-        list.add(Long.valueOf(2));
+//        Collection<Long> list = new ArrayList();
+//        list.add(Long.valueOf(1));
+//        list.add(Long.valueOf(2));
 //        list.add(Long.valueOf(3));
 
 //        aaaa = list.toArray(aaaa);
-        shortMessageService.deleteByIdIn(list);
+//        shortMessageService.deleteByIdIn(list);
 //        shortMessageService.delete((long) 1);
-        System.out.println("111111111111111111111111");
+//        System.out.println("111111111111111111111111");
+        UserInfo userInfo = userService.findByUsername("hzd");
+        Hibernate.initialize(userInfo);
+        List a = userInfo.getUserQuestions();
+
+        System.out.println(a.isEmpty());
+//        List b = userService.findAll().iterator().next().getUserQuestions();
+//        System.out.println(b.isEmpty());
     }
 }
