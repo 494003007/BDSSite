@@ -31,7 +31,7 @@ public class SysRole implements Serializable{
     private String parent_role;//父角色
     private Date create_time;//创建时间
     private Long create_user;//创建者
-    private String role_describe;//角色描述
+    private String role_describe;//角色描述 用于界面上显示
 
 
 

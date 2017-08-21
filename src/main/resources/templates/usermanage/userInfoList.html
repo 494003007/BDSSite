@@ -196,7 +196,11 @@
             field: 'roles',
             title: '角色',
             formatter:function(value,row,index){
-                alert(value[0]['role']);
+                var roleNames = '';
+                $.each(value,function (index, role) {
+                    roleNames += role['role_describe'];
+                })
+                return roleNames;
             }
 
         }
