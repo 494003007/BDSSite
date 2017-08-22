@@ -54,7 +54,7 @@ $(document).ready(function(){
         st_sb_scroll: 1,
         st_sb_right: 0,
         st_sb_custom: 0,
-        st_sb_toggled: 0,
+        st_sb_toggled: 1,
         st_layout_boxed: 0
     };
     /* End Default settings */
