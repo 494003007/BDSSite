@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: header (pageTitle='性能总览')">
+    <!-- META SECTION -->
+    <title>Joli Admin - Responsive Bootstrap Admin Template</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- END META SECTION -->
+
+    <!-- CSS INCLUDE -->
+    <link rel="stylesheet" type="text/css"  href="/css/theme-default.css"/>
+    <link rel="stylesheet" type="text/css"  href="/css/bootstrap-table.min.css"/>
+    <!-- EOF CSS INCLUDE -->
+</head>
+
+
+<body>
+
+
+
+<!-- START PAGE CONTAINER -->
+<div class="page-container page-navigation-toggled">
+
+    <!-- START PAGE SIDEBAR -->
+    <div th:include="fragments/layout :: sideBar" th:remove="tag"></div>
+    <!-- END PAGE SIDEBAR -->
+
+
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+        <!-- START X-NAVIGATION VERTICAL -->
+        <div th:include="fragments/layout :: contentTop" th:remove="tag"></div>
+        <!-- END X-NAVIGATION VERTICAL -->
+
+        <!-- START BREADCRUMB -->
+        <ul class="breadcrumb">
+            <li ><a href="index">首页</a></li>
+            <li class="active">性能总览</li>
+        </ul>
+        <!-- END BREADCRUMB -->
+
+        <div class="page-title">
+            <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a>  性能总览</h2><button class="btn btn-success" type="button" onclick="flashDash()"><span class="fa fa-refresh"></span>刷新</button>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-2">
+
+                <!-- 总内存显示块 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading ui-draggable-handle">
+                        <div class="panel-title-box">
+                            <h3>内存使用</h3>
+                            <span>内存的使用情况</span>
+                        </div>
+                        <ul class="panel-controls" style="margin-top: 2px;">
+                            <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
+                                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-body padding-0">
+                        <div class="chart-holder" id="memory" style="height: 200px;"></div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-4">
+
+                <!-- 总内存显示块 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading ui-draggable-handle">
+                        <div class="panel-title-box">
+                            <h3>线程状态</h3>
+                            <span>当前线程数量显示</span>
+                        </div>
+                        <ul class="panel-controls" style="margin-top: 2px;">
+                            <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
+                                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-body padding-0">
+                        <div class="chart-holder" id="heap" style="height: 200px;"></div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-4">
+
+                <!-- 总线程显示块 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading ui-draggable-handle">
+                        <div class="panel-title-box">
+                            <h3>线程状态</h3>
+                            <span>当前线程数量显示</span>
+                        </div>
+                        <ul class="panel-controls" style="margin-top: 2px;">
+                            <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
+                                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="panel-body padding-0">
+                        <div class="chart-holder" id="thread" style="height: 200px;"></div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- END PAGE CONTENT -->
+</div>
+<!-- END PAGE CONTAINER -->
+
+
+
+
+
+<div th:include="fragments/layout :: messageBox" th:remove="tag">
+
+</div>
+
+
+<!-- START SCRIPTS -->
+<div th:include="fragments/layout :: allHasJs" th:remove="tag">
+
+</div>
+
+<!-- START THIS PAGE PLUGINS-->
+<script type='text/javascript' src='/js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="/js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+
+<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
+<script type="text/javascript" src="/js/plugins/rickshaw/d3.v3.js"></script>
+<script type="text/javascript" src="/js/plugins/rickshaw/rickshaw.min.js"></script>
+<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
+<script type='text/javascript' src='/js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+<script type="text/javascript" src="/js/plugins/owl/owl.carousel.min.js"></script>
+
+<script type="text/javascript" src="/js/plugins/moment.min.js"></script>
+<script type="text/javascript" src="/js/plugins/daterangepicker/daterangepicker.js"></script>
+
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-table-zh-CN.min.js"></script>
+
+<!-- END THIS PAGE PLUGINS-->
+
+<!-- START TEMPLATE -->
+<div th:include="fragments/layout :: templateJs" th:remove="tag"></div>
+<!-- END TEMPLATE -->
+<script>
+    var dataJ = undefined;
+    flashDash();
+
+    function flashDash(){
+
+        $.getJSON("/metrics",function (data) {
+            dataJ = data;
+
+            memoryChart();
+            threadChart();
+        });
+    }
+    function memoryChart() {
+        $('#memory').empty();
+        Morris.Donut({
+            element: 'memory',
+            data:  [
+                    {label: "已使用", value: ((dataJ['mem'] - dataJ['mem.free'])/1024).toFixed(2)},
+                    {label: "未使用", value: (dataJ['mem.free']/1024).toFixed(2)}
+                ],
+            colors: ['#33414E', '#1caf9a', '#FEA223'],
+            resize: true,
+            formatter:function (value) {
+                return value + 'Mbi';
+            }
+        });
+    }
+    function threadChart() {
+        $('#thread').empty();
+        Morris.Donut({
+            element: 'thread',
+            data:  [
+                {label: "守护线程", value: dataJ['threads.daemon']},
+                {label: "用户线程", value: dataJ['threads'] - dataJ['threads.daemon']}
+            ],
+            colors: ['#33414E', '#1caf9a', '#FEA223'],
+            resize: true,
+            formatter:function (value) {
+                return value + '个';
+            }
+        });
+    }
+
+</script>
+<!-- END SCRIPTS -->
+
+</body>
+</html>
+
+
+
+
+
+
