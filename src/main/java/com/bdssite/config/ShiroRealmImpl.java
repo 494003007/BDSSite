@@ -33,7 +33,7 @@ public class ShiroRealmImpl extends AuthorizingRealm {
 
         //获取用户名
         UserInfo user = (UserInfo) principalCollection.getPrimaryPrincipal();
-        log.info("<====================doGetAuthorizationInfo()=====================>");
+
 
         for(SysRole role:user.getRoles()){
             authorizationInfo.addRole(role.getRole());

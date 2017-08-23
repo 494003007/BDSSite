@@ -1,325 +1,327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: header (pageTitle='角色管理')">
+    <!-- META SECTION -->
+    <title>Joli Admin - Responsive Bootstrap Admin Template</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <!DOCTYPE html>
-    <html xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/layout :: header (pageTitle='角色管理')">
-        <!-- META SECTION -->
-        <title>Joli Admin - Responsive Bootstrap Admin Template</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <!-- END META SECTION -->
 
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <!-- END META SECTION -->
+    <!-- CSS INCLUDE -->
+    <link rel="stylesheet" type="text/css" href="/css/theme-default.css"/>
 
-        <!-- CSS INCLUDE -->
-        <link rel="stylesheet" type="text/css"  href="/css/theme-default.css"/>
-
-        <!-- EOF CSS INCLUDE -->
-    </head>
-
-
-    <body>
+    <!-- EOF CSS INCLUDE -->
+</head>
 
 
-
-    <!-- START PAGE CONTAINER -->
-    <div class="page-container page-navigation-toggled">
-
-        <!-- START PAGE SIDEBAR -->
-        <div th:include="fragments/layout :: sideBar" th:remove="tag"></div>
-        <!-- END PAGE SIDEBAR -->
+<body>
 
 
+<!-- START PAGE CONTAINER -->
+<div class="page-container page-navigation-toggled page-container-wide page-navigation-top-fixed">
 
-        <!-- PAGE CONTENT -->
-        <div class="page-content">
+    <!-- START PAGE SIDEBAR -->
+    <div th:include="fragments/layout :: sideBar" th:remove="tag"></div>
+    <!-- END PAGE SIDEBAR -->
 
-            <!-- START X-NAVIGATION VERTICAL -->
-            <div th:include="fragments/layout :: contentTop" th:remove="tag"></div>
-            <!-- END X-NAVIGATION VERTICAL -->
 
-            <!-- START BREADCRUMB -->
-            <ul class="breadcrumb">
-                <li ><a href="index">首页</a></li>
-                <li class="active">角色列表</li>
-            </ul>
-            <!-- END BREADCRUMB -->
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
 
-            <div class="page-title">
-                <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a>  角色列表</h2>
-            </div>
+        <!-- START X-NAVIGATION VERTICAL -->
+        <div th:include="fragments/layout :: contentTop" th:remove="tag"></div>
+        <!-- END X-NAVIGATION VERTICAL -->
 
-            <!--状态提示框-->
-            <div id="alertBoxDiv"></div>
-            <!-- PAGE CONTENT WRAPPER -->
-            <div class="page-content-wrap">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div id="toolbar">
-                                    <button id="remove" class="btn btn-default" onclick="newRoleModel()" >
-                                        <i class="glyphicon glyphicon-plus"></i> 新增角色
-                                    </button>
-                                </div>
-                                <table id="roleDataTable" class="table">
-                                </table>
+        <!-- START BREADCRUMB -->
+        <ul class="breadcrumb">
+            <li><a href="index">首页</a></li>
+            <li class="active">角色列表</li>
+        </ul>
+        <!-- END BREADCRUMB -->
+
+        <div class="page-title">
+            <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a> 角色列表</h2>
+        </div>
+
+        <!--状态提示框-->
+        <div id="alertBoxDiv"></div>
+        <!-- PAGE CONTENT WRAPPER -->
+        <div class="page-content-wrap">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div id="toolbar">
+                                <button id="remove" class="btn btn-default" onclick="newRoleModel()">
+                                    <i class="glyphicon glyphicon-plus"></i> 新增角色
+                                </button>
                             </div>
+                            <table id="roleDataTable" class="table">
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- END PAGE CONTENT WRAPPER -->
         </div>
-        <!-- END PAGE CONTENT -->
+        <!-- END PAGE CONTENT WRAPPER -->
     </div>
-    <!-- END PAGE CONTAINER -->
+    <!-- END PAGE CONTENT -->
+</div>
+<!-- END PAGE CONTAINER -->
 
-    <div class="modal fade" id="roleModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document" id="roleModalDialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="roleModalLabel">角色编辑</h4>
+<div class="modal fade" id="roleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" id="roleModalDialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="roleModalLabel">角色编辑</h4>
+            </div>
+            <form method="post" class="form-horizontal" role="form" id="roleForm">
+                <div class="modal-body">
+
+                    <input id="id" name="id" value="" type="hidden"/>
+
+                    <div class="form-group">
+                        <label for="role" class="col-sm-2 control-label">角色名:</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="role" class="form-control" id="role"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">角色标识:</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="description" class="form-control" id="description"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="role_describe" class="col-sm-2 control-label">角色描述</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="role_describe" class="form-control" id="role_describe"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="available" class="col-sm-2 control-label">是否可用</label>
+                        <div class="col-sm-10">
+                            <select id="available" name="available" class="form-control dropdown-toggle"
+                                    style="-webkit-appearance:menulist">
+                                <option value="true">可用</option>
+                                <option value="false">不可用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="available" class="col-sm-2 control-label">拥有权限</label>
+                        <div class="col-sm-10">
+                            <div class="treeview"
+                                 data-role="treeview"
+                                 id="permission_tree">
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <form  method="post" class="form-horizontal" role="form" id="roleForm">
-                    <div class="modal-body">
-
-                        <input id="id" name="id" value="" type="hidden" />
-
-                        <div class="form-group">
-                            <label for="role" class="col-sm-2 control-label">角色名:</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="role" class="form-control" id="role"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="description" class="col-sm-2 control-label">角色标识:</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="description" class="form-control" id="description"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="role_describe" class="col-sm-2 control-label">角色描述</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="role_describe" class="form-control" id="role_describe"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="available" class="col-sm-2 control-label">是否可用</label>
-                            <div class="col-sm-10">
-                                <select id="available" name="available" class="form-control dropdown-toggle" style="-webkit-appearance:menulist">
-                                    <option value="true">可用</option>
-                                    <option value="false">不可用</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="available" class="col-sm-2 control-label">拥有权限</label>
-                            <div class="col-sm-10">
-                                <div class="treeview"
-                                     data-role="treeview"
-                                     id="permission_tree">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button id="modalButton" type="button" onclick="roleDataUpdate()" class="btn btn-primary">提交更改</button>
-                    </div>
-                </form>
-            </div><!-- /.modal-content -->
-        </div>
-    </div><!-- /.modal -->
-
-
-
-    <div th:include="fragments/layout :: messageBox" th:remove="tag">
-
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button id="modalButton" type="button" onclick="roleDataUpdate()" class="btn btn-primary">提交更改
+                    </button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
     </div>
+</div><!-- /.modal -->
 
 
-    <!-- START SCRIPTS -->
-    <div th:include="fragments/layout :: allHasJs" th:remove="tag">
+<div th:include="fragments/layout :: messageBox" th:remove="tag">
 
-    </div>
+</div>
 
-    <!-- START THIS PAGE PLUGINS-->
-    <script type='text/javascript' src='/js/plugins/icheck/icheck.min.js'></script>
-    <script type="text/javascript" src="/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/scrolltotop/scrolltopcontrol.js"></script>
 
-    <script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
-    <script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/rickshaw/d3.v3.js"></script>
-    <script type="text/javascript" src="/js/plugins/rickshaw/rickshaw.min.js"></script>
-    <script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
-    <script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
-    <script type='text/javascript' src='/js/plugins/bootstrap/bootstrap-datepicker.js'></script>
-    <script type="text/javascript" src="/js/plugins/owl/owl.carousel.min.js"></script>
+<!-- START SCRIPTS -->
+<div th:include="fragments/layout :: allHasJs" th:remove="tag">
 
-    <script type="text/javascript" src="/js/plugins/moment.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/daterangepicker/daterangepicker.js"></script>
+</div>
 
-    <script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-table.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-table-zh-CN.min.js"></script>
+<!-- START THIS PAGE PLUGINS-->
+<script type='text/javascript' src='/js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="/js/plugins/scrolltotop/scrolltopcontrol.js"></script>
 
-    <!-- END THIS PAGE PLUGINS-->
+<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
+<script type="text/javascript" src="/js/plugins/rickshaw/d3.v3.js"></script>
+<script type="text/javascript" src="/js/plugins/rickshaw/rickshaw.min.js"></script>
+<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
+<script type='text/javascript' src='/js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+<script type="text/javascript" src="/js/plugins/owl/owl.carousel.min.js"></script>
 
-    <!-- START TEMPLATE -->
-    <div th:include="fragments/layout :: templateJs" th:remove="tag"></div>
-    <!-- END TEMPLATE -->
-    <!-- END SCRIPTS -->
-    <script>
-        $('#roleDataTable').bootstrapTable({
-            url: "/AuthorizationManage/roles",
-            dataType: "json",
-            pagination:true,
-            sidePagination: "server",
-            columns: [{
-                field: 'id',
-                title: '角色id'
-            }, {
-                field: 'role',
-                title: '角色名'
-            }, {
-                field: 'description',
-                title: '角色标识'
-            }, {
-                field: 'role_description',
-                title: '角色描述'
-            }, {
-                field: 'available',
-                title: '角色状态',
-                formatter:function(value,row,index){
+<script type="text/javascript" src="/js/plugins/moment.min.js"></script>
+<script type="text/javascript" src="/js/plugins/daterangepicker/daterangepicker.js"></script>
 
-                    return value == true ? '可用' : '不可用' ;
-                }
-            }, {
-                field: 'id',
-                title: '操作',
-                formatter:function(value,row,index){
-                    var e = '<button class="btn" onclick="roleModalDisplay(' + value + ')" >编辑</button> ';
-                    var d = '<button class="btn" onclick="roleDelete(' + value + ')" >删除</button>';
-                    return e+d;
-                }
-            }],
-            toolbar:'#toolbar'
-        });
-        var alertBox = new AlertBox('alertBoxDiv');
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-table-zh-CN.min.js"></script>
 
-        function roleModalDisplay(roleId){
-            $('#id').attr("disabled",false);
-            $('#parentId').attr("disabled",false);
-            $('#parentIds').attr("disabled",false);
-            fillFormUseAjax({
-                url:'/AuthorizationManage/roles/' + roleId
-            },$('#roleForm'),
+<!-- END THIS PAGE PLUGINS-->
+
+<!-- START TEMPLATE -->
+<div th:include="fragments/layout :: templateJs" th:remove="tag"></div>
+<!-- END TEMPLATE -->
+<!-- END SCRIPTS -->
+<script>
+    $('#roleDataTable').bootstrapTable({
+        url: "/AuthorizationManage/roles",
+        dataType: "json",
+        pagination: true,
+        sidePagination: "server",
+        columns: [{
+            field: 'id',
+            title: '角色id'
+        }, {
+            field: 'role',
+            title: '角色名'
+        }, {
+            field: 'description',
+            title: '角色标识'
+        }, {
+            field: 'role_description',
+            title: '角色描述'
+        }, {
+            field: 'available',
+            title: '角色状态',
+            formatter: function (value, row, index) {
+
+                return value == true ? '可用' : '不可用';
+            }
+        }, {
+            field: 'id',
+            title: '操作',
+            formatter: function (value, row, index) {
+                var e = '<button class="btn" onclick="roleModalDisplay(' + value + ')" >编辑</button> ';
+                var d = '<button class="btn" onclick="roleDelete(' + value + ')" >删除</button>';
+                return e + d;
+            }
+        }],
+        toolbar: '#toolbar'
+    });
+    var alertBox = new AlertBox('alertBoxDiv');
+
+    function roleModalDisplay(roleId) {
+        $('#id').attr("disabled", false);
+        $('#parentId').attr("disabled", false);
+        $('#parentIds').attr("disabled", false);
+        fillFormUseAjax({
+                url: '/AuthorizationManage/roles/' + roleId
+            }, $('#roleForm'),
             function (data) {
                 $.ajax({
-                    url:'/AuthorizationManage/permissions/all',
+                    url: '/AuthorizationManage/permissions/all',
                     type: 'GET',
-                    success:function (allPermissionData) {
+                    success: function (allPermissionData) {
                         var hadSelected = [];
-                        $.each(data['entity']['permissions'], function(commentIndex, comment){
+                        $.each(data['entity']['permissions'], function (commentIndex, comment) {
                             hadSelected.push(comment['id']);
                         });
-                        $.each(allPermissionData['entityList'], function(commentIndex, comment){
-                            if(comment['parentId'] === null){
-                                tree_add_root(comment['name'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
-                            }else{
-                                tree_add_leaf(comment['parentId'],comment['name'],comment['id'],$.inArray(comment['id'],hadSelected)!== -1);
+                        $.each(allPermissionData['entityList'], function (commentIndex, comment) {
+                            if (comment['parentId'] === null) {
+                                tree_add_root(comment['name'], comment['id'], $.inArray(comment['id'], hadSelected) !== -1);
+                            } else {
+                                tree_add_leaf(comment['parentId'], comment['name'], comment['id'], $.inArray(comment['id'], hadSelected) !== -1);
                             }
                         });
                     },
-                    error:function (e) {
+                    error: function (e) {
                         alert('权限列表载入失败');
                     }
 
                 })
             });
-            $("#roleModal").modal("show");
-            $("#roleModalDialog").css("z-index", "1500");
-        }
+        $("#roleModal").modal("show");
+        $("#roleModalDialog").css("z-index", "1500");
+    }
 
-        function roleDataUpdate() {
-            ajaxFormSubmit({
-                url:'/AuthorizationManage/roleUpdate',
-                type:'post',
-                success:function (data) {
-                    $("#roleModal").modal("hide");
-                    if(data['statusCode'] === 1000){
-                        alertBox.addNewAlert('success',"操作成功","你所做的修改已生效");
-                        $('#roleDataTable').bootstrapTable('refresh');
-                    }else{
-                        alertBox.addNewAlert('danger',"操作失败",data['message']);
-                        $('#roleDataTable').bootstrapTable('refresh');
-                    }
-                },
-                error:function (e) {
-
+    function roleDataUpdate() {
+        ajaxFormSubmit({
+            url: '/AuthorizationManage/roleUpdate',
+            type: 'post',
+            success: function (data) {
+                $("#roleModal").modal("hide");
+                if (data['statusCode'] === 1000) {
+                    alertBox.addNewAlert('success', "操作成功", "你所做的修改已生效");
+                    $('#roleDataTable').bootstrapTable('refresh');
+                } else {
+                    alertBox.addNewAlert('danger', "操作失败", data['message']);
+                    $('#roleDataTable').bootstrapTable('refresh');
                 }
-            },'roleForm')
-        }
-        function roleDelete(roleId){
-            if(!window.confirm("确认删除该角色吗")){
-                return false;
+            },
+            error: function (e) {
+
             }
-            $.ajax({
-                url:'/AuthorizationManage/roleDelete',
-                type: 'POST',
-                data:{
-                    id:roleId
-                },
-                success:function (data) {
-                    if(data['statusCode'] === 1000){
-                        alertBox.addNewAlert('success',"操作成功","已删除所选记录");
-                        $('#roleDataTable').bootstrapTable('refresh');
-                    }else{
-                        alertBox.addNewAlert('danger',"操作失败",data['message']);
-                        $('#roleDataTable').bootstrapTable('refresh');
-                    }
-                },
-                error:function (e) {
-                    console.log("fillFormUseAjax:Error:Ajax request error");
+        }, 'roleForm')
+    }
+
+    function roleDelete(roleId) {
+        if (!window.confirm("确认删除该角色吗")) {
+            return false;
+        }
+        $.ajax({
+            url: '/AuthorizationManage/roleDelete',
+            type: 'POST',
+            data: {
+                id: roleId
+            },
+            success: function (data) {
+                if (data['statusCode'] === 1000) {
+                    alertBox.addNewAlert('success', "操作成功", "已删除所选记录");
+                    $('#roleDataTable').bootstrapTable('refresh');
+                } else {
+                    alertBox.addNewAlert('danger', "操作失败", data['message']);
+                    $('#roleDataTable').bootstrapTable('refresh');
                 }
-            });
-        }
-        function newRoleModel(){
-            $('#roleForm')[0].reset();
-            $('#id').attr("disabled",true);
-            $('#parentId').attr("disabled",true);
-            $('#parentIds').attr("disabled",true);
-            $("#roleModal").modal("show");
-            $("#roleModalDialog").css("z-index", "1500");
-        }
-        function tree_add_root(name,id,isChecked){
-            var tree = $("#permission_tree").data("treeview");
-            tree.addLeaf(false, name,{
-                mode: 'checkbox',
-                checked: isChecked,
-                name: 'permission',
-                value: id,
-                id:'permission'+id
-            });
-        }
-        function tree_add_leaf(parentId,name,id,isChecked){
-            var tree = $("#permission_tree").data("treeview");
-            var node = tree.element.find("[data-value='"+ parentId + "']" );
-            tree.addLeaf(node, name,{
-                mode: 'checkbox',
-                checked: isChecked,
-                name: 'permission',
-                value: id,
-                id:'permission'+id
-            });
-        }
-    </script>
-    </body>
-    </html>
+            },
+            error: function (e) {
+                console.log("fillFormUseAjax:Error:Ajax request error");
+            }
+        });
+    }
+
+    function newRoleModel() {
+        $('#roleForm')[0].reset();
+        $('#id').attr("disabled", true);
+        $('#parentId').attr("disabled", true);
+        $('#parentIds').attr("disabled", true);
+        $("#roleModal").modal("show");
+        $("#roleModalDialog").css("z-index", "1500");
+    }
+
+    function tree_add_root(name, id, isChecked) {
+        var tree = $("#permission_tree").data("treeview");
+        tree.addLeaf(false, name, {
+            mode: 'checkbox',
+            checked: isChecked,
+            name: 'permission',
+            value: id,
+            id: 'permission' + id
+        });
+    }
+
+    function tree_add_leaf(parentId, name, id, isChecked) {
+        var tree = $("#permission_tree").data("treeview");
+        var node = tree.element.find("[data-value='" + parentId + "']");
+        tree.addLeaf(node, name, {
+            mode: 'checkbox',
+            checked: isChecked,
+            name: 'permission',
+            value: id,
+            id: 'permission' + id
+        });
+    }
+</script>
+</body>
+</html>
 
 
 

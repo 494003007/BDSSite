@@ -150,3 +150,7 @@ function isExist(jqueryDom) {
     }
     return false;
 }
+
+function kbiToMbi(kbi) {
+    return (kbi/1024.0).toFixed(2);
+}

@@ -4,16 +4,16 @@
 <head th:replace="fragments/layout :: header (pageTitle='管理日志')">
     <!-- META SECTION -->
     <title>Joli Admin - Responsive Bootstrap Admin Template</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     <!-- END META SECTION -->
 
     <!-- CSS INCLUDE -->
-    <link rel="stylesheet" type="text/css"  href="/css/theme-default.css"/>
-    <link rel="stylesheet" type="text/css"  href="/css/bootstrap-table.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/theme-default.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-table.min.css"/>
     <!-- EOF CSS INCLUDE -->
 </head>
 
@@ -21,14 +21,12 @@
 <body>
 
 
-
 <!-- START PAGE CONTAINER -->
-<div class="page-container page-navigation-toggled">
+<div class="page-container page-navigation-toggled page-container-wide page-navigation-top-fixed">
 
     <!-- START PAGE SIDEBAR -->
     <div th:include="fragments/layout :: sideBar" th:remove="tag"></div>
     <!-- END PAGE SIDEBAR -->
-
 
 
     <!-- PAGE CONTENT -->
@@ -40,13 +38,13 @@
 
         <!-- START BREADCRUMB -->
         <ul class="breadcrumb">
-            <li ><a href="index">首页</a></li>
+            <li><a href="index">首页</a></li>
             <li class="active">日志列表</li>
         </ul>
         <!-- END BREADCRUMB -->
 
         <div class="page-title">
-            <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a>  管理日志</h2>
+            <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a> 管理日志</h2>
         </div>
 
         <!--搜索框-->
@@ -76,31 +74,35 @@
 
                         <div class="col-md-2">
 
-                                <button style="float: right" type="button" class="btn btn-success" onclick="send()"><span class="fa fa-refresh"></span> 搜索</button>
+                            <button style="float: right" type="button" class="btn btn-success" onclick="send()"><span
+                                    class="fa fa-refresh"></span> 搜索
+                            </button>
 
                         </div>
                         <div class="col-md-2">
 
-                            <button style="float: left" type="button" class="btn btn-success" onclick="alloperateLog()"><span class="fa fa-refresh"></span> 查看全部</button>
+                            <button style="float: left" type="button" class="btn btn-success" onclick="alloperateLog()">
+                                <span class="fa fa-refresh"></span> 查看全部
+                            </button>
 
                         </div>
-                   </div>
+                    </div>
                 </form>
             </div>
         </div>
         <!-- END BREADCRUMB -->
         <!--状态提示框-->
         <div id="alertBoxDiv"></div>
-         <!--PAGE CONTENT WRAPPER -->
+        <!--PAGE CONTENT WRAPPER -->
         <div class="page-content-wrap">
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <!--<div id="toolbar">-->
-                                <!--<button id="remove" class="btn btn-default" onclick="newPermissionModel()" >-->
-                                    <!--<i class="glyphicon glyphicon-plus"></i> 新增权限-->
-                                <!--</button>-->
+                            <!--<button id="remove" class="btn btn-default" onclick="newPermissionModel()" >-->
+                            <!--<i class="glyphicon glyphicon-plus"></i> 新增权限-->
+                            <!--</button>-->
                             <!--</div>-->
                             <table id="operateLogDataTable" class="table">
                             </table>
@@ -109,72 +111,71 @@
                 </div>
             </div>
         </div>
-         <!--END PAGE CONTENT WRAPPER -->
+        <!--END PAGE CONTENT WRAPPER -->
     </div>
     <!-- END PAGE CONTENT -->
 </div>
 <!-- END PAGE CONTAINER -->
 
 <!--<div class="modal fade" id="permissionModal" tabindex="-1" role="dialog">-->
-    <!--<div class="modal-dialog" role="document" id="permissionModalDialog">-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
-                <!--<h4 class="modal-title" id="permissionModalLabel">权限编辑</h4>-->
-            <!--</div>-->
-            <!--<form  method="post" class="form-horizontal" role="form" id="permissionForm">-->
-                <!--<div class="modal-body">-->
+<!--<div class="modal-dialog" role="document" id="permissionModalDialog">-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-header">-->
+<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+<!--<h4 class="modal-title" id="permissionModalLabel">权限编辑</h4>-->
+<!--</div>-->
+<!--<form  method="post" class="form-horizontal" role="form" id="permissionForm">-->
+<!--<div class="modal-body">-->
 
-                    <!--<input id="id" name="id" value="" type="hidden" />-->
-                    <!--<input id="parentId" name="parentId" value="" type="hidden" />-->
-                    <!--<input id="parentIds" name="parentIds" value="" type="hidden" />-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="name" class="col-sm-2 control-label">权限名:</label>-->
-                        <!--<div class="col-sm-10">-->
-                            <!--<input type="text" name="name" class="form-control" id="name"/>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="permission" class="col-sm-2 control-label">权限字符串:</label>-->
-                        <!--<div class="col-sm-10">-->
-                            <!--<input type="text" name="permission" class="form-control" id="permission"/>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="url" class="col-sm-2 control-label">链接</label>-->
-                        <!--<div class="col-sm-10">-->
-                            <!--<input type="text" name="url" class="form-control" id="url"/>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="resourceType" class="col-sm-2 control-label">资源类型</label>-->
-                        <!--<div class="col-sm-10">-->
-                            <!--<select id="resourceType"  name="resourceType" class="form-control" style="-webkit-appearance:menulist">-->
-                                <!--<option value="menu">menu</option>-->
-                                <!--<option value="button">button</option>-->
-                            <!--</select>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="available" class="col-sm-2 control-label">是否可见</label>-->
-                        <!--<div class="col-sm-10">-->
-                            <!--<select id="available" name="available" class="form-control dropdown-toggle" style="-webkit-appearance:menulist">-->
-                                <!--<option value="true">可见</option>-->
-                                <!--<option value="false">不可见</option>-->
-                            <!--</select>-->
-                        <!--</div>-->
-                    <!--</div>-->
+<!--<input id="id" name="id" value="" type="hidden" />-->
+<!--<input id="parentId" name="parentId" value="" type="hidden" />-->
+<!--<input id="parentIds" name="parentIds" value="" type="hidden" />-->
+<!--<div class="form-group">-->
+<!--<label for="name" class="col-sm-2 control-label">权限名:</label>-->
+<!--<div class="col-sm-10">-->
+<!--<input type="text" name="name" class="form-control" id="name"/>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="permission" class="col-sm-2 control-label">权限字符串:</label>-->
+<!--<div class="col-sm-10">-->
+<!--<input type="text" name="permission" class="form-control" id="permission"/>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="url" class="col-sm-2 control-label">链接</label>-->
+<!--<div class="col-sm-10">-->
+<!--<input type="text" name="url" class="form-control" id="url"/>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="resourceType" class="col-sm-2 control-label">资源类型</label>-->
+<!--<div class="col-sm-10">-->
+<!--<select id="resourceType"  name="resourceType" class="form-control" style="-webkit-appearance:menulist">-->
+<!--<option value="menu">menu</option>-->
+<!--<option value="button">button</option>-->
+<!--</select>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="available" class="col-sm-2 control-label">是否可见</label>-->
+<!--<div class="col-sm-10">-->
+<!--<select id="available" name="available" class="form-control dropdown-toggle" style="-webkit-appearance:menulist">-->
+<!--<option value="true">可见</option>-->
+<!--<option value="false">不可见</option>-->
+<!--</select>-->
+<!--</div>-->
+<!--</div>-->
 
-                <!--</div>-->
-                <!--<div class="modal-footer">-->
-                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
-                    <!--<button id="modalButton" type="button" onclick="permissionDataUpdate()" class="btn btn-primary">提交更改</button>-->
-                <!--</div>-->
-            <!--</form>-->
-        <!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
-    <!--</div>-->
+<!--</div>-->
+<!--<div class="modal-footer">-->
+<!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+<!--<button id="modalButton" type="button" onclick="permissionDataUpdate()" class="btn btn-primary">提交更改</button>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>&lt;!&ndash; /.modal-content &ndash;&gt;-->
+<!--</div>-->
 <!--</div>&lt;!&ndash; /.modal &ndash;&gt;-->
-
 
 
 <div th:include="fragments/layout :: messageBox" th:remove="tag">
@@ -217,7 +218,7 @@
     $('#operateLogDataTable').bootstrapTable({
         url: "/AuthorizationManage/operateLogs",
         dataType: "json",
-        pagination:true,
+        pagination: true,
         sidePagination: "server",
         columns: [{
             field: 'id',
@@ -231,36 +232,36 @@
         }, {
             field: 'exception',
             title: '异常操作'
-        },{
+        }, {
             field: 'uid',
             title: '操作人员id'
         }],
-        toolbar:'#toolbar'
+        toolbar: '#toolbar'
     });
     var alertBox = new AlertBox('alertBoxDiv');
 
     function send() {
 
-        var userid= $('#userid').val();
-        var date= $('#date').val();
+        var userid = $('#userid').val();
+        var date = $('#date').val();
         var query;
-        if(""==date){
+        if ("" == date) {
             query = {
-                userid:userid,
+                userid: userid,
 
             }
 //            alert("''");
-        }else {
-            query ={
-                userid:userid,
-                date:date
+        } else {
+            query = {
+                userid: userid,
+                date: date
             }
 //            alert("null");
         }
         var options = $('#operateLogDataTable').bootstrapTable('refresh', {
             url: "/AuthorizationManage/operateLogs",
             dataType: "json",
-            query:query
+            query: query
         });
 
         var alertBox = new AlertBox('alertBoxDiv');

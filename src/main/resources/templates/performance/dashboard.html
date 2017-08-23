@@ -4,16 +4,16 @@
 <head th:replace="fragments/layout :: header (pageTitle='性能总览')">
     <!-- META SECTION -->
     <title>Joli Admin - Responsive Bootstrap Admin Template</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     <!-- END META SECTION -->
 
     <!-- CSS INCLUDE -->
-    <link rel="stylesheet" type="text/css"  href="/css/theme-default.css"/>
-    <link rel="stylesheet" type="text/css"  href="/css/bootstrap-table.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/theme-default.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-table.min.css"/>
     <!-- EOF CSS INCLUDE -->
 </head>
 
@@ -21,14 +21,12 @@
 <body>
 
 
-
 <!-- START PAGE CONTAINER -->
-<div class="page-container page-navigation-toggled">
+<div class="page-container page-navigation-toggled page-container-wide page-navigation-top-fixed">
 
     <!-- START PAGE SIDEBAR -->
     <div th:include="fragments/layout :: sideBar" th:remove="tag"></div>
     <!-- END PAGE SIDEBAR -->
-
 
 
     <!-- PAGE CONTENT -->
@@ -40,18 +38,20 @@
 
         <!-- START BREADCRUMB -->
         <ul class="breadcrumb">
-            <li ><a href="index">首页</a></li>
+            <li><a href="index">首页</a></li>
             <li class="active">性能总览</li>
         </ul>
         <!-- END BREADCRUMB -->
 
         <div class="page-title">
-            <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a>  性能总览</h2><button class="btn btn-success" type="button" onclick="flashDash()"><span class="fa fa-refresh"></span>刷新</button>
+            <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a> 性能总览</h2>
+            <button class="btn btn-success" type="button" onclick="flashDash()"><span class="fa fa-refresh"></span>刷新
+            </button>
         </div>
 
         <div class="row">
 
-            <div class="col-md-2">
+            <div class="col-md-3">
 
                 <!-- 总内存显示块 -->
                 <div class="panel panel-default">
@@ -60,54 +60,70 @@
                             <h3>内存使用</h3>
                             <span>内存的使用情况</span>
                         </div>
-                        <ul class="panel-controls" style="margin-top: 2px;">
-                            <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
-                                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+
                     </div>
                     <div class="panel-body padding-0">
-                        <div class="chart-holder" id="memory" style="height: 200px;"></div>
+                        <div class="chart-holder" id="memory" style="display:inline-block;height: 200px;width: 200px"></div>
+                        <div id="memoryData"  style="display: inline-block;position: absolute;top: 35px;">
+                            <h2>总内存:600Mib</h2>
+                            <h2>未使用:600Mib</h2>
+                            <h2>已使用:600Mib</h2>
+                        </div>
                     </div>
                 </div>
 
 
             </div>
-            <div class="col-md-4">
 
-                <!-- 总内存显示块 -->
+            <div class="col-md-3">
+
+                <!-- 堆内存显示块 -->
                 <div class="panel panel-default">
                     <div class="panel-heading ui-draggable-handle">
                         <div class="panel-title-box">
-                            <h3>线程状态</h3>
-                            <span>当前线程数量显示</span>
+                            <h3>堆内存使用</h3>
+                            <span>堆内存的使用情况</span>
                         </div>
-                        <ul class="panel-controls" style="margin-top: 2px;">
-                            <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
-                                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+
                     </div>
                     <div class="panel-body padding-0">
-                        <div class="chart-holder" id="heap" style="height: 200px;"></div>
+                        <div class="chart-holder" id="heapMemory" style="display:inline-block;height: 200px;width: 200px"></div>
+                        <div id="heapMemoryData"  style="display: inline-block;position: absolute;top: 35px;">
+                            <h2>最大值:600Mib</h2>
+                            <h2>已分配:600Mib</h2>
+                            <h2>已使用:600Mib</h2>
+                        </div>
                     </div>
                 </div>
 
 
             </div>
-            <div class="col-md-4">
+
+            <div class="col-md-3">
+
+                <!-- 非堆内存显示块 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading ui-draggable-handle">
+                        <div class="panel-title-box">
+                            <h3>非堆内存使用</h3>
+                            <span>非堆内存的使用情况</span>
+                        </div>
+
+                    </div>
+                    <div class="panel-body padding-0">
+                        <div class="chart-holder" id="nonHeapMemory" style="display:inline-block;height: 200px;width: 200px"></div>
+                        <div id="nonHeapMemoryData"  style="display: inline-block;position: absolute;top: 35px;">
+                            <h2>最大值:600Mib</h2>
+                            <h2>已分配:600Mib</h2>
+                            <h2>已使用:600Mib</h2>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-3">
 
                 <!-- 总线程显示块 -->
                 <div class="panel panel-default">
@@ -116,20 +132,15 @@
                             <h3>线程状态</h3>
                             <span>当前线程数量显示</span>
                         </div>
-                        <ul class="panel-controls" style="margin-top: 2px;">
-                            <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
-                            <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> Collapse</a></li>
-                                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> Remove</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+
                     </div>
                     <div class="panel-body padding-0">
-                        <div class="chart-holder" id="thread" style="height: 200px;"></div>
+                        <div class="chart-holder" id="thread" style="height: 200px;display:inline-block;width: 200px"></div>
+                        <div id="threadData"  style="display: inline-block;position: absolute;top: 35px;padding-left: 20px">
+                            <h2>总线程数:</h2>
+                            <h2>守护线程:</h2>
+                            <h2>用户线程:</h2>
+                        </div>
                     </div>
                 </div>
 
@@ -142,9 +153,6 @@
     <!-- END PAGE CONTENT -->
 </div>
 <!-- END PAGE CONTAINER -->
-
-
-
 
 
 <div th:include="fragments/layout :: messageBox" th:remove="tag">
@@ -186,46 +194,101 @@
     var dataJ = undefined;
     flashDash();
 
-    function flashDash(){
+    function flashDash() {
 
-        $.getJSON("/metrics",function (data) {
+        $.getJSON("/metrics", function (data) {
             dataJ = data;
 
             memoryChart();
             threadChart();
+            heapMemoryChart();
+            nonHeapMemoryChart();
         });
     }
+
     function memoryChart() {
         $('#memory').empty();
+        var memData = $("#memoryData");
+        memData.empty();
         Morris.Donut({
             element: 'memory',
-            data:  [
-                    {label: "已使用", value: ((dataJ['mem'] - dataJ['mem.free'])/1024).toFixed(2)},
-                    {label: "未使用", value: (dataJ['mem.free']/1024).toFixed(2)}
-                ],
+            data: [
+                {label: "已使用", value: kbiToMbi(dataJ['mem'] - dataJ['mem.free'])},
+                {label: "未使用", value: kbiToMbi(dataJ['mem.free'])}
+            ],
             colors: ['#33414E', '#1caf9a', '#FEA223'],
             resize: true,
-            formatter:function (value) {
+            formatter: function (value) {
                 return value + 'Mbi';
             }
         });
+        memData.append("<h2>总内存:" + kbiToMbi(dataJ['mem']) + "Mib</h2>\n" +
+            "<h2>未使用:" + kbiToMbi(dataJ['mem.free']) + "Mib</h2>\n" +
+            "<h2>已使用:" + kbiToMbi(dataJ['mem'] - dataJ['mem.free']) + "Mib</h2>");
     }
+
     function threadChart() {
         $('#thread').empty();
+        var threadData = $("#threadData");
+        threadData.empty();
         Morris.Donut({
             element: 'thread',
-            data:  [
+            data: [
                 {label: "守护线程", value: dataJ['threads.daemon']},
                 {label: "用户线程", value: dataJ['threads'] - dataJ['threads.daemon']}
             ],
             colors: ['#33414E', '#1caf9a', '#FEA223'],
             resize: true,
-            formatter:function (value) {
+            formatter: function (value) {
                 return value + '个';
             }
         });
+        threadData.append("<h2>总线程数:" + dataJ['threads'] + "个</h2>\n" +
+            "<h2>守护线程:" + dataJ['threads.daemon'] + "个</h2>" +
+            "<h2>用户线程:" + (dataJ['threads'] - dataJ['threads.daemon']) + "个</h2>");
     }
 
+    function heapMemoryChart() {
+        $('#heapMemory').empty();
+        var memData = $("#heapMemoryData");
+        memData.empty();
+        Morris.Donut({
+            element: 'heapMemory',
+            data: [
+                {label: "已使用", value: kbiToMbi(dataJ['heap.used'])},
+                {label: "未使用", value: kbiToMbi(dataJ['heap.committed'] - dataJ['heap.used'])}
+            ],
+            colors: ['#33414E', '#1caf9a', '#FEA223'],
+            resize: true,
+            formatter: function (value) {
+                return value + 'Mbi';
+            }
+        });
+        memData.append("<h2>最大值:" + kbiToMbi(dataJ['heap']) + "Mib</h2>\n" +
+            "<h2>已分配:" + kbiToMbi(dataJ['heap.committed']) + "Mib</h2>\n" +
+            "<h2>已使用:" + kbiToMbi(dataJ['heap.used']) + "Mib</h2>");
+    }
+
+    function nonHeapMemoryChart() {
+        $('#nonHeapMemory').empty();
+        var memData = $("#nonHeapMemoryData");
+        memData.empty();
+        Morris.Donut({
+            element: 'nonHeapMemory',
+            data: [
+                {label: "已使用", value: kbiToMbi(dataJ['nonheap.used'])},
+                {label: "未使用", value: kbiToMbi(dataJ['nonheap.committed'] - dataJ['nonheap.used'])}
+            ],
+            colors: ['#33414E', '#1caf9a', '#FEA223'],
+            resize: true,
+            formatter: function (value) {
+                return value + 'Mbi';
+            }
+        });
+        memData.append("<h2>最大值:" + kbiToMbi(dataJ['nonheap']) + "Mib</h2>\n" +
+            "<h2>已分配:" + kbiToMbi(dataJ['nonheap.committed']) + "Mib</h2>\n" +
+            "<h2>已使用:" + kbiToMbi(dataJ['nonheap.used']) + "Mib</h2>");
+    }
 </script>
 <!-- END SCRIPTS -->
 

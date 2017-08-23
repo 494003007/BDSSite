@@ -47,11 +47,12 @@ var settings_block = document.createElement('div');
 
 $(document).ready(function(){
 
+
     /* Default settings */
     var theme_settings = {
         st_head_fixed: 1,
         st_sb_fixed: 1,
-        st_sb_scroll: 1,
+        st_sb_scroll: 0,
         st_sb_right: 0,
         st_sb_custom: 0,
         st_sb_toggled: 1,

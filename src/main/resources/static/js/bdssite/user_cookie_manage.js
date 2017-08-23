@@ -55,7 +55,7 @@ function deleteUserData() {
 }
 
 function reflashUserData() {
-    deleteUserData()
+    deleteUserData();
     getUserData();
     if(userData){
         getPermissions();
