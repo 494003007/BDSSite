@@ -7,6 +7,7 @@ package com.bdssite.modules.usermanage.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.*;
-
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -29,15 +30,19 @@ public class UserInfo implements Serializable{
     private String username;//账号.
 
     private String name;//名称（昵称或者真实姓名，不同系统不同定义）
+    @NotNull(message = "user.password.notnull")
     @Column(nullable = false)
     @JsonIgnore
     private String password; //密码;
+    @NotNull(message = "user.salt.notnull")
     @Column(nullable = false)
     @JsonIgnore
     private String salt;//加密密码的盐
 
+
     private String true_name;//真实姓名
     @DateTimeFormat( pattern = "yyyy-MM-dd" )
+
     private Date birth_date;//出生日期
 
     public String getCity() {
@@ -49,11 +54,16 @@ public class UserInfo implements Serializable{
     }
 
     private String city;//国家
+    @NotNull(message = "user.mail.notnull")
     @Column(nullable = false,unique = true)
     private String email;//邮件
     private String qq;
     private String phone;
+    @NotNull(message = "user.info_shield.notnull")
+    @Column(nullable = false)
     private int info_shield;//信息屏蔽设置
+    @NotNull(message = "user.sex.notnull")
+    @Column(nullable = false)
     private int sex;
     private String address;
     @JsonIgnore
@@ -65,6 +75,8 @@ public class UserInfo implements Serializable{
     @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date last_login_time;//最后一次登陆
 
+    @NotNull(message = "user.state.notnull")
+    @Column(nullable = false)
     private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
 
     //个人密保

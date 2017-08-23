@@ -19,6 +19,9 @@ public class OperateLogService extends BaseService<OperateLogDao,OperateLog,Long
 
 
 
+    public OperateLog findbyid(Long id){
+        return dao.findOne(id);
+    }
     public OperateLog findOne(Example<OperateLog> operateLogExample){
         return dao.findOne(operateLogExample);
     }

@@ -6,6 +6,7 @@ package com.bdssite.modules.common;
 public enum RequestStatus {
 
     SUCCESS(1000, "请求成功"),
+    OPERATION_FALSE(1150,"操作异常"),
     PERMISSION_Denied(1050,"权限不足"),
     SERVER_ERROR(1100, "服务器异常");
 

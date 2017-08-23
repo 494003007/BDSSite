@@ -19,11 +19,13 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -195,31 +197,32 @@ public class AuthorizationManageController {
         return new PagingDto<>(RequestStatus.SUCCESS,result);
     }
 
-
-    @RequestMapping(value = "userInfoView", method = RequestMethod.GET)
-    public String userInfoView(Model model,Long uid){
-        if(uid != null){
-            model.addAttribute("userInfo",userService.findOne(uid));
-        }else{
-            model.addAttribute("userInfo",new UserInfo());
-        }
-
-        return "/usermanage/userInfoView";
+    @RequestMapping(value = "userInfos/{uid}", method = RequestMethod.GET)
+    @ResponseBody
+    public EntityDto<UserInfo> userInfos(@PathVariable Long uid){
+        UserInfo result = userService.findByUid(uid);
+        return new EntityDto<>(RequestStatus.SUCCESS,result);
     }
 
-    @RequestMapping(value = "userInfoUpdate", method = RequestMethod.POST)
-    public String userInfoUpdate(Model model,UserInfo userInfo,String roles){
-        System.out.println(roles);
-        if(roles != null){
-            List<SysRole> roleList = new ArrayList<>();
 
-            for(String role : roles.split(",")){
-                roleList.add(roleService.findById(Long.parseLong(role)));
-            }
-            userInfo.setRoles(roleList);
+    @RequestMapping(value = "userInfoUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public OperationDto userInfoUpdate(Map<String, Object> map,@Valid UserInfo userInfo,BindingResult result){
+
+        if (result.hasErrors()){
+            System.out.println(result.getAllErrors());
+            return new OperationDto(RequestStatus.OPERATION_FALSE);
+        }else {
+            userService.save(userInfo);
+            return new OperationDto(RequestStatus.SUCCESS);
         }
-        userService.save(userInfo);
-        return "redirect:/AuthorizationManage/userInfoView?id=" + userInfo.getUid();
+    }
+
+    @RequestMapping(value = "userInfoDelete", method = RequestMethod.POST)
+    @ResponseBody
+    public OperationDto userInfoDelete(Long id){
+        userService.delete(id);
+        return new OperationDto(RequestStatus.SUCCESS);
     }
     /**************      权限角色增删查改      **************/
 
@@ -360,6 +363,13 @@ public class AuthorizationManageController {
         Example<OperateLog> example = Example.of(result);
         Page<OperateLog> out = operateLogService.queryAllOperateLogPaging(example,limit,offset);
         return new PagingDto<>(RequestStatus.SUCCESS,out);
+    }
+
+    @RequestMapping(value = "operateLogs/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public EntityDto<OperateLog> operateLogs(@PathVariable Long id){
+        OperateLog result = operateLogService.findOne(id);
+        return new EntityDto<>(RequestStatus.SUCCESS,result);
     }
 
 
