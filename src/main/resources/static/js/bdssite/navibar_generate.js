@@ -65,7 +65,7 @@ function changeToOpenableNavi(jqueryDom){
 function createNaviLi(element) {
     var li = $("<li></li>").attr('id','navibar_' + element['id'] );
     // alert('<a href="' + (element['url']?element['url']:'#') + '"><span class="fa fa-files-o"></span> <span class="xn-text">' + element['name'] + '</span></a>');
-    li.append('<a href="' + (element['url']?element['url']:'#') + '"><span class="fa fa-cogs"></span>' + element['name'] + '</a>');
+    li.append('<a href="' + (element['url']?element['url']:'#') + '"><span class="fa fa-' + element['icon'] + '"></span>' + element['name'] + '</a>');
     return li;
 }
 

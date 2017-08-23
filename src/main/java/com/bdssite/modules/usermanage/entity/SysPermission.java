@@ -36,6 +36,7 @@ public class SysPermission implements Serializable{
     private Long parentId; //父编号
     private String parentIds; //父编号列表
     private Boolean available = Boolean.FALSE;//是否显示
+    private String icon = "cogs";//图标
 
 
     private Date create_time;//创建时间
@@ -108,6 +109,13 @@ public class SysPermission implements Serializable{
         this.roles = roles;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     @Override
     public String toString() {
