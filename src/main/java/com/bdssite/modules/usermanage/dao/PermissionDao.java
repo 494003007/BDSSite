@@ -1,10 +1,10 @@
 package com.bdssite.modules.usermanage.dao;
 
+import com.bdssite.modules.common.repository.ExtJpaRepository;
 import com.bdssite.modules.usermanage.entity.SysPermission;
 
 
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.PagingAndSortingRepository;
+
 import org.springframework.stereotype.Repository;
 
 
@@ -13,6 +13,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface PermissionDao extends JpaSpecificationExecutor<SysPermission>
-        ,PagingAndSortingRepository<SysPermission,Long> {
+public interface PermissionDao extends ExtJpaRepository<SysPermission,Long> {
 }

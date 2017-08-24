@@ -113,8 +113,8 @@ public class AuthorizationManageController {
 
     @RequestMapping(value = "permissionUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public OperationDto permissionUpdate(Map<String, Object> map,@ModelAttribute SysPermission permission){
-        permissionService.save(permission);
+    public OperationDto permissionUpdate(@ModelAttribute SysPermission permission){
+        permissionService.save(permission.getId(),permission);
         return new OperationDto(RequestStatus.SUCCESS);
     }
 

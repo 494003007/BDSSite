@@ -35,8 +35,8 @@ public class SysPermission implements Serializable{
     private String permission; //权限字符串,menu例子：role:*，button例子：role:create,role:update,role:delete,role:view
     private Long parentId; //父编号
     private String parentIds; //父编号列表
-    private Boolean available = Boolean.FALSE;//是否显示
-    private String icon = "cogs";//图标
+    private Boolean available;//是否显示
+    private String icon ;//图标
 
 
     private Date create_time;//创建时间

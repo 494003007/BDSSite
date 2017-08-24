@@ -1,7 +1,8 @@
 package com.bdssite.modules.common;
 
+import com.bdssite.modules.common.repository.ExtJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
+
 
 import java.io.Serializable;
 
@@ -9,12 +10,16 @@ import java.io.Serializable;
 /**
  * Created by D on 2017/2/13.
  */
-public abstract class BaseService<DAO extends CrudRepository<T, ID>, T, ID extends Serializable> {
+public abstract class BaseService<DAO extends ExtJpaRepository<T, ID>, T, ID extends Serializable> {
     @Autowired
     protected DAO dao;
 
     public <S extends T> S save(S var1){
         return dao.save(var1);
+    }
+
+    public <S extends T,I extends ID> T save(I id,S var1){
+        return dao.dynamicSave(id,var1);
     }
 
     public <S extends T> Iterable<S> save(Iterable<S> var1){

@@ -1,5 +1,6 @@
 package com.bdssite;
 
+import com.bdssite.modules.common.repository.ExtJpaRepositoryFactoryBean;
 import org.springframework.boot.SpringApplication;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = {"com.bdssite.modules"})
+@EnableJpaRepositories(basePackages = {"com.bdssite.modules"},repositoryFactoryBeanClass = ExtJpaRepositoryFactoryBean.class)
 @EnableTransactionManagement
 public class BDSSiteApplication {
 

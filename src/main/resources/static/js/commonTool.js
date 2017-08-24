@@ -50,14 +50,24 @@ function fillFormUseAjax(ajaxOption,form,callback){
 function fillFormUseEntity(entity,form){
     for(var key in entity){
         var element = form.find('#' +  key);
-        if(element.length !== 0){
-            if(element.is("input[type='text']","input[type='password']","textarea")){
+        if(isExist(element)){
+            if(!element.is("input[type='hidden']")){
+                element.attr("disabled",false);
+                element.attr("isChanged",false);
+                element.change(
+                    function (eventElement) {
+                        $(eventElement.currentTarget).attr("isChanged",true);
+                    }
+                );
+            }
+            if(element.is("input[type='text']","input[type='password']","textarea")||element.is("textarea")){
                 element.val(entity[key]);
             }else if(element.is("select")){
                 element.find("option[value='"+  entity[key]  + "']").attr("selected",true);
             }else{
                 element.val(entity[key]);
             }
+
         }
     }
 }
@@ -72,7 +82,10 @@ function ajaxFormSubmit(ajaxOption, formId) {
         console.log("ajaxFormSubmit:Error:ajaxOption Need the key 'url'");
         return;
     }
+    $('#' + formId +' [isChanged="false"]').attr("disabled",true);
     var form = new FormData(document.getElementById(formId));
+
+
     ajaxOption = {
         url:ajaxOption['url'],
         type: ajaxOption['type']?ajaxOption['type']:'GET',
