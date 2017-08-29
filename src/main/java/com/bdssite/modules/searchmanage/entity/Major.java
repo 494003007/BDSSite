@@ -22,6 +22,12 @@ public class Major  implements Serializable {
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "major")//指向多的那方的pojo的关联外键字段
     private List<Subject> subjects;
 
+    @ManyToOne(cascade=CascadeType.MERGE)
+    @JoinColumn(name="parent_id")
+    private Major parentMajor;
+
+
+
     public Long getId() {
         return id;
     }
@@ -45,4 +51,13 @@ public class Major  implements Serializable {
     public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
     }
+
+    public Major getParentMajor() {
+        return parentMajor;
+    }
+
+    public void setParentMajor(Major parentMajor) {
+        this.parentMajor = parentMajor;
+    }
+
 }

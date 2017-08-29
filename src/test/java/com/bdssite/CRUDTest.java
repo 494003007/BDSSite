@@ -1,18 +1,19 @@
 package com.bdssite;
 
-import com.bdssite.modules.usermanage.entity.ShortMessage;
+import com.bdssite.modules.searchmanage.entity.Major;
+import com.bdssite.modules.searchmanage.service.MajorService;
 import com.bdssite.modules.usermanage.entity.UserInfo;
-import com.bdssite.modules.usermanage.services.ShortMessageService;
 import com.bdssite.modules.usermanage.services.UserService;
-import org.hibernate.Hibernate;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,34 +27,44 @@ public class CRUDTest {
     private UserService userService;
 
     @Autowired
-    private ShortMessageService shortMessageService;
+    private MajorService majorService;
+
     @Test
+    @Transactional
+    @Rollback
     public void userServiceTest() {
-//        UserInfo userInfo = new UserInfo();
-//        userInfo.setUsername("testaaaaaaaa");
-//        userInfo.setPassword("sasasa");
-//        userInfo.setState((byte)0);
-//        userInfo.setName("cai");
-//        userService.save(userInfo);
-//
-//        System.out.println("----------------"+userService.findByName("cai"));
-//
-//        userService.delete(userInfo.getUid());
-//        Collection<Long> list = new ArrayList();
-//        list.add(Long.valueOf(1));
-//        list.add(Long.valueOf(2));
-//        list.add(Long.valueOf(3));
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername("testaaaaaaaa");
+        userInfo.setPassword("sasasa");
+        userInfo.setState((byte)0);
+        userInfo.setSalt("aaaaaa");
+        userInfo.setEmail("aaa@qqqq.aaa");
+        userInfo.setName("cai");
+        userService.save(userInfo);
 
-//        aaaa = list.toArray(aaaa);
-//        shortMessageService.deleteByIdIn(list);
-//        shortMessageService.delete((long) 1);
-//        System.out.println("111111111111111111111111");
-        UserInfo userInfo = userService.findByUsername("hzd");
-        Hibernate.initialize(userInfo);
-        List a = userInfo.getUserQuestions();
+        UserInfo cai = userService.findByName("cai");
 
-        System.out.println(a.isEmpty());
-//        List b = userService.findAll().iterator().next().getUserQuestions();
-//        System.out.println(b.isEmpty());
+        System.out.println("userServiceTest:" + cai);
+
+        Assert.assertNotNull(cai.getName());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void majorTest(){
+        Major parentMajor = new Major();
+        parentMajor.setName("父学科");
+        Major childMajor = new Major();
+        childMajor.setName("子学科1");
+        Major childMajor2 = new Major();
+        childMajor2.setName("子学科2");
+        majorService.save(parentMajor);
+        childMajor.setParentMajor(parentMajor);
+        childMajor2.setParentMajor(parentMajor);
+        majorService.save(childMajor);
+        majorService.save(childMajor2);
+
+
     }
 }
