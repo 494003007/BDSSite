@@ -2,7 +2,9 @@ package com.bdssite;
 
 import com.bdssite.modules.searchmanage.entity.Major;
 import com.bdssite.modules.searchmanage.service.MajorService;
+import com.bdssite.modules.usermanage.entity.ShortMessage;
 import com.bdssite.modules.usermanage.entity.UserInfo;
+import com.bdssite.modules.usermanage.services.ShortMessageService;
 import com.bdssite.modules.usermanage.services.UserService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,6 +30,9 @@ public class CRUDTest {
 
     @Autowired
     private MajorService majorService;
+
+    @Autowired
+    private ShortMessageService shortMessageService;
 
     @Test
     @Transactional
@@ -65,6 +70,27 @@ public class CRUDTest {
         majorService.save(childMajor);
         majorService.save(childMajor2);
 
+
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void shortMessageServiceTest() {
+        UserInfo userInfo = userService.findByName("cai");
+        List<ShortMessage> shortMessages = shortMessageService.findByToUserAndIsRead(userInfo,1);
+        removeDuplicate(shortMessages);
+        System.out.println("----------------------------");
+    }
+
+    public  void  removeDuplicate(List<ShortMessage> list)  {
+        for  ( int  i  =   list.size()  -   1 ; i  >=  0; i -- )  {
+            for  ( int  j  =  i+1 ; j  <  list.size()  ; j ++ )  {
+                if  (list.get(j).getFromUser().equals(list.get(i).getFromUser()))  {
+                    list.remove(j);
+                }
+            }
+        }
 
     }
 }

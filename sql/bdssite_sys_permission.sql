@@ -1,14 +1,13 @@
-INSERT INTO sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url) VALUES (true, '2017-04-09', '管理', null, null, '', 'menu', '');
-INSERT INTO sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url) VALUES (true, '2017-04-09', '角色管理', 1, '1', '', 'button', '/AuthorizationManage/roleList');
-INSERT INTO sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url) VALUES (false, '2017-04-09', '角色查询', 2, '1,2', 'role:view', 'button', null);
-INSERT INTO sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url) VALUES (false, '2017-04-09', '角色编辑', 2, '1,2', 'role:edit', 'button', null);
-INSERT INTO sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url) VALUES (true, '2017-04-09', '权限管理', 1, '1', '', 'button', '/AuthorizationManage/permissionList');
-INSERT INTO sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url) VALUES (false, '2017-04-09', '权限查询', 5, '1,5', 'permission:view', 'button', null);
-INSERT INTO sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url) VALUES (false, '2017-04-09', '权限编辑', 5, '1,5', 'permission:edit', 'button', null);
-
-INSERT INTO sys_role (available, create_time, create_user, description, parent_role, role, role_describe) VALUES (true, null, null, '11', null, 'admin', null);
-
-INSERT INTO sys_role_permission (role_id, permission_id) VALUES (1, 1);
-INSERT INTO sys_role_permission (role_id, permission_id) VALUES (1, 2);
-INSERT INTO sys_role_permission (role_id, permission_id) VALUES (1, 3);
-INSERT INTO sys_role_permission (role_id, permission_id) VALUES (1, 4);
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (true, null, '操作', null, '', '', null, null, 'cogs');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (false, null, '角色管理', 1, '1', null, 'button', '/AuthorizationManage/roleList', 'users');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (false, '2017-04-09', '角色查询', 2, '1,2', 'role:view', 'button', null, 'cogs');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (false, '2017-04-09', '角色编辑', 2, '1,2', 'role:edit', 'button', null, 'cogs');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (true, null, '权限管理', 1, '1', '', 'button', '/AuthorizationManage/permissionList', 'unlock-alt');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (false, '2017-04-09', '权限查询', 5, '1,5', 'permission:view', 'button', null, 'cogs');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (false, null, '权限编辑', 5, '1,5', 'permission:edit', 'button', '', 'cogs');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (true, null, '日志管理', 1, '1', '', 'button', '/AuthorizationManage/operateLogList', 'file-o');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (true, null, '用户管理', 1, '1', '', 'button', '/AuthorizationManage/userInfoList', 'user');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (true, null, '性能', null, '', '', 'menu', '', 'line-chart');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (true, null, '运行总览', 11, '11', '', 'button', '/performance/dashboard', 'tachometer');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (false, null, null, null, null, null, null, null, 'cogs');
+INSERT INTO bdssite.sys_permission (available, create_time, name, parent_id, parent_ids, permission, resource_type, url, icon) VALUES (false, null, null, null, null, null, null, null, 'cogs');

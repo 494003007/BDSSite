@@ -334,6 +334,7 @@ public class UserInfo implements Serializable{
      * 密码盐.
      * @return
      */
+    @JsonIgnore
     public String getCredentialsSalt(){
         return this.username+this.salt;
     }
