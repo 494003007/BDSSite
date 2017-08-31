@@ -16,7 +16,8 @@ public class majorAndSubjectGener {
     @Autowired
     MajorAndSubjectGeneratorMain msg;
     @Test
-    public void generTest() throws Exception {
-        msg.gener();
+    public void generateTest() throws Exception {
+        msg.majorGenerate();
+        msg.subjectGenerate();
     }
 }

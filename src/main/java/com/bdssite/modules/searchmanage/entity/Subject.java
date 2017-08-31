@@ -2,6 +2,7 @@ package com.bdssite.modules.searchmanage.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 课程表
@@ -13,9 +14,11 @@ public class Subject implements Serializable {
     @Id@GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)//设置在“一方”pojo的外键字段上
-    @JoinColumn(name = "major", referencedColumnName = "id")//设置对应数据表的列名和引用的数据表的列名
-    private Major major;
+    private String name;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "MajorToSubject",joinColumns = {@JoinColumn(name = "sid",referencedColumnName="id")},inverseJoinColumns = {@JoinColumn(name = "mid",referencedColumnName="id")})
+    private List<Major> majors;
 
     public Long getId() {
         return id;
@@ -25,11 +28,19 @@ public class Subject implements Serializable {
         this.id = id;
     }
 
-    public Major getMajor() {
-        return major;
+    public String getName() {
+        return name;
     }
 
-    public void setMajor(Major major) {
-        this.major = major;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Major> getMajors() {
+        return majors;
+    }
+
+    public void setMajors(List<Major> majors) {
+        this.majors = majors;
     }
 }

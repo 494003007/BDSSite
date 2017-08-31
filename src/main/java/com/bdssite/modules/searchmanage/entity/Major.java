@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 @Entity
-public class Major  implements Serializable {
+public class Major implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
@@ -19,7 +19,7 @@ public class Major  implements Serializable {
     @Column(unique=true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "major")//指向多的那方的pojo的关联外键字段
+    @ManyToMany(mappedBy = "majors")//指向多的那方的pojo的关联外键字段
     private List<Subject> subjects;
 
     @ManyToOne(cascade=CascadeType.MERGE)

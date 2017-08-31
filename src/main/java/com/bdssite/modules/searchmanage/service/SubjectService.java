@@ -7,4 +7,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SubjectService extends BaseService<SubjectDao,Subject,Long> {
+    public Subject findByName(String name){
+        return dao.findByName(name);
+    }
+    public boolean existByName(String name){
+        return dao.existsByName(name);
+    }
 }
