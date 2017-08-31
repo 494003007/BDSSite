@@ -49,7 +49,7 @@
             </button>
         </div>
 
-        <div class="row">
+        <div class="row" id="dashboardC">
 
             <div class="col-md-3">
 
@@ -192,18 +192,39 @@
 <!-- END TEMPLATE -->
 <script>
     var dataJ = undefined;
-    flashDash();
+    $(function () {
+        flashDash();
+    });
 
     function flashDash() {
+        $.ajax({
+            dataType: "json",
+            url: "/metrics",
+            success: function (data) {
+                dataJ = data;
 
-        $.getJSON("/metrics", function (data) {
-            dataJ = data;
-
-            memoryChart();
-            threadChart();
-            heapMemoryChart();
-            nonHeapMemoryChart();
+                memoryChart();
+                threadChart();
+                heapMemoryChart();
+                nonHeapMemoryChart();
+            },
+            error: function (status) {
+                $("#dashboardC").html("<div class=\"panel panel-danger\">\n" +
+                    "                                <div class=\"panel-heading\">\n" +
+                    "                                    <h3 class=\"panel-title\">访问错误</h3>\n" +
+                    "                                </div>\n" +
+                    "                                <div class=\"panel-body\">\n" +
+                    "                                    <p>获取性能数据失败</p>\n" +
+                    "                                    <p>可能是因为系统异常或者您没有权限</p>\n" +
+                    "                                </div>     \n" +
+                    "                                <div class=\"panel-footer\">\n" +
+                    "                                    <button onclick='history.go(-1)' class=\"btn btn-default\">返回</button>\n" +
+                    "                                    <button onclick='location.reload()' class=\"btn btn-primary pull-right\">刷新</button>\n" +
+                    "                                </div>                            \n" +
+                    "                            </div>   ");
+            }
         });
+
     }
 
     function memoryChart() {
