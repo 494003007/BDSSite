@@ -1,5 +1,7 @@
 package com.bdssite.modules.searchmanage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -16,7 +18,8 @@ public class Subject implements Serializable {
 
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToMany()
     @JoinTable(name = "MajorToSubject",joinColumns = {@JoinColumn(name = "sid",referencedColumnName="id")},inverseJoinColumns = {@JoinColumn(name = "mid",referencedColumnName="id")})
     private List<Major> majors;
 

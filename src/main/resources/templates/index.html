@@ -30,16 +30,52 @@
         <div th:include="fragments/layout :: contentTop" th:remove="tag"></div>
         <!-- END X-NAVIGATION VERTICAL -->
 
-        <!-- START BREADCRUMB -->
-        <ul class="breadcrumb">
-            <li class="active"><a href="index">Home</a></li>
 
-        </ul>
-        <!-- END BREADCRUMB -->
+        <div class="page-title">
+            <h2><span class="fa fa-search"></span> 职业 查找 </h2>
+        </div>
 
         <!-- PAGE CONTENT WRAPPER -->
         <div class="page-content-wrap">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h4>建议应届毕业生按专业进行查找，其他人士直接进行检索</h4>
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <button onclick="displayFindByMajor()" type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 按专业查找</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="findByMajor" class="panel panel-default" style="display: none;">
+                        <div class="panel-body" id="majorPane" style="max-height: 400px;overflow-y:auto;">
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
+                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
+                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
+                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
+                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
+                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
 
+                </div>
+                <div class="col-md-1"></div>
+            </div>
 
         </div>
         <!-- END PAGE CONTENT WRAPPER -->
@@ -80,6 +116,56 @@
 <div th:include="fragments/layout :: templateJs" th:remove="tag">
 
 </div>
+
+<script>
+    function displayFindByMajor() {
+        majorChooserInit();
+    }
+    function majorChooserInit() {
+        $('#findByMajor').hide();
+        ajaxDataDisplay(null,"majorChildDisplay");
+    }
+    function majorChildDisplay(majorParentId){
+        ajaxDataDisplay(majorParentId,"searchDialogDisplay");
+    }
+    function ajaxDataDisplay(majorParentId,functionName){
+        var majorDiv = $('#majorPane');
+        $('#findByMajor').fadeOut(500,function () {
+            majorDiv.html("");
+            $.ajax({
+                url:"/searchApi/majors",
+                type: 'POST',
+                data:majorParentId?{'parentId':majorParentId}:{},
+                success:function (data) {
+                    var list = data['entityList'];
+                    var num = list.length;
+                    var buttonDom = [];
+                    var moreRow = num % 6;
+                    var defaultRow = Math.floor(num / 6);
+                    $.each(list,function () {
+                        buttonDom.push($("<button type=\"button\" onclick='" + functionName + "(" + this['id'] + ")' class=\"btn btn-primary btn-block\"><span class=\"fa fa-book\"></span> " + this['name'] + "</button>"));
+                    });
+                    for(var i = 0; i < 6 ; i++){
+                        var temp = $("<div class=\"col-md-2\"></div>");
+                        for(var j = 0;j < defaultRow;j++){
+                            temp.append(buttonDom.pop());
+                        }
+                        if(i<moreRow){
+                            temp.append(buttonDom.pop());
+                        }
+                        majorDiv.append(temp);
+                    }
+                    $('#findByMajor').fadeIn(500);
+                },
+                error:function (e) {
+                    alert("获取专业列表失败.")
+                }
+
+            });
+        });
+    }
+
+</script>
 <!-- END TEMPLATE -->
 <!-- END SCRIPTS -->
 </body>

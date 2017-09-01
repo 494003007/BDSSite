@@ -1,5 +1,7 @@
 package com.bdssite.modules.searchmanage.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +21,7 @@ public class Major implements Serializable {
     @Column(unique=true)
     private String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "majors")//指向多的那方的pojo的关联外键字段
     private List<Subject> subjects;
 
