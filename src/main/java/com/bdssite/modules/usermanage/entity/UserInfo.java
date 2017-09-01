@@ -41,7 +41,7 @@ public class UserInfo implements Serializable{
 
 
     private String true_name;//真实姓名
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
+//    @DateTimeFormat( pattern = "yyyy-MM-dd" )
 
     private Date birth_date;//出生日期
 
@@ -66,13 +66,13 @@ public class UserInfo implements Serializable{
     @Column(nullable = false)
     private int sex;
     private String address;
-    @JsonIgnore
+//    @JsonIgnore
     private String we_chat_account;//微信账号
-    @JsonIgnore
+//    @JsonIgnore
     private String ip_address;//ip地址
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
+//    @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date new_time;//创建时间
-    @DateTimeFormat( pattern = "yyyy-MM-dd" )
+//    @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date last_login_time;//最后一次登陆
 
     @NotNull(message = "user.state.notnull")

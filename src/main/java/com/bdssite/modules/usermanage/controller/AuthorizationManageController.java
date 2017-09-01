@@ -15,13 +15,17 @@ import com.bdssite.modules.usermanage.services.RoleService;
 import com.bdssite.modules.usermanage.services.UserService;
 import com.bdssite.modules.usermanage.entity.OperateLog;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -42,6 +46,12 @@ public class AuthorizationManageController {
     private RoleService roleService;
     @Autowired
     private OperateLogService operateLogService;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
     @RequestMapping(value = "/currentUser", method = RequestMethod.POST)
     @ResponseBody
@@ -206,13 +216,11 @@ public class AuthorizationManageController {
     @ResponseBody
     public OperationDto userInfoUpdate(Map<String, Object> map,@Valid UserInfo userInfo,BindingResult result){
 
-        if (result.hasErrors()){
-            System.out.println(result.getAllErrors());
-            return new OperationDto(RequestStatus.OPERATION_FALSE);
-        }else {
-            userService.save(userInfo);
+        System.out.println(result.getAllErrors());
+
+            userService.save(userInfo.getUid(),userInfo);
             return new OperationDto(RequestStatus.SUCCESS);
-        }
+
     }
 
     @RequestMapping(value = "userInfoDelete", method = RequestMethod.POST)

@@ -85,63 +85,69 @@
                     <div class="form-group">
                         <label for="username" class="col-sm-2 control-label">账号:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="username" class="form-control" id="username"/>
+                            <input type="text" name="username" class="form-control" id="username" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">昵称:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="name" class="form-control" id="name"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="col-sm-2 control-label">密码:</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="password" class="form-control" id="password" onblur="if(this.value.replace(/^ +| +$/g,'')=='')alert('不能为空!')"/>
+                            <input type="text" name="name" class="form-control" id="name" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="true_name" class="col-sm-2 control-label">真实姓名:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="true_name" class="form-control" id="true_name"/>
+                            <input type="text" name="true_name" class="form-control" id="true_name" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="birth_date" class="col-sm-2 control-label">出生日期:</label>
                         <div class="col-sm-10">
-                            <input type="date"  name="birth_date" class="form-control" id="birth_date"/>
+                            <input type="date" value="<%=date%>" name="birth_date" class="form-control" id="birth_date" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="city" class="col-sm-2 control-label">国家:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="city" class="form-control" id="city"/>
+                            <input type="text" name="city" class="form-control" id="city" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email" class="col-sm-2 control-label">邮件:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="email" class="form-control" id="email"/>
+                            <input type="text" name="email" class="form-control" id="email" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="we_chat_account" class="col-sm-2 control-label">微信:</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="we_chat_account" class="form-control" id="we_chat_account" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="qq" class="col-sm-2 control-label">qq:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="qq" class="form-control" id="qq"/>
+                            <input type="text" name="qq" class="form-control" id="qq" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="col-sm-2 control-label">住址:</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="address" class="form-control" id="address" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="phone" class="col-sm-2 control-label">电话号码:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="phone" class="form-control" id="phone"/>
+                            <input type="text" name="phone" class="form-control" id="phone" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="info_shield" class="col-sm-2 control-label">信息屏蔽设置:</label>
                         <div class="col-sm-10">
                             <select id="info_shield"  name="info_shield" class="form-control" style="-webkit-appearance:menulist">
-                                <option value="1">1</option>
-                                <option value="0">0</option>
+                                <option value="1">屏蔽</option>
+                                <option value="0">不屏蔽</option>
                             </select>
                         </div>
                     </div>
@@ -149,51 +155,37 @@
                     <div class="form-group">
                         <label for="sex" class="col-sm-2 control-label">性别:</label>
                         <div class="col-sm-10">
-                            <select id="sex"  name="sex" class="form-control" style="-webkit-appearance:menulist">
-                                <option value="1">1</option>
-                                <option value="0">0</option>
-                            </select>
+                            <input id="sex"  name="sex" class="form-control" readonly="readonly" />
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="adress" class="col-sm-2 control-label">家庭住址:</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="adress" class="form-control" id="adress"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="we_chat_account" class="col-sm-2 control-label">微信账号:</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="we_chat_account" class="form-control" id="we_chat_account"/>
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <label for="ip_address" class="col-sm-2 control-label">最后登陆ip地址:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="ip_address" class="form-control" id="ip_address"/>
+                            <input type="text" name="ip_address" class="form-control" id="ip_address" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="new_time" class="col-sm-2 control-label">创建时间:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="new_time" class="form-control" id="new_time"/>
+                            <input type="text" name="new_time" class="form-control" id="new_time" readonly="readonly"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="last_login_time" class="col-sm-2 control-label">最后登陆时间:</label>
                         <div class="col-sm-10">
-                            <input type="text" name="last_login_time" class="form-control" id="last_login_time"/>
+                            <input type="text" name="last_login_time" class="form-control" id="last_login_time" readonly="readonly"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="state" class="col-sm-2 control-label">状态:</label>
                         <div class="col-sm-10">
-                            <select id="state"  name="sex" class="state" style="-webkit-appearance:menulist">
-                                <option value="menu">0</option>
-                                <option value="button">1</option>
-                                <option value="button">2</option>
+                            <select id="state"  name="state" class="state" style="-webkit-appearance:menulist">
+                                <option value="0">未认证</option>
+                                <option value="1">正常</option>
+                                <option value="2">锁定</option>
                             </select>
                         </div>
                     </div>
@@ -309,7 +301,6 @@
 
     function userInfoModalDisplay(userInfoId){
         $('#uid').attr("disabled",false);
-        $('#salt').attr("disabled",false);
 
         fillFormUseAjax({
             url:'/AuthorizationManage/userInfos/' + userInfoId
