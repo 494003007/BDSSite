@@ -14,7 +14,7 @@ public abstract class TypeGenerator {
         stringBuilder.append("name=\"").append(name).append("\" ");
         stringBuilder.append("class=\"").append(className).append("\" ");
         stringBuilder.append("type=\"").append(type).append("\" ");
-        stringBuilder.append("th:value=\"").append("${").append(entityName).append(".").append(name).append("}\" ");
+        stringBuilder.append("value=\"").append("${").append(entityName).append(".").append(name).append("}\" ");
         stringBuilder.append("/>");
         return stringBuilder.toString();
     }
