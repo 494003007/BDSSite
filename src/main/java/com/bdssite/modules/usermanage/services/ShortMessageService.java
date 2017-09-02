@@ -1,19 +1,16 @@
 package com.bdssite.modules.usermanage.services;
 
 import com.bdssite.modules.common.BaseService;
-import com.bdssite.modules.usermanage.dao.RoleDao;
+
 import com.bdssite.modules.usermanage.dao.ShortMessageDao;
 import com.bdssite.modules.usermanage.entity.ShortMessage;
-import com.bdssite.modules.usermanage.entity.SysRole;
+
 import com.bdssite.modules.usermanage.entity.UserInfo;
-import org.apache.catalina.User;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
+
 import java.util.Collection;
 import java.util.List;
 

@@ -5,7 +5,9 @@ package com.bdssite.modules.searchmanage.controller;
 import com.bdssite.modules.common.RequestStatus;
 import com.bdssite.modules.common.dto.ListDto;
 import com.bdssite.modules.searchmanage.entity.Major;
+import com.bdssite.modules.searchmanage.entity.Subject;
 import com.bdssite.modules.searchmanage.service.MajorService;
+import com.bdssite.modules.searchmanage.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,19 @@ import java.util.Map;
 public class SearchAPIController {
     @Autowired
     MajorService ms;
+
+    @Autowired
+    SubjectService ss;
+
+    @RequestMapping(value = "subject/byMajor")
+    @ResponseBody
+    public  ListDto<Subject> getMajorById(Long majorId){
+        if(majorId!=null){
+            return new ListDto<>(RequestStatus.SUCCESS, ss.findByMajor(ms.findOne(majorId)));
+        }else{
+            return new ListDto<>(RequestStatus.SUCCESS, null);
+        }
+    }
 
     @RequestMapping(value = "majors",method = RequestMethod.POST)
     @ResponseBody

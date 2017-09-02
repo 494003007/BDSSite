@@ -57,19 +57,7 @@
                     </div>
                     <div id="findByMajor" class="panel panel-default" style="display: none;">
                         <div class="panel-body" id="majorPane" style="max-height: 400px;overflow-y:auto;">
-                            <div class="col-md-2">
-                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
-                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
-                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
-                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
-                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
-                                <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
-                            </div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-2"></div>
+
                         </div>
                     </div>
 
@@ -126,7 +114,7 @@
         ajaxDataDisplay(null,"majorChildDisplay");
     }
     function majorChildDisplay(majorParentId){
-        ajaxDataDisplay(majorParentId,"searchDialogDisplay");
+        ajaxDataDisplay(majorParentId,"subjectChoose");
     }
     function ajaxDataDisplay(majorParentId,functionName){
         var majorDiv = $('#majorPane');
@@ -147,10 +135,7 @@
                     });
                     for(var i = 0; i < 6 ; i++){
                         var temp = $("<div class=\"col-md-2\"></div>");
-                        for(var j = 0;j < defaultRow;j++){
-                            temp.append(buttonDom.pop());
-                        }
-                        if(i<moreRow){
+                        for(var j = 0;j < (i < moreRow ? defaultRow + 1 : defaultRow );j++){
                             temp.append(buttonDom.pop());
                         }
                         majorDiv.append(temp);
@@ -163,6 +148,41 @@
 
             });
         });
+    }
+    function subjectChoose(majorId){
+        var majorDiv = $('#majorPane');
+        $('#findByMajor').fadeOut(500,function () {
+            majorDiv.html("");
+            $.ajax({
+                url:"/searchApi/subject/byMajor",
+                type: 'POST',
+                data:{'majorId':majorId},
+                success:function (data) {
+                    var list = data['entityList'];
+                    var num = list.length;
+                    var buttonDom = [];
+                    var moreRow = num % 6;
+                    var defaultRow = Math.floor(num / 6);
+                    $.each(list,function () {
+                        buttonDom.push($("<button type=\"button\" onclick='delSubject(" + this['id'] + ")' class=\"btn btn-primary btn-block\"><span class=\"fa fa-minus\"></span> " + this['name'] + "</button>"));
+                    });
+                    majorDiv.append($("<p>请按实际情况划去关键词</p>"));
+                    for(var i = 0; i < 6 ; i++){
+                        var temp = $("<div class=\"col-md-2\"></div>");
+                        for(var j = 0;j < (i < moreRow ? defaultRow + 1 : defaultRow );j++){
+                            temp.append(buttonDom.pop());
+                        }
+                        majorDiv.append(temp);
+                    }
+                    $('#findByMajor').fadeIn(500);
+                },
+                error:function (e) {
+                    alert("获取专业列表失败.");
+                }
+
+            });
+        });
+
     }
 
 </script>
