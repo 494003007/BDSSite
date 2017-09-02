@@ -15,7 +15,7 @@
 
     <!-- CSS INCLUDE -->
     <link rel="stylesheet" type="text/css" id="theme" href="/css/theme-default.css"/>
- <!-- EOF CSS INCLUDE -->
+    <!-- EOF CSS INCLUDE -->
 </head>
 
 <div th:fragment="messageBox">
@@ -54,6 +54,10 @@
     <script type="text/javascript" src="/js/bdssite/user_cookie_manage.js"></script>
     <script type="text/javascript" src="/js/bdssite/navibar_generate.js"></script>
 
+
+    <script type="text/javascript" src="/js/bdssite/message_module_js.js"></script>
+
+    <script type="text/javascript" src="/js/plugins/metrotreeview/treeview.js"></script>
 </div>
 
 <div th:fragment="templateJs">
@@ -121,33 +125,40 @@
             <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>
         </li>
         <!-- END SIGN OUT -->
+
         <!-- MESSAGES -->
-        <li class="xn-icon-button pull-right">
+        <li class="xn-icon-button pull-right" id="message_moudule_div">
             <a href="#"><span class="fa fa-comments"></span></a>
-            <div class="informer informer-danger">4</div>
+            <div class="informer informer-danger" id="new_message_count">4</div>
             <div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
                 <div class="panel-heading">
                     <h3 class="panel-title"><span class="fa fa-comments"></span> Messages</h3>
                     <div class="pull-right">
-                        <span class="label label-danger">1 Message</span>
+                        <span class="label label-danger" id="new_message_inner_count">4 Message</span>
                     </div>
                 </div>
-                <div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
+                <div id="">
+
+                </div>
+                <div id="message_moudle" class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
                     <a href="#" class="list-group-item">
                         <div class="list-group-status status-online"></div>
                         <img src="/assets/images/users/user2.jpg" class="pull-left" alt="System"/>
-                        <span class="contacts-title">系统提示</span>
+                        <span class="contacts-title" id="ot">系统提示</span>
                         <p>你目前有1个职位推送</p>
                     </a>
 
                 </div>
                 <div class="panel-footer text-center">
-                    <a href="pages-messages.html">Show all messages</a>
+                    <a href="/shortMessage/messagePage">Show all messages</a>
                 </div>
             </div>
         </li>
         <!-- END MESSAGES -->
+
         <!-- TASKS -->
+
+
         <li class="xn-icon-button pull-right">
             <a href="#"><span class="fa fa-tasks"></span></a>
             <div class="informer informer-warning">3</div>
