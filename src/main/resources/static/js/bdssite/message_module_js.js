@@ -8,6 +8,8 @@ function MessageManage() {
      * 请求新信息
      */
     this.showNewMessage = function() {
+
+
         _this=this
         $.ajax(
             {
@@ -68,8 +70,7 @@ function MessageManage() {
                 async: false,
                 success:function (data) {
                     if(data){
-                        _this.fillNewMessage(data['entityList'])
-                        _this.fillNewMessageCount(data['entityList'])
+                        _this.fillContact(data['entityList'])
                     }
                 },
                 error:function (e) {
@@ -79,13 +80,55 @@ function MessageManage() {
             }
         )
     }
-    this.fillContact = function () {
+    this.fillContact = function (entityList) {
+        content = "";
+        var currentUser = $.cookie("userData")
+        for (var i in entityList){
+            if(currentUser['uid'] == entityList[i]['fromUser']['uid']){
+                content+=(
+                    "<a href=\"#\" class=\"list-group-item\">"+
+                    "<div class=\"list-group-status status-online\"></div>"+
+                    "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\""+entityList[i]['toUser'][name]+"\">"+
+                    "<span class=\"contacts-title\">"+entityList[i]['toUser']['name']+"</span>"+
+                    "<p>"+entityList[i]['content']+"</p>"+
+                    "</a>"
+                )
+            }
+            else if(currentUser['uid'] == entityList[i]['toUser']['uid']){
+                content+=(
+                    "<a href=\"#\" class=\"list-group-item\">"+
+                    "<div class=\"list-group-status status-online\"></div>"+
+                    "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\""+entityList[i]['fromUser'][name]+"\">"+
+                    "<span class=\"contacts-title\">"+entityList[i]['fromUser']['name']+"</span>"+
+                    "<p>"+entityList[i]['content']+"</p>"+
+                    "</a>"
+                )
+
+            }
+        }
+        $("#contactList").html(content)
 
     }
-    this.showMessageContent = function(){
+    this.showMessageContent = function(id){
+        _this=this
+        $.ajax(
+            {
+                url:'/shortMessage/readMessage/'+id,
+                type: 'GET',
+                async: false,
+                success:function (data) {
+                    if(data){
+                        _this.fillMessageContent(data['entity'])
+                    }
+                },
+                error:function (e) {
+                    alert("获取用户信息失败");
+                }
 
+            }
+        )
     }
-    this.fillMessageContent = function () {
+    this.fillMessageContent = function (entity) {
 
     }
 //##################################################################//
