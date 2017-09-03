@@ -76,12 +76,12 @@ public class ShortMessageController {
      */
     @RequestMapping(value = {"/readMessage/{id}"},method = RequestMethod.GET)
     @ResponseBody
-    public MessageDto readMessage(Model model,@PathVariable Long id){
+    public EntityDto<MessageDto> readMessage(Model model,@PathVariable Long id){
          UserInfo currentUser = CommonTool.getUser();
             UserInfo user = userService.findOne(id);
             //更新信息为已读
             shortMessageService.updateIsReadToTrue(currentUser,user,0);
-            return new MessageDto(RequestStatus.SUCCESS, shortMessageService.showMessageRecord(currentUser,user),currentUser);
+            return  new EntityDto<>(RequestStatus.SUCCESS,new MessageDto(RequestStatus.SUCCESS, shortMessageService.showMessageRecord(currentUser,user),currentUser)) ;
     }
 
     //TODO:删除聊天记录

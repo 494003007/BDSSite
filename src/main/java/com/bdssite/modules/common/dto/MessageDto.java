@@ -19,7 +19,7 @@ public class MessageDto extends BaseDto {
     public UserInfo currentUser;
     public UserInfo otherUser;
     public Collection<MessageDto.MessageInfo> messageInfo = new ArrayList();
-    public Date sendTime;
+
 
     public MessageDto(RequestStatus status, List<ShortMessage> list, UserInfo currentUser) {
         super(status);
@@ -35,7 +35,7 @@ public class MessageDto extends BaseDto {
 
             while(var4.hasNext()) {
                 ShortMessage s = (ShortMessage)var4.next();
-                this.getMessageInfo().add(new MessageDto.MessageInfo(s.getContent(), Long.valueOf(s.getFromUser().getUid())));
+                this.getMessageInfo().add(new MessageDto.MessageInfo(s.getContent(), Long.valueOf(s.getFromUser().getUid()),s.getSendTime()));
             }
         }
 
@@ -65,29 +65,23 @@ public class MessageDto extends BaseDto {
         this.messageInfo = messageInfo;
     }
 
-    public Date getSendTime() {
-        return this.sendTime;
-    }
-
-    public void setSendTime(Date sendTime) {
-        this.sendTime = sendTime;
-    }
 
     class MessageInfo {
-        Long otherUserId;
+        Long fromUserId;
         String messageContent;
-
-        MessageInfo(String messageContent, Long otherUserId) {
-            this.otherUserId = otherUserId;
+        Date sendTime;
+        MessageInfo(String messageContent, Long fromUserId, java.sql.Date sendTime) {
+            this.fromUserId = fromUserId;
             this.messageContent = messageContent;
+            this.sendTime = sendTime;
         }
 
-        public Long getOtherUserId() {
-            return this.otherUserId;
+        public Long getFromUserId() {
+            return this.fromUserId;
         }
 
-        public void setOtherUserId(Long otherUserId) {
-            this.otherUserId = otherUserId;
+        public void setFromUserId(Long fromUserId) {
+            this.fromUserId = fromUserId;
         }
 
         public String getMessageContent() {
@@ -97,5 +91,13 @@ public class MessageDto extends BaseDto {
         public void setMessageContent(String messageContent) {
             this.messageContent = messageContent;
         }
+        public Date getSendTime() {
+            return this.sendTime;
+        }
+
+        public void setSendTime(Date sendTime) {
+            this.sendTime = sendTime;
+        }
+
     }
 }
