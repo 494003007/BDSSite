@@ -31,7 +31,6 @@
         <!-- END X-NAVIGATION VERTICAL -->
 
 
-
         <!-- PAGE CONTENT WRAPPER -->
         <div class="page-content-wrap">
             <!-- START CONTENT FRAME -->
@@ -43,13 +42,14 @@
                     </div>
                     <div class="pull-right">
                         <button class="btn btn-danger"><span class="fa fa-book"></span> Contacts</button>
-                        <button class="btn btn-default content-frame-right-toggle"><span class="fa fa-bars"></span></button>
+                        <button class="btn btn-default content-frame-right-toggle"><span class="fa fa-bars"></span>
+                        </button>
                     </div>
                 </div>
                 <!-- END CONTENT FRAME TOP -->
 
                 <!-- START CONTENT FRAME RIGHT -->
-                <div  class="content-frame-right">
+                <div class="content-frame-right">
 
                     <div id="contactList" class="list-group list-group-contacts border-bottom push-down-10">
                         <a href="#" class="list-group-item">
@@ -99,9 +99,11 @@
                     <div class="block">
                         <h4>Status</h4>
                         <div class="list-group list-group-simple">
-                            <a href="#" class="list-group-item"><span class="fa fa-circle text-success"></span> Online</a>
+                            <a href="#" class="list-group-item"><span class="fa fa-circle text-success"></span>
+                                Online</a>
                             <a href="#" class="list-group-item"><span class="fa fa-circle text-warning"></span> Away</a>
-                            <a href="#" class="list-group-item"><span class="fa fa-circle text-muted"></span> Offline</a>
+                            <a href="#" class="list-group-item"><span class="fa fa-circle text-muted"></span>
+                                Offline</a>
                         </div>
                     </div>
 
@@ -121,7 +123,8 @@
                                     <a href="#">John Doe</a>
                                     <span class="date">08:33</span>
                                 </div>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis suscipit eros vitae iaculis.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis suscipit eros
+                                vitae iaculis.
                             </div>
                         </div>
                         <div class="item">
@@ -158,7 +161,8 @@
                                     <a href="#">John Doe</a>
                                     <span class="date">09:22</span>
                                 </div>
-                                Vestibulum cursus ipsum ut dolor vulputate dapibus. Donec elementum est vel vulputate malesuada?
+                                Vestibulum cursus ipsum ut dolor vulputate dapibus. Donec elementum est vel vulputate
+                                malesuada?
                             </div>
                         </div>
                     </div>
@@ -229,72 +233,72 @@
     }
     function majorChooserInit() {
         $('#findByMajor').hide();
-        ajaxDataDisplay(null,"majorChildDisplay");
+        ajaxDataDisplay(null, "majorChildDisplay");
     }
-    function majorChildDisplay(majorParentId){
-        ajaxDataDisplay(majorParentId,"subjectChoose");
+    function majorChildDisplay(majorParentId) {
+        ajaxDataDisplay(majorParentId, "subjectChoose");
     }
-    function ajaxDataDisplay(majorParentId,functionName){
+    function ajaxDataDisplay(majorParentId, functionName) {
         var majorDiv = $('#majorPane');
-        $('#findByMajor').fadeOut(500,function () {
+        $('#findByMajor').fadeOut(500, function () {
             majorDiv.html("");
             $.ajax({
-                url:"/searchApi/majors",
+                url: "/searchApi/majors",
                 type: 'POST',
-                data:majorParentId?{'parentId':majorParentId}:{},
-                success:function (data) {
+                data: majorParentId ? {'parentId': majorParentId} : {},
+                success: function (data) {
                     var list = data['entityList'];
                     var num = list.length;
                     var buttonDom = [];
                     var moreRow = num % 6;
                     var defaultRow = Math.floor(num / 6);
-                    $.each(list,function () {
+                    $.each(list, function () {
                         buttonDom.push($("<button type=\"button\" onclick='" + functionName + "(" + this['id'] + ")' class=\"btn btn-primary btn-block\"><span class=\"fa fa-book\"></span> " + this['name'] + "</button>"));
                     });
-                    for(var i = 0; i < 6 ; i++){
+                    for (var i = 0; i < 6; i++) {
                         var temp = $("<div class=\"col-md-2\"></div>");
-                        for(var j = 0;j < (i < moreRow ? defaultRow + 1 : defaultRow );j++){
+                        for (var j = 0; j < (i < moreRow ? defaultRow + 1 : defaultRow ); j++) {
                             temp.append(buttonDom.pop());
                         }
                         majorDiv.append(temp);
                     }
                     $('#findByMajor').fadeIn(500);
                 },
-                error:function (e) {
+                error: function (e) {
                     alert("获取专业列表失败.")
                 }
 
             });
         });
     }
-    function subjectChoose(majorId){
+    function subjectChoose(majorId) {
         var majorDiv = $('#majorPane');
-        $('#findByMajor').fadeOut(500,function () {
+        $('#findByMajor').fadeOut(500, function () {
             majorDiv.html("");
             $.ajax({
-                url:"/searchApi/subject/byMajor",
+                url: "/searchApi/subject/byMajor",
                 type: 'POST',
-                data:{'majorId':majorId},
-                success:function (data) {
+                data: {'majorId': majorId},
+                success: function (data) {
                     var list = data['entityList'];
                     var num = list.length;
                     var buttonDom = [];
                     var moreRow = num % 6;
                     var defaultRow = Math.floor(num / 6);
-                    $.each(list,function () {
+                    $.each(list, function () {
                         buttonDom.push($("<button type=\"button\" onclick='delSubject(" + this['id'] + ")' class=\"btn btn-primary btn-block\"><span class=\"fa fa-minus\"></span> " + this['name'] + "</button>"));
                     });
                     majorDiv.append($("<p>请按实际情况划去关键词</p>"));
-                    for(var i = 0; i < 6 ; i++){
+                    for (var i = 0; i < 6; i++) {
                         var temp = $("<div class=\"col-md-2\"></div>");
-                        for(var j = 0;j < (i < moreRow ? defaultRow + 1 : defaultRow );j++){
+                        for (var j = 0; j < (i < moreRow ? defaultRow + 1 : defaultRow ); j++) {
                             temp.append(buttonDom.pop());
                         }
                         majorDiv.append(temp);
                     }
                     $('#findByMajor').fadeIn(500);
                 },
-                error:function (e) {
+                error: function (e) {
                     alert("获取专业列表失败.");
                 }
 
@@ -312,9 +316,5 @@
 <!-- END SCRIPTS -->
 </body>
 </html>
-
-
-
-
 
 
