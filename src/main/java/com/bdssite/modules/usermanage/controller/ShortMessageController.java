@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ed_cc on 2017/8/16.
@@ -37,6 +38,11 @@ public class ShortMessageController {
     private UserService userService;
 
 
+    //TODO:聊天界面获取
+    @RequestMapping(value = {"/messagePage"},method = RequestMethod.GET)
+    public String messagePage(Map<String, Object> map){
+        return "shortMessage/messagePage";
+    }
 
     //TODO:发信控制器
     @RequestMapping(value = {"/sendMessage"},method = RequestMethod.POST)
@@ -46,11 +52,17 @@ public class ShortMessageController {
         return "shortMessage/viewSent";
     }
 
-    //TODO:标记未读
+    /**
+     * 标记联系人为未读
+     * @param model
+     * @param id 联系人id
+     * @return
+     */
     @RequestMapping(value = {"/markNotReadMessage/{id}"},method = RequestMethod.GET)
     @ResponseBody
     public EntityDto<ShortMessage> markNotReadMessage(Model model,@PathVariable Long id){
-        ShortMessage shortMessage = shortMessageService.findOne(id);
+        UserInfo currentUser = CommonTool.getUser();
+        ShortMessage shortMessage = shortMessageService.findLastNewMessage(currentUser,userService.findOne(id));
         shortMessage.setIsRead(0);
         shortMessageService.save(shortMessage);
         return new EntityDto<>(RequestStatus.SUCCESS,shortMessage);
@@ -64,12 +76,12 @@ public class ShortMessageController {
      */
     @RequestMapping(value = {"/readMessage/{id}"},method = RequestMethod.GET)
     @ResponseBody
-    public MessageDto readMessage(Model model,@PathVariable Long id){
+    public EntityDto<MessageDto> readMessage(Model model,@PathVariable Long id){
          UserInfo currentUser = CommonTool.getUser();
             UserInfo user = userService.findOne(id);
             //更新信息为已读
             shortMessageService.updateIsReadToTrue(currentUser,user,0);
-            return new MessageDto(RequestStatus.SUCCESS, shortMessageService.showMessageRecord(currentUser,user),currentUser);
+            return  new EntityDto<>(RequestStatus.SUCCESS,new MessageDto(RequestStatus.SUCCESS, shortMessageService.showMessageRecord(currentUser,user),currentUser)) ;
     }
 
     //TODO:删除聊天记录
@@ -84,12 +96,19 @@ public class ShortMessageController {
         shortMessageService.deleteByIdIn(idsCollection);
         return new OperationDto(RequestStatus.SUCCESS);
     }
-    //TODO:新信息.
-    @RequestMapping(value = {"/showNewMessage}"},method = RequestMethod.GET)
+
+    /**
+     * 显示收到各个用户新信息的最后一条记录
+     * @param model
+     * @return
+     */
+
+    @RequestMapping(value = {"/showNewMessage"},method = RequestMethod.GET)
     @ResponseBody
     public ListDto<ShortMessage> showNewMessage(Model model){
         UserInfo currentUser = CommonTool.getUser();
             List<ShortMessage> shortMessages = shortMessageService.findByToUserAndIsRead(currentUser,0);
+            removeDuplicate(shortMessages);
             return new ListDto<>(RequestStatus.SUCCESS, shortMessages);
     }
 
@@ -101,10 +120,57 @@ public class ShortMessageController {
         for  ( int  i  =   list.size()  -   1 ; i  >=  0; i -- )  {
             for  ( int  j  =  i+1 ; j  <  list.size()  ; j ++ )  {
                 if  (list.get(j).getFromUser().equals(list.get(i).getFromUser()))  {
-                    list.remove(j);
+                    list.remove(i);
                 }
             }
         }
 
+    }
+    //TODO:请求所有联系人
+    @RequestMapping(value = {"/showContact"},method = RequestMethod.GET)
+    @ResponseBody
+    public  ListDto<ShortMessage>  showContact(Model model){
+        UserInfo currentUser = CommonTool.getUser();
+        List<ShortMessage> currentUserShortMessage= shortMessageService.findByFromUserOrToUser(currentUser,currentUser);
+
+        for  ( int  i  =   currentUserShortMessage.size()  -   1 ; i  >=  0; i -- )  {
+            for  ( int  j  =  i+1 ; j  <  currentUserShortMessage.size()  ; j ++ )  {
+                UserInfo fromUser = currentUserShortMessage.get(j).getFromUser();
+                UserInfo toUser=currentUserShortMessage.get(j).getToUser();
+                if (fromUser.getUid()!=currentUser.getUid()){
+                    if  (fromUser.equals(currentUserShortMessage.get(i).getFromUser())
+                            || fromUser.equals(currentUserShortMessage.get(i).getToUser()))  {
+                        currentUserShortMessage.remove(i);
+                    }
+                }
+                else if (toUser.getUid()!=currentUser.getUid()){
+                    if  (toUser.equals(currentUserShortMessage.get(i).getFromUser())
+                            || toUser.equals(currentUserShortMessage.get(i).getToUser()))  {
+                        currentUserShortMessage.remove(i);
+                    }
+                }
+
+            }
+        }
+
+
+
+//        List<UserInfo> contact = new ArrayList<>();
+//        for (ShortMessage shortMessage:currentUserShortMessage){
+//            UserInfo toUser=shortMessage.getToUser();
+//            UserInfo fromUser = shortMessage.getFromUser();
+//
+//            if (toUser.getUid() != currentUser.getUid()){
+//                if (!contact.contains(toUser)){
+//                    contact.add(toUser);
+//                }
+//            }
+//            else if(fromUser.getUid() != currentUser.getUid()){
+//                if (!contact.contains(fromUser)){
+//                    contact.add(fromUser);
+//                }
+//            }
+//        }
+        return new ListDto<ShortMessage>(RequestStatus.SUCCESS,currentUserShortMessage);
     }
 }

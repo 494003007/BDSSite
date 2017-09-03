@@ -1,80 +1,103 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
 package com.bdssite.modules.common.dto;
 
 import com.bdssite.modules.common.RequestStatus;
+import com.bdssite.modules.common.dto.BaseDto;
 import com.bdssite.modules.usermanage.entity.ShortMessage;
 import com.bdssite.modules.usermanage.entity.UserInfo;
-
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by Ed_cc on 2017/8/31.
- */
 public class MessageDto extends BaseDto {
+    public UserInfo currentUser;
+    public UserInfo otherUser;
+    public Collection<MessageDto.MessageInfo> messageInfo = new ArrayList();
+
+
     public MessageDto(RequestStatus status, List<ShortMessage> list, UserInfo currentUser) {
         super(status);
-        messageInfo = new ArrayList<>();
-        toUser = currentUser;
-        if (list != null) {
-            if (list.get(0).getToUser()==currentUser) {
-                fromUser = list.get(0).getFromUser();
-            } else
-                fromUser = list.get(0).getToUser();
-
-            for (ShortMessage s : list) {
-                getMessageInfo().add(new MessageInfo(s.getContent(), s.getFromUser().getUid()));
+        this.currentUser = currentUser;
+        if(list != null) {
+            if(((ShortMessage)list.get(0)).getToUser().getUid() == currentUser.getUid()) {
+                this.otherUser = ((ShortMessage)list.get(0)).getFromUser();
+            } else {
+                this.otherUser = ((ShortMessage)list.get(0)).getToUser();
             }
 
+            Iterator var4 = list.iterator();
+
+            while(var4.hasNext()) {
+                ShortMessage s = (ShortMessage)var4.next();
+                this.getMessageInfo().add(new MessageDto.MessageInfo(s.getContent(), Long.valueOf(s.getFromUser().getUid()),s.getSendTime()));
+            }
         }
 
     }
 
-    public UserInfo getToUser() {
-        return toUser;
+    public UserInfo getCurrentUser() {
+        return this.currentUser;
     }
 
-    public void setToUser(UserInfo toUser) {
-        this.toUser = toUser;
+    public void setCurrentUser(UserInfo currentUser) {
+        this.currentUser = currentUser;
     }
 
-    public UserInfo getFromUser() {
-        return fromUser;
+    public UserInfo getOtherUser() {
+        return this.otherUser;
     }
 
-    public void setFromUser(UserInfo fromUser) {
-        this.fromUser = fromUser;
+    public void setOtherUser(UserInfo otherUser) {
+        this.otherUser = otherUser;
     }
 
-    public List<MessageInfo> getMessageInfo() {
-        return messageInfo;
+    public Collection<MessageDto.MessageInfo> getMessageInfo() {
+        return this.messageInfo;
     }
 
-    public void setMessageInfo(List<MessageInfo> messageInfo) {
+    public void setMessageInfo(Collection<MessageDto.MessageInfo> messageInfo) {
         this.messageInfo = messageInfo;
     }
 
-    public Date getSendTime() {
-        return sendTime;
-    }
-
-    public void setSendTime(Date sendTime) {
-        this.sendTime = sendTime;
-    }
-
-    public UserInfo toUser;
-    public UserInfo fromUser;
-    public List<MessageInfo> messageInfo;
-    public Date sendTime;
 
     class MessageInfo {
-        //发送者flag
-        MessageInfo(String messageContent, Long fromUserId) {
-            this.fromUserId = fromUserId;
-            this.messageContent = messageContent;
-        }
-
         Long fromUserId;
         String messageContent;
+        Date sendTime;
+        MessageInfo(String messageContent, Long fromUserId, java.sql.Date sendTime) {
+            this.fromUserId = fromUserId;
+            this.messageContent = messageContent;
+            this.sendTime = sendTime;
+        }
+
+        public Long getFromUserId() {
+            return this.fromUserId;
+        }
+
+        public void setFromUserId(Long fromUserId) {
+            this.fromUserId = fromUserId;
+        }
+
+        public String getMessageContent() {
+            return this.messageContent;
+        }
+
+        public void setMessageContent(String messageContent) {
+            this.messageContent = messageContent;
+        }
+        public Date getSendTime() {
+            return this.sendTime;
+        }
+
+        public void setSendTime(Date sendTime) {
+            this.sendTime = sendTime;
+        }
+
     }
 }
