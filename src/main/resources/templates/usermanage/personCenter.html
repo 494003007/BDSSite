@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: header (pageTitle='用户管理')">
+    <!-- META SECTION -->
+    <title>Joli Admin - Responsive Bootstrap Admin Template</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <!-- END META SECTION -->
+
+    <!-- CSS INCLUDE -->
+    <link rel="stylesheet" type="text/css"  href="/css/theme-default.css"/>
+    <link rel="stylesheet" type="text/css"  href="/css/bootstrap-table.min.css"/>
+    <!-- EOF CSS INCLUDE -->
+</head>
+
+
+<body>
+
+
+
+<!-- START PAGE CONTAINER -->
+<div class="page-container page-navigation-toggled page-container-wide page-navigation-top-fixed">
+
+    <!-- START PAGE SIDEBAR -->
+    <div th:include="fragments/layout :: sideBar" th:remove="tag"></div>
+    <!-- END PAGE SIDEBAR -->
+
+
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+
+        <!--START SMALL NAVIGATION-->
+        <ul class="breadcrumb">
+
+        </ul>
+        <div th:include="fragments/layout :: contentTop" th:remove="tag"></div>
+        <!--END SMALL NAVIGATION-->
+
+        <div class="page-content-wrap">
+
+            <!-- START X-NAVIGATION VERTICAL -->
+            <div th:include="fragments/layout :: contentTop" th:remove="tag"></div>
+            <!-- END X-NAVIGATION VERTICAL -->
+
+            <div class="row">
+                <div class="col-md-3">
+
+                    <div class="panel panel-default">
+                        <div class="panel-body profile" style="background: url('/assets/images/gallery/music-4.jpg') center center no-repeat;">
+                            <div class="profile-image">
+                                <img src="/assets/images/users/user3.jpg" alt="Nadia Ali"/>
+                            </div>
+                            <div class="profile-data">
+                                <div class="profile-data-name" id="name">Nadia Ali</div>
+                                <div class="profile-data-title" style="color: #FFF;" id="description">Singer-Songwriter</div>
+                            </div>
+
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button class="btn btn-info btn-rounded btn-block"><span class="fa fa-check"></span> Following</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary btn-rounded btn-block"><span class="fa fa-comments"></span> Chat</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body list-group border-bottom">
+                            <a href="#" id="userInfo" onclick="changeForm('userInfo','userInfoForm')" class="list-group-item"><span class="fa fa-bar-chart-o"></span> 个人信息 </a>
+                            <a href="#" id="resume" onclick="changeForm('resume','resumeForm')" class="list-group-item"><span class="fa fa-coffee"></span> 我的简历 <span class="badge badge-default"></span></a>
+                            <a href="#" id="collection" onclick="changeForm('collection','collectionForm')" class="list-group-item"><span class="fa fa-users"></span> 个人收藏 <span class="badge badge-danger"></span></a>
+                            <a href="#" id="searchHistory" onclick="changeForm('searchHistory','searchHistoryForm')" class="list-group-item"><span class="fa fa-folder"></span> 搜索记录 </a>
+                            <a href="#" id="passwordSet" onclick="changeForm('passwordSet','passwordSetForm')" class="list-group-item"><span class="fa fa-cog"></span> 修改密码 </a>
+                            <a href="#" id="setting" onclick="changeForm('setting','settingForm')" class="list-group-item"><span class="fa fa-cog"></span> 设置 </a>
+                        </div>
+                        <div class="panel-body">
+                            <h4 class="text-title">Friends</h4>
+                            <div class="row">
+                                <div class="col-md-4 col-xs-4">
+                                    <a href="#" class="friend">
+                                        <img src="/assets/images/users/user.jpg"/>
+                                        <span>Dmitry Ivaniuk</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-4 col-xs-4">
+                                    <a href="#" class="friend">
+                                        <img src="/assets/images/users/user2.jpg"/>
+                                        <span>John Doe</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-4 col-xs-4">
+                                    <a href="#" class="friend">
+                                        <img src="/assets/images/users/user4.jpg"/>
+                                        <span>Brad Pit</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-xs-4">
+                                    <a href="#" class="friend">
+                                        <img src="/assets/images/users/user5.jpg"/>
+                                        <span>John Travolta</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-4 col-xs-4">
+                                    <a href="#" class="friend">
+                                        <img src="/assets/images/users/user6.jpg"/>
+                                        <span>Darth Vader</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-4 col-xs-4">
+                                    <a href="#" class="friend">
+                                        <img src="/assets/images/users/user7.jpg"/>
+                                        <span>Samuel Leroy Jackson</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <h4 class="text-title">Photos</h4>
+                            <div class="gallery" id="links">
+                                <a href="/assets/images/gallery/music-1.jpg" title="Music Image 1" class="gallery-item" data-gallery>
+                                    <div class="image">
+                                        <img src="/assets/images/gallery/music-1.jpg" alt="Music Image 1"/>
+                                    </div>
+                                </a>
+                                <a href="/assets/images/gallery/music-2.jpg" title="Music Image 2" class="gallery-item" data-gallery>
+                                    <div class="image">
+                                        <img src="/assets/images/gallery/music-2.jpg" alt="Music Image 2"/>
+                                    </div>
+                                </a>
+                                <a href="/assets/images/gallery/music-3.jpg" title="Music Image 3" class="gallery-item" data-gallery>
+                                    <div class="image">
+                                        <img src="/assets/images/gallery/music-3.jpg" alt="Music Image 3"/>
+                                    </div>
+                                </a>
+                                <a href="/assets/images/gallery/nature-1.jpg" title="Nature Image 1" class="gallery-item" data-gallery>
+                                    <div class="image">
+                                        <img src="/assets/images/gallery/nature-1.jpg" alt="Nature Image 1"/>
+                                    </div>
+                                </a>
+                                <a href="/assets/images/gallery/nature-2.jpg" title="Nature Image 2" class="gallery-item" data-gallery>
+                                    <div class="image">
+                                        <img src="/assets/images/gallery/nature-2.jpg" alt="Nature Image 2"/>
+                                    </div>
+                                </a>
+                                <a href="/assets/images/gallery/nature-3.jpg" title="Nature Image 3" class="gallery-item" data-gallery>
+                                    <div class="image">
+                                        <img src="/assets/images/gallery/nature-3.jpg" alt="Nature Image 3"/>
+                                    </div>
+                                </a>
+                                <a href="/assets/images/gallery/nature-4.jpg" title="Nature Image 4" class="gallery-item" data-gallery>
+                                    <div class="image">
+                                        <img src="/assets/images/gallery/nature-4.jpg" alt="Nature Image 4"/>
+                                    </div>
+                                </a>
+                                <a href="/assets/images/gallery/nature-5.jpg" title="Nature Image 5" class="gallery-item" data-gallery>
+                                    <div class="image">
+                                        <img src="/assets/images/gallery/nature-5.jpg" alt="Nature Image 5"/>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-9">
+
+                    <form id="userInfoForm" class="form-horizontal">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><strong>One Column</strong> Layout</h3>
+                                <ul class="panel-controls">
+                                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="panel-body">
+                                <p>This is non libero bibendum, scelerisque arcu id, placerat nunc. Integer ullamcorper rutrum dui eget porta. Fusce enim dui, pulvinar a augue nec, dapibus hendrerit mauris. Praesent efficitur, elit non convallis faucibus, enim sapien suscipit mi, sit amet fringilla felis arcu id sem. Phasellus semper felis in odio convallis, et venenatis nisl posuere. Morbi non aliquet magna, a consectetur risus. Vivamus quis tellus eros. Nulla sagittis nisi sit amet orci consectetur laoreet. Vivamus volutpat erat ac vulputate laoreet. Phasellus eu ipsum massa.</p>
+                            </div>
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Text Field</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">This is sample of text field</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Password</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
+                                            <input type="password" class="form-control"/>
+                                        </div>
+                                        <span class="help-block">Password field sample</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Datepicker</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                            <input type="text" class="form-control datepicker" value="2014-11-01">
+                                        </div>
+                                        <span class="help-block">Click on input field to get datepicker</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Textarea</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <textarea class="form-control" rows="5"></textarea>
+                                        <span class="help-block">Default textarea field</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Tags</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <input type="text" class="tagsinput" value="First,Second,Third"/>
+                                        <span class="help-block">Default textarea field</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Select</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <select class="form-control select">
+                                            <option>Option 1</option>
+                                            <option>Option 2</option>
+                                            <option>Option 3</option>
+                                            <option>Option 4</option>
+                                            <option>Option 5</option>
+                                        </select>
+                                        <span class="help-block">Select box example</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">File</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <input type="file" class="fileinput btn-primary" name="filename" id="filename" title="Browse file"/>
+                                        <span class="help-block">Input type file</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">Checkbox</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <label class="check"><input type="checkbox" class="icheckbox" checked="checked"/> Checkbox title</label>
+                                        <span class="help-block">Checkbox sample, easy to use</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="panel-footer">
+                                <button class="btn btn-default">Clear Form</button>
+                                <button class="btn btn-primary pull-right">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <form id="collectionForm" class="form-horizontal"></form>
+                </div>
+
+        </div>
+        </div>
+    </div>
+    <!-- END PAGE CONTENT -->
+</div>
+<!-- END PAGE CONTAINER -->
+
+
+
+
+<div th:include="fragments/layout :: messageBox" th:remove="tag">
+
+</div>
+
+
+<!-- START SCRIPTS -->
+<div th:include="fragments/layout :: allHasJs" th:remove="tag">
+
+</div>
+
+<!-- START THIS PAGE PLUGINS-->
+<script type='text/javascript' src='/js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="/js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+
+<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
+<script type="text/javascript" src="/js/plugins/rickshaw/d3.v3.js"></script>
+<script type="text/javascript" src="/js/plugins/rickshaw/rickshaw.min.js"></script>
+<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
+<script type='text/javascript' src='/js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+<script type="text/javascript" src="/js/plugins/owl/owl.carousel.min.js"></script>
+<script type="text/javascript" src="/js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-file-input.js"></script>
+<script type="text/javascript" src="/js/plugins/moment.min.js"></script>
+<script type="text/javascript" src="/js/plugins/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="/js/plugins/bootstrap/bootstrap-table-zh-CN.min.js"></script>
+<!-- END THIS PAGE PLUGINS-->
+
+<!-- START TEMPLATE -->
+<div th:include="fragments/layout :: templateJs" th:remove="tag"></div>
+<!-- END TEMPLATE -->
+<!-- END SCRIPTS -->
+<script>
+
+    function changeForm(itemName,formId) {
+        $("a.list-group-item").attr("class","list-group-item");
+        $("#"+itemName+"").addClass("active");
+        $("#userInfoForm").hide();
+        $("#collectionForm").hide();
+        $("#"+formId+"").show();
+    }
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
