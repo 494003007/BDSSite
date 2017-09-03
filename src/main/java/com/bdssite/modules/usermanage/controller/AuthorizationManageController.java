@@ -183,6 +183,10 @@ public class AuthorizationManageController {
 
     /**************      用户增删查改      **************/
 
+    @RequestMapping(value = "personCenter", method = RequestMethod.GET)
+    public String personCenter(Map<String, Object> map){
+        return "/usermanage/personCenter";
+    }
 
     @RequestMapping(value = "userInfoList", method = RequestMethod.GET)
     public String userInfoList(Map<String, Object> map){
@@ -203,6 +207,7 @@ public class AuthorizationManageController {
         Page<UserInfo> result = userService.queryAllUserInfoPaging(limit,offset);
         return new PagingDto<>(RequestStatus.SUCCESS,result);
     }
+
 
     @RequestMapping(value = "userInfos/{uid}", method = RequestMethod.GET)
     @ResponseBody
