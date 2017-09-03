@@ -90,7 +90,7 @@ function MessageManage() {
         for (var i in entityList){
             if(currentUser['uid'] == entityList[i]['fromUser']['uid']){
                 content+=(
-                    "<a href=\"/shortMessage/messagePage/\" class=\"list-group-item\">"+
+                    "<a href=\"# \" onclick=\'messageManage.showMessageContent("+entityList[i]['toUser']['uid']+")\' class=\"list-group-item\">"+
                     "<div class=\"list-group-status status-online\"></div>"+
                     "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\""+entityList[i]['toUser'][name]+"\">"+
                     "<span class=\"contacts-title\">"+entityList[i]['toUser']['name']+"</span>"+
@@ -100,7 +100,7 @@ function MessageManage() {
             }
             else if(currentUser['uid'] == entityList[i]['toUser']['uid']){
                 content+=(
-                    "<a href=\"#\" class=\"list-group-item\">"+
+                    "<a href=\"#\" onclick=\'messageManage.showMessageContent("+entityList[i]['fromUser']['uid']+")\' class=\"list-group-item\">"+
                     "<div class=\"list-group-status status-online\"></div>"+
                     "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\""+entityList[i]['fromUser'][name]+"\">"+
                     "<span class=\"contacts-title\">"+entityList[i]['fromUser']['name']+"</span>"+
@@ -132,6 +132,10 @@ function MessageManage() {
             }
         )
     }
+    /**
+     * 填充聊天内容
+     * @param entity
+     */
     this.fillMessageContent = function (entity) {
         var currentUser = $.cookie("userData")
         currentUser = JSON.parse(currentUser);
@@ -168,6 +172,12 @@ function MessageManage() {
                     "</div>"
             }
             $("#messageContent").html(content)
+            $(".messages .item").each(function(index){
+                var elm = $(this);
+                setInterval(function(){
+                    elm.addClass("item-visible");
+                },index*300);
+            });
         }
 
     }
