@@ -40,7 +40,7 @@ public class ShortMessageService extends BaseService<ShortMessageDao, ShortMessa
     }
 
     public List<ShortMessage> showMessageRecord(UserInfo user1, UserInfo user2) {
-        return dao.findByToUserAndFromUserOrToUserAndFromUser(user1, user2, user2, user1);
+        return dao.findByToUserAndFromUserOrToUserAndFromUserOrderBySendTimeDesc(user1, user2, user2, user1);
     }
 
     public ShortMessage findLastNewMessage(UserInfo user1, UserInfo user2) {

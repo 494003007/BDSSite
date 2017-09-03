@@ -41,7 +41,7 @@ function MessageManage() {
         for (var i in entityList){
 
             content+=("" +
-            "<a href=\"#\" class=\"list-group-item\">"+
+            "<a href=\"/shortMessage/messagePage/"+entityList[i]['fromUser']['uid']+"\" class=\"list-group-item\">"+
                 "<div class=\"list-group-status status-online\"></div>"+
                " <img src=\"/assets/images/users/user2.jpg\" class=\"pull-left\" alt=\"System\"/>"+
                 "<span class=\"contacts-title\" id=\"otherUserId\""+entityList[i]['fromUser']['uid']+">"+entityList[i]['fromUser']['name']+"</span>"+
@@ -90,7 +90,7 @@ function MessageManage() {
         for (var i in entityList){
             if(currentUser['uid'] == entityList[i]['fromUser']['uid']){
                 content+=(
-                    "<a href=\"#\" class=\"list-group-item\">"+
+                    "<a href=\"/shortMessage/messagePage/\" class=\"list-group-item\">"+
                     "<div class=\"list-group-status status-online\"></div>"+
                     "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\""+entityList[i]['toUser'][name]+"\">"+
                     "<span class=\"contacts-title\">"+entityList[i]['toUser']['name']+"</span>"+
@@ -183,7 +183,7 @@ function MessageManage() {
 //##################################################################//
     this.cutContentByLenth = function (content,lenth) {
         var  messageContent="";
-        if(content.length>25){
+        if(content != null && content.length>25){
              messageContent = (content.substring(0,lenth)+"......");
             return messageContent;
         }
