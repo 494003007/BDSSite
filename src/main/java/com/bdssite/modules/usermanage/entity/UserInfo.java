@@ -43,6 +43,15 @@ public class UserInfo implements Serializable{
     private String true_name;//真实姓名
 //    @DateTimeFormat( pattern = "yyyy-MM-dd" )
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private String description;//自我描述
     private Date birth_date;//出生日期
 
     public String getCity() {
