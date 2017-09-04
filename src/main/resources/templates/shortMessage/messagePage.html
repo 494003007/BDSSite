@@ -112,61 +112,11 @@
 
                 <!-- START CONTENT FRAME BODY -->
                 <div class="content-frame-body content-frame-body-left">
-
+                    <!-- Message Content Begin-->
                     <div id="messageContent" class="messages messages-img">
-                        <div class="item in">
-                            <div class="image">
-                                <img src="/assets/images/users/user2.jpg" alt="John Doe">
-                            </div>
-                            <div class="text">
-                                <div class="heading">
-                                    <a href="#">John Doe</a>
-                                    <span class="date">08:33</span>
-                                </div>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis suscipit eros
-                                vitae iaculis.
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="image">
-                                <img src="/assets/images/users/user.jpg" alt="Dmitry Ivaniuk">
-                            </div>
-                            <div class="text">
-                                <div class="heading">
-                                    <a href="#">Dmitry Ivaniuk</a>
-                                    <span class="date">08:39</span>
-                                </div>
-                                Integer et ipsum vitae urna mattis dictum. Sed eu sollicitudin nibh, in luctus velit.
-                            </div>
-                        </div>
 
-                        <div class="item">
-                            <div class="image">
-                                <img src="/assets/images/users/user.jpg" alt="Dmitry Ivaniuk">
-                            </div>
-                            <div class="text">
-                                <div class="heading">
-                                    <a href="#">Dmitry Ivaniuk</a>
-                                    <span class="date">09:11</span>
-                                </div>
-                                Fusce ultricies erat quis massa interdum, eu elementum urna iaculis
-                            </div>
-                        </div>
-                        <div class="item in">
-                            <div class="image">
-                                <img src="/assets/images/users/user2.jpg" alt="John Doe">
-                            </div>
-                            <div class="text">
-                                <div class="heading">
-                                    <a href="#">John Doe</a>
-                                    <span class="date">09:22</span>
-                                </div>
-                                Vestibulum cursus ipsum ut dolor vulputate dapibus. Donec elementum est vel vulputate
-                                malesuada?
-                            </div>
-                        </div>
                     </div>
-
+                    <!-- Message Content End-->
                     <div class="panel panel-default push-up-10">
                         <div class="panel-body panel-body-search">
                             <div class="input-group">
@@ -309,8 +259,9 @@
 
 
     messageManage.showContact();
-    messageManage.showMessageContent(4);
-
+    if ($.cookie("otherId")!=0){
+        messageManage.showMessageContent($.cookie("otherId"));
+    }
 </script>
 <!-- END TEMPLATE -->
 <!-- END SCRIPTS -->

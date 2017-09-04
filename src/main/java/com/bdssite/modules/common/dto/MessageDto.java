@@ -24,7 +24,7 @@ public class MessageDto extends BaseDto {
     public MessageDto(RequestStatus status, List<ShortMessage> list, UserInfo currentUser) {
         super(status);
         this.currentUser = currentUser;
-        if(list != null) {
+        if(list != null ) {
             if(((ShortMessage)list.get(0)).getToUser().getUid() == currentUser.getUid()) {
                 this.otherUser = ((ShortMessage)list.get(0)).getFromUser();
             } else {

@@ -2,8 +2,13 @@
 var messageManage = new MessageManage();
 messageManage.showNewMessage()
 
+
+/**
+ * 聊天模块
+ * @constructor
+ */
 function MessageManage() {
-//##################################################################//
+//###########################   --  START  --   ###############################//
     /**
      * 请求新信息
      */
@@ -30,7 +35,6 @@ function MessageManage() {
         )
 
     }
-
     /**
      * 填充新信息提示内容
      * @param entityList
@@ -41,7 +45,7 @@ function MessageManage() {
         for (var i in entityList){
 
             content+=("" +
-            "<a href=\"/shortMessage/messagePage/"+entityList[i]['fromUser']['uid']+"\" class=\"list-group-item\">"+
+            "<a href=\"#\" onclick='messageManage.clickNewMessage("+entityList[i]['fromUser']['uid']+")' class=\"list-group-item\">"+
                 "<div class=\"list-group-status status-online\"></div>"+
                " <img src=\"/assets/images/users/user2.jpg\" class=\"pull-left\" alt=\"System\"/>"+
                 "<span class=\"contacts-title\" id=\"otherUserId\""+entityList[i]['fromUser']['uid']+">"+entityList[i]['fromUser']['name']+"</span>"+
@@ -51,18 +55,25 @@ function MessageManage() {
         }
         $("#message_moudle").html(content)
     }
-
     /**
      * 填充新信息数量
      * @param entityList
      */
     this.fillNewMessageCount=function (entityList) {
         $("#new_message_count").html(entityList.length)
-        $("#new_message_inner_count").html(entityList.length+"message")
+        $("#new_message_inner_count").html(entityList.length+" message")
     }
-//##################################################################//
+    this.clickNewMessage = function (id) {
+        $.cookie('otherId',id,{path:'/'});
+        $(location).attr('href', '/shortMessage/messagePage');
+    }
+//###########################   --   END   --   ###############################//
 
-//##################################################################//
+
+//###########################   --  START  --   ###############################//
+    /**
+     * 请求通讯录
+     */
     this.showContact = function () {
         _this=this
         $.ajax(
@@ -82,6 +93,10 @@ function MessageManage() {
             }
         )
     }
+    /**
+     * 填充通讯录
+     * @param entityList
+     */
     this.fillContact = function (entityList) {
         _this=this
         content = "";
@@ -113,6 +128,10 @@ function MessageManage() {
         $("#contactList").html(content)
 
     }
+    /**
+     * 请求聊天内容
+     * @param id
+     */
     this.showMessageContent = function(id){
         _this=this
         $.ajax(
@@ -181,16 +200,14 @@ function MessageManage() {
         }
 
     }
-//##################################################################//
+//###########################   --   END   --   ###############################//
 
 
 
-
-
-
-
-
-//##################################################################//
+//###########################   --  START  --   ###############################//
+    /**
+     *  取一定长度字符串
+     */
     this.cutContentByLenth = function (content,lenth) {
         var  messageContent="";
         if(content != null && content.length>25){
@@ -203,9 +220,7 @@ function MessageManage() {
             return messageContent;
           }
     }
-
-
-//##################################################################//
+//###########################   --   END   --   ###############################//
 
 
 
