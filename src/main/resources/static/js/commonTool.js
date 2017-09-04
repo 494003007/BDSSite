@@ -49,25 +49,30 @@ function fillFormUseAjax(ajaxOption,form,callback){
  */
 function fillFormUseEntity(entity,form){
     for(var key in entity){
-        var element = form.find('#' +  key);
-        if(isExist(element)){
-            if(!element.is("input[type='hidden']")){
-                element.attr("disabled",false);
-                element.attr("isChanged",false);
+        if(key=='sex'){
+            var element = form.find("[name=sex]");
+        }else
+             var element = form.find('#' +  key);
+        if(isExist(element)) {
+            if (!element.is("input[type='hidden']")) {
+                element.attr("disabled", false);
+                element.attr("isChanged", false);
                 element.change(
                     function (eventElement) {
-                        $(eventElement.currentTarget).attr("isChanged",true);
+                        $(eventElement.currentTarget).attr("isChanged", true);
                     }
                 );
             }
-            if(element.is("input[type='text']","input[type='password']","textarea")||element.is("textarea")){
+            if (element.is("input[type='text']", "input[type='password']", "textarea") || element.is("textarea")) {
                 element.val(entity[key]);
-            }else if(element.is("select")){
-                element.find("option[value='"+  entity[key]  + "']").attr("selected",true);
-            }else{
+            } else if (element.is("select")) {
+                element.find("option[value='" + entity[key] + "']").attr("selected", true);
+            } else if(element.is("input[type='radio']"))  {
+                form.find("[name=sex][value="+entity[key]+"]").attr("checked",true);
+            }else
+            {
                 element.val(entity[key]);
             }
-
         }
     }
 }

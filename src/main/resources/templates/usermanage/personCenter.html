@@ -56,8 +56,8 @@
                                 <img src="/assets/images/users/user3.jpg" alt="Nadia Ali"/>
                             </div>
                             <div class="profile-data">
-                                <div class="profile-data-name" id="name">Nadia Ali</div>
-                                <div class="profile-data-title" style="color: #FFF;" id="description">Singer-Songwriter</div>
+                                <div class="profile-data-name" id="top_name">Nadia Ali</div>
+                                <div class="profile-data-title" style="color: #FFF;" id="top_description">Singer-Songwriter</div>
                             </div>
 
                         </div>
@@ -72,11 +72,11 @@
                             </div>
                         </div>
                         <div class="panel-body list-group border-bottom">
-                            <a href="#" id="userInfo" onclick="changeForm('userInfo','userInfoForm')" class="list-group-item"><span class="fa fa-bar-chart-o"></span> 个人信息 </a>
+                            <a href="#" id="userInfo" onclick="changeForm('userInfo','userInfoForm',fillForm())" class="list-group-item active"><span class="fa fa-bar-chart-o"></span> 个人信息 </a>
                             <a href="#" id="resume" onclick="changeForm('resume','resumeForm')" class="list-group-item"><span class="fa fa-coffee"></span> 我的简历 <span class="badge badge-default"></span></a>
                             <a href="#" id="collection" onclick="changeForm('collection','collectionForm')" class="list-group-item"><span class="fa fa-users"></span> 个人收藏 <span class="badge badge-danger"></span></a>
                             <a href="#" id="searchHistory" onclick="changeForm('searchHistory','searchHistoryForm')" class="list-group-item"><span class="fa fa-folder"></span> 搜索记录 </a>
-                            <a href="#" id="passwordSet" onclick="changeForm('passwordSet','passwordSetForm')" class="list-group-item"><span class="fa fa-cog"></span> 修改密码 </a>
+                            <a href="#" id="textSet" onclick="changeForm('textSet','textSetForm')" class="list-group-item"><span class="fa fa-cog"></span> 修改密码 </a>
                             <a href="#" id="setting" onclick="changeForm('setting','settingForm')" class="list-group-item"><span class="fa fa-cog"></span> 设置 </a>
                         </div>
                         <div class="panel-body">
@@ -174,55 +174,153 @@
                     <form id="userInfoForm" class="form-horizontal">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><strong>One Column</strong> Layout</h3>
-                                <ul class="panel-controls">
-                                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
-                                </ul>
+                                <h3 class="panel-title"><strong>个人中心 </strong> > 个人信息</h3>
+
                             </div>
                             <div class="panel-body">
-                                <p>This is non libero bibendum, scelerisque arcu id, placerat nunc. Integer ullamcorper rutrum dui eget porta. Fusce enim dui, pulvinar a augue nec, dapibus hendrerit mauris. Praesent efficitur, elit non convallis faucibus, enim sapien suscipit mi, sit amet fringilla felis arcu id sem. Phasellus semper felis in odio convallis, et venenatis nisl posuere. Morbi non aliquet magna, a consectetur risus. Vivamus quis tellus eros. Nulla sagittis nisi sit amet orci consectetur laoreet. Vivamus volutpat erat ac vulputate laoreet. Phasellus eu ipsum massa.</p>
+                                <br><br><br>
                             </div>
                             <div class="panel-body">
 
                                 <div class="form-group">
-                                    <label class="col-md-3 col-xs-12 control-label">Text Field</label>
+                                    <label class="col-md-3 col-xs-12 control-label">账号</label>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                            <input type="text" class="form-control"/>
+                                            <input id="username" type="text" class="form-control" readonly="readonly"/>
                                         </div>
-                                        <span class="help-block">This is sample of text field</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 col-xs-12 control-label">Password</label>
+                                    <label class="col-md-3 col-xs-12 control-label">名称</label>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
-                                            <input type="password" class="form-control"/>
+                                            <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
+                                            <input id="name" type="text" class="form-control"/>
                                         </div>
-                                        <span class="help-block">Password field sample</span>
+
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 col-xs-12 control-label">Datepicker</label>
+                                    <label class="col-md-3 col-xs-12 control-label">真实姓名</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
+                                            <input id="true_name" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">自我描述</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <textarea id="description" class="form-control" rows="5"></textarea>
+                                        <span class="help-block">Default textarea field</span>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">出生日期</label>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                            <input type="text" class="form-control datepicker" value="2014-11-01">
+                                            <input id="birth_date" type="text" class="form-control datepicker" value="2014-11-01">
                                         </div>
-                                        <span class="help-block">Click on input field to get datepicker</span>
+                                        <span class="help-block">请正确按照日期格式</span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 col-xs-12 control-label">Textarea</label>
+                                    <label class="col-md-3 col-xs-12 control-label">国家</label>
                                     <div class="col-md-6 col-xs-12">
-                                        <textarea class="form-control" rows="5"></textarea>
-                                        <span class="help-block">Default textarea field</span>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
+                                            <input id="city" type="text" class="form-control"/>
+                                        </div>
                                     </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">邮箱</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
+                                            <input id="email" type="text" class="form-control" readonly="readonly"/>
+                                        </div>
+                                        <span class="help-block">邮箱不能为空</span>
+                                    </div>
+                                    <button type="button" class="btn btn-primary">更改</button>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">qq </label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
+                                            <input id="qq" type="text" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary">更改</button>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">电话号码</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
+                                            <input id="phone" type="text" class="form-control" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">隐私设置</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <select id="info_shield" class="form-control select">
+                                            <option value="0">不屏蔽</option>
+                                            <option value="1">屏蔽</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">性别</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="col-sm-2">
+                                            <input type="radio" name="sex" value="1"  readonly="readonly"/>男<span></span>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="radio" name="sex" value="0"  readonly="readonly"/>女<span></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">地址</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
+                                            <input id="ip_address" type="text" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 col-xs-12 control-label">微信账号</label>
+                                    <div class="col-md-6 col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
+                                            <input id="we_chat_account" type="text" class="form-control" readonly="readonly"/>
+
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary">更改</button>
                                 </div>
 
                                 <div class="form-group">
@@ -233,19 +331,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-md-3 col-xs-12 control-label">Select</label>
-                                    <div class="col-md-6 col-xs-12">
-                                        <select class="form-control select">
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                            <option>Option 3</option>
-                                            <option>Option 4</option>
-                                            <option>Option 5</option>
-                                        </select>
-                                        <span class="help-block">Select box example</span>
-                                    </div>
-                                </div>
+
 
                                 <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">File</label>
@@ -323,12 +409,24 @@
 <!-- END SCRIPTS -->
 <script>
 
-    function changeForm(itemName,formId) {
+    $(document).ready(function(){
+        fillFormUseEntity(userData,$('#userInfoForm'));
+
+    });
+
+    function changeForm(itemName,formId,callback) {
         $("a.list-group-item").attr("class","list-group-item");
         $("#"+itemName+"").addClass("active");
         $("#userInfoForm").hide();
         $("#collectionForm").hide();
         $("#"+formId+"").show();
+        if(callback){
+            callback();
+        }
+    }
+
+    function fillForm() {
+        fillFormUseEntity(userData,$('#userInfoForm'));
     }
 
 
