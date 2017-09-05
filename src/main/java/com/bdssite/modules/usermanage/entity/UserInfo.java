@@ -11,6 +11,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Date;
 
 import java.util.List;
@@ -351,6 +354,47 @@ public class UserInfo implements Serializable{
     @Override
     public String toString() {
         return "UserInfo [uid=" + uid + ", username=" + username + ", name=" + name + ", state=" + state + "]";
+    }
+
+    public void  update(UserInfo userInfo) {
+
+
+        Class cls = userInfo.getClass();
+        Field[] fields = cls.getDeclaredFields();
+        for(int i=0; i<fields.length; i++){
+            Field f = fields[i];
+            f.setAccessible(true);
+            try {
+                if(f.get(userInfo)!=null&&f.getName()!="serialVersionUID"&&f.getName()!="uid"){
+                    Class userInfoClass = userInfo.getClass();
+                    try {
+                        char c = (char)(f.getName().charAt(0)-32);
+                        Class newclass;
+                        if(f.getGenericType().toString().equals("int")){
+                            newclass = int.class;
+                        }else if (f.getGenericType().toString().equals("Date")){
+                            newclass = Date.class;
+                        }else if (f.getGenericType().toString().equals("byte")){
+                            newclass = byte.class;
+                        }else
+                            newclass = String.class;
+                        Method methd = userInfoClass.getDeclaredMethod("set"+c+f.getName().substring(1),newclass);
+                        try {
+                            methd.invoke(this,f.get(userInfo));
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                System.out.println("属性名:" + f.getName() + " 属性值:" + f.get(userInfo));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
