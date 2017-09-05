@@ -224,7 +224,7 @@ public class AuthorizationManageController {
         System.out.println(result.getAllErrors());
 
             userService.save(userInfo.getUid(),userInfo);
-//            CommonTool.getUser().update(userInfo);
+            CommonTool.getUser().update(userInfo);
             return new OperationDto(RequestStatus.SUCCESS);
 
     }
