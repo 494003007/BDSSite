@@ -37,7 +37,9 @@ public class ShortMessageController {
     private UserService userService;
 
 
-    //TODO:聊天界面获取
+    /**
+     * 聊天界面获取
+     */
     @RequestMapping(value = {"/messagePage"}, method = RequestMethod.GET)
     public String messagePage(Map<String, Object> map) {
         return "shortMessage/messagePage";
@@ -145,7 +147,11 @@ public class ShortMessageController {
 
     }
 
-    //TODO:请求所有联系人
+    /**
+     * 请求所有联系人
+     * @param model
+     * @return
+     */
     @RequestMapping(value = {"/showContact"}, method = RequestMethod.GET)
     @ResponseBody
     public ListDto<ShortMessage> showContact(Model model) {
