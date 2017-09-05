@@ -29,8 +29,6 @@
     <div th:include="fragments/layout :: sideBar" th:remove="tag"></div>
     <!-- END PAGE SIDEBAR -->
 
-
-
     <!-- PAGE CONTENT -->
     <div class="page-content">
 
@@ -44,7 +42,6 @@
         <div class="page-content-wrap">
 
             <!-- START X-NAVIGATION VERTICAL -->
-            <div th:include="fragments/layout :: contentTop" th:remove="tag"></div>
             <!-- END X-NAVIGATION VERTICAL -->
 
             <div class="row">
@@ -182,12 +179,13 @@
                             </div>
                             <div class="panel-body">
 
+                                <input id="uid" name="uid" value="" type="hidden" />
                                 <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">账号</label>
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
-                                            <input id="username" type="text" class="form-control" readonly="readonly"/>
+                                            <input id="username"  name="username" type="text" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
                                 </div>
@@ -197,10 +195,11 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
-                                            <input id="name" type="text" class="form-control"/>
+                                            <input id="name" name="name" type="text" class="form-control"/>
                                         </div>
 
                                     </div>
+
                                 </div>
 
                                 <div class="form-group">
@@ -208,7 +207,7 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
-                                            <input id="true_name" type="text" class="form-control"/>
+                                            <input id="true_name" name="true_name" type="text" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
@@ -216,7 +215,7 @@
                                 <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">自我描述</label>
                                     <div class="col-md-6 col-xs-12">
-                                        <textarea id="description" class="form-control" rows="5"></textarea>
+                                        <textarea id="description" name="description" class="form-control" rows="5"></textarea>
                                         <span class="help-block">Default textarea field</span>
                                     </div>
                                 </div>
@@ -227,7 +226,7 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-                                            <input id="birth_date" type="text" class="form-control datepicker" value="2014-11-01">
+                                            <input id="birth_date" name="birth_date" type="text" class="form-control datepicker" value="2014-11-01">
                                         </div>
                                         <span class="help-block">请正确按照日期格式</span>
                                     </div>
@@ -238,7 +237,7 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
-                                            <input id="city" type="text" class="form-control"/>
+                                            <input id="city" name="city" type="text" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
@@ -249,11 +248,11 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
-                                            <input id="email" type="text" class="form-control" readonly="readonly"/>
+                                            <input id="email" name="email" type="text" class="form-control" readonly="readonly"/>
                                         </div>
                                         <span class="help-block">邮箱不能为空</span>
                                     </div>
-                                    <button type="button" class="btn btn-primary">更改</button>
+                                    <button type="button" onclick="changeModalDisplay('email','邮箱')" class="btn btn-primary">更改</button>
                                 </div>
 
                                 <div class="form-group">
@@ -261,10 +260,10 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
-                                            <input id="qq" type="text" class="form-control" readonly="readonly"/>
+                                            <input id="qq" name="qq" type="text" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary">更改</button>
+                                    <button type="button" onclick="changeModalDisplay('qq','QQ')" class="btn btn-primary">更改</button>
                                 </div>
 
                                 <div class="form-group">
@@ -272,15 +271,16 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
-                                            <input id="phone" type="text" class="form-control" readonly="readonly"/>
+                                            <input id="phone" name="phone" type="text" class="form-control" readonly="readonly"/>
                                         </div>
                                     </div>
+                                    <button type="button" onclick="changeModalDisplay('phone','电话号码')" class="btn btn-primary">更改</button>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-md-3 col-xs-12 control-label">隐私设置</label>
                                     <div class="col-md-6 col-xs-12">
-                                        <select id="info_shield" class="form-control select">
+                                        <select id="info_shield" name="info_shield" class="form-control select">
                                             <option value="0">不屏蔽</option>
                                             <option value="1">屏蔽</option>
                                         </select>
@@ -306,7 +306,7 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
-                                            <input id="ip_address" type="text" class="form-control"/>
+                                            <input id="ip_address" name="ip_address" type="text" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
@@ -316,11 +316,11 @@
                                     <div class="col-md-6 col-xs-12">
                                         <div class="input-group">
                                             <span class="input-group-addon"><span class="fa  fa-pencil"></span></span>
-                                            <input id="we_chat_account" type="text" class="form-control" readonly="readonly"/>
+                                            <input id="we_chat_account" name="we_chat_account" type="text" class="form-control" readonly="readonly"/>
 
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary">更改</button>
+                                    <button type="button" onclick="changeModalDisplay('we_chat_account','微信')" class="btn btn-primary">更改</button>
                                 </div>
 
                                 <div class="form-group">
@@ -351,8 +351,7 @@
 
                             </div>
                             <div class="panel-footer">
-                                <button class="btn btn-default">Clear Form</button>
-                                <button class="btn btn-primary pull-right">Submit</button>
+                                <button type="button" id="submit" onclick="formUpdate('/AuthorizationManage/userInfoUpdate','userInfoForm')" class="btn btn-primary pull-right">提交更改</button>
                             </div>
                         </div>
                     </form>
@@ -361,12 +360,57 @@
                     <form id="collectionForm" class="form-horizontal"></form>
                 </div>
 
-        </div>
+
+            </div>
+
         </div>
     </div>
     <!-- END PAGE CONTENT -->
+
 </div>
 <!-- END PAGE CONTAINER -->
+<div class="modal fade" id="changeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" id="changeModalDialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="changeModalLabel"></h4>
+            </div>
+            <form  method="post" class="form-horizontal" role="form" id="changeForm">
+                <div class="modal-body">
+                    <!--<input id="uid" name="uid" value="" type="hidden" />-->
+                    <div class="form-group">
+                        <label id="changeInputLabel" for="changeInput" class="col-sm-2 control-label"></label>
+                        <div class="col-sm-8">
+                            <input type="text" name="changeInput" class="form-control" id="changeInput" />
+                            <span class="help-block">请按正确格式更改</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="verificationCode" for="changeInput" class="col-sm-2 control-label">验证码</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="verificationCodeInput" class="form-control" id="verificationCodeInput" />
+                            <span class="help-block">请输入正确验证码</span>
+                        </div>
+                        <button class="btn btn-primary" type="button" onclick="" id="verificationCodeButton">获取验证码</button>
+                    </div>
+
+
+
+
+                </div>
+                <div class="panel-footer">
+                    <div class="col-sm-10"></div>
+                    <div class="modal-body col-sm-2"><button type="button"  onclick="" class="btn btn-primary pull-right">更改</button></div>
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -413,7 +457,7 @@
         fillFormUseEntity(userData,$('#userInfoForm'));
 
     });
-
+    var alertBox = new AlertBox('alertBoxDiv');
     function changeForm(itemName,formId,callback) {
         $("a.list-group-item").attr("class","list-group-item");
         $("#"+itemName+"").addClass("active");
@@ -429,7 +473,41 @@
         fillFormUseEntity(userData,$('#userInfoForm'));
     }
 
+    function formUpdate(url,formId) {
+//        alert('---------------------')
+        ajaxFormSubmit({
+            url:url,
+            type:'post',
 
+            success:function (data) {
+                alert("!!!");
+                reflashUserData();
+                fillForm();
+                if(data['statusCode'] === 1000){
+//                    alertBox.addNewAlert('success',"操作成功","你所做的修改已生效");
+                    alert("****");
+
+                }else{
+//                    alertBox.addNewAlert('danger',"操作失败",data['message']);
+
+                }
+
+            },
+            error:function (e) {
+//                alert('---------------')
+            }
+        },formId)
+    }
+
+    function changeModalDisplay(item,word){
+
+        $("#changeModal").modal("show");
+        $("#changeModalDialog").css("z-index", "1500");
+        $("#changeModalLabel").text("更改"+word);
+        $("#changeInputLabel").text(word);
+        $("#changeInput").attr("value",userData[item]);
+
+    }
 
 
 </script>
