@@ -1,5 +1,6 @@
 package com.bdssite.modules.usermanage.entity;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class ShortMessage implements Serializable {
     //内容
     private String content;
     //发送时间
-    @CreatedDate
+    @CreationTimestamp
     private Date sendTime;
 
     public int getIsRead() {

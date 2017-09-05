@@ -43,12 +43,23 @@ public class ShortMessageController {
         return "shortMessage/messagePage";
     }
 
-    //TODO:发信控制器
-    @RequestMapping(value = {"/sendMessage"}, method = RequestMethod.POST)
+    /**
+     *  发送信件
+     * @param model
+     * @param content
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = {"/sendMessage/{id}"}, method = RequestMethod.POST)
     @ResponseBody
-    public String sendMessage(Model model, ShortMessage shortMessage) {
-        shortMessageService.save(shortMessage);
-        return "shortMessage/viewSent";
+    public OperationDto sendMessage(Model model,String content, @PathVariable Long id) {
+        UserInfo toUser = userService.findOne(id);
+        ShortMessage shortMessage1 = new ShortMessage();
+        shortMessage1.setFromUser(CommonTool.getUser());
+        shortMessage1.setToUser(toUser);
+        shortMessage1.setContent(content);
+        shortMessageService.save(shortMessage1);
+        return new OperationDto(RequestStatus.SUCCESS);
     }
 
     /**
