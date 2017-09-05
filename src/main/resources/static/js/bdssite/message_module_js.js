@@ -164,7 +164,7 @@ function MessageManage() {
         for (var i in entity['messageInfo']) {
             if (entity['messageInfo'][i]['fromUserId'] == currentUser['uid']) {
                 content +=
-                    " <div class=\"item in\">" +
+                    " <div style=\"max-width:70%;float:right\" class=\"item in\">" +
                     " <div class=\"image\">" +
                     "<img src=\"/assets/images/users/user2.jpg\" alt=\"" + entity['currentUser']['name'] + "\">" +
                     "</div>" +
@@ -179,7 +179,7 @@ function MessageManage() {
             }
             else {
                 content +=
-                    " <div class=\"item\">" +
+                    " <div style=\"max-width:70%\" class=\"item\">" +
                     "<div class=\"image\">" +
                     "<img src=\"/assets/images/users/user.jpg\" alt=\"" + entity['otherUser']['name'] + "\">" +
                     "</div>" +
