@@ -1,5 +1,6 @@
 var messageManage = new MessageManage();
-messageManage.showNewMessage()
+messageManage.showNewMessage();
+setInterval("messageManage.showNewMessage();",3000)
 
 
 /**
@@ -12,7 +13,6 @@ function MessageManage() {
      * 请求新信息
      */
     this.showNewMessage = function () {
-
 
         _this = this
         $.ajax(
@@ -27,7 +27,7 @@ function MessageManage() {
                     }
                 },
                 error: function (e) {
-                    alert("获取用户信息失败");
+                    alert("与服务器失去连接");
                 }
 
             }
@@ -136,6 +136,7 @@ function MessageManage() {
      */
     this.showMessageContent = function (id) {
         _this = this
+        $.cookie("otherId",id)
         $.ajax(
             {
                 url: '/shortMessage/readMessage/' + id,
@@ -158,42 +159,8 @@ function MessageManage() {
      * @param entity
      */
     this.fillMessageContent = function (entity) {
-        var currentUser = $.cookie("userData")
-        currentUser = JSON.parse(currentUser);
-        content = "";
-        for (var i in entity['messageInfo']) {
-            if (entity['messageInfo'][i]['fromUserId'] == currentUser['uid']) {
-                content +=
-                    " <div style=\"max-width:70%;float:right\" class=\"item in\">" +
-                    " <div class=\"image\">" +
-                    "<img src=\"/assets/images/users/user2.jpg\" alt=\"" + entity['currentUser']['name'] + "\">" +
-                    "</div>" +
-                    "<div class=\"text\">" +
-                    "<div class=\"heading\">" +
-                    "<a href=\"#\">" + entity['currentUser']['name'] + "</a>" +
-                    "<span class=\"date\">" + entity['messageInfo'][i]['sendTime'] + "</span>" +
-                    " </div>" +
-                    entity['messageInfo'][i]['messageContent'] +
-                    "</div>" +
-                    "</div>"
-            }
-            else {
-                content +=
-                    " <div style=\"max-width:70%\" class=\"item\">" +
-                    "<div class=\"image\">" +
-                    "<img src=\"/assets/images/users/user.jpg\" alt=\"" + entity['otherUser']['name'] + "\">" +
-                    "</div>" +
-                    "<div class=\"text\">" +
-                    "<div class=\"heading\">" +
-                    "<a href=\"#\">" + entity['otherUser']['name'] + "</a>" +
-                    "<span class=\"date\">" + entity['messageInfo'][i]['sendTime'] + "</span>" +
-                    "</div>" +
-                    entity['messageInfo'][i]['messageContent'] +
-                    "</div>" +
-                    "</div>"
-            }
-
-        }
+        _this = this
+        content = _this.makeUpcontent(entity)
         $("#messageContent").html(content)
         $("#messageSend").html(
             "<div class=\"input-group-btn\">" +
@@ -205,13 +172,91 @@ function MessageManage() {
             "<button class=\"btn btn-default\" onclick='messageManage.sendMessage("+ entity["otherUser"]["uid"]+",\""+entity['currentUser']['name']+"\")'>Send</button>" +
             "</div>"
         )
+        _this.setMessageVisible();
+
+
+    }
+    /**
+     * 请求更新聊天内容
+     */
+    this.updateContent = function (id) {
+        $.ajax({
+            url: '/shortMessage/updateMessage/' + id,
+            type:'GET',
+            async:false,
+            success:function (data) {
+                if (data){
+                    _this.fillUpdateContent(data['entity'])
+                }
+
+            },
+            error:function (e) {
+
+            }
+        })
+    }
+    /**
+     * 填充更新的聊天内容
+     */
+    this.fillUpdateContent = function (entity) {
+        _this = this
+        content = _this.makeUpcontent(entity)
+        $("#messageContent").prepend(content)
+        _this.setMessageVisible();
+    }
+    /**
+     * 拼接聊天内容
+     */
+    this.makeUpcontent = function (entity) {
+        var currentUser = $.cookie("userData")
+        currentUser = JSON.parse(currentUser);
+            content = "";
+            for (var i in entity['messageInfo']) {
+                if (entity['messageInfo'][i]['fromUserId'] == currentUser['uid']) {
+                    content +=
+                        " <div style=\"max-width:70%;float:right\" class=\"item in\">" +
+                        " <div class=\"image\">" +
+                        "<img src=\"/assets/images/users/user2.jpg\" alt=\"" + entity['currentUser']['name'] + "\">" +
+                        "</div>" +
+                        "<div class=\"text\">" +
+                        "<div class=\"heading\">" +
+                        "<a href=\"#\">" + entity['currentUser']['name'] + "</a>" +
+                        "<span class=\"date\">" + _this.timeFormatter(entity['messageInfo'][i]['sendTime'] )+ "</span>" +
+                        " </div>" +
+                        entity['messageInfo'][i]['messageContent'] +
+                        "</div>" +
+                        "</div>"
+                }
+                else {
+                    content +=
+                        " <div style=\"max-width:70%\" class=\"item\">" +
+                        "<div class=\"image\">" +
+                        "<img src=\"/assets/images/users/user.jpg\" alt=\"" + entity['otherUser']['name'] + "\">" +
+                        "</div>" +
+                        "<div class=\"text\">" +
+                        "<div class=\"heading\">" +
+                        "<a href=\"#\">" + entity['otherUser']['name'] + "</a>" +
+                        "<span class=\"date\">" + _this.timeFormatter(entity['messageInfo'][i]['sendTime']) + "</span>" +
+                        "</div>" +
+                        entity['messageInfo'][i]['messageContent'] +
+                        "</div>" +
+                        "</div>"
+                }
+
+            }
+            return content
+        }
+    /**
+     * 聊天内容模块可见
+     */
+    this.setMessageVisible =function () {
         $(".messages .item").each(function (index) {
+
             var elm = $(this);
             setInterval(function () {
                 elm.addClass("item-visible");
             }, index * 300);
         });
-
     }
 //###########################   --   END   --   ###############################//
 
@@ -230,7 +275,7 @@ function MessageManage() {
             success: function (data) {
                 if (data) {
                     $("#messageContent").prepend(
-                        " <div class=\"item in item-visible\">" +
+                        " <div style=\"max-width:70%;float:right\" class=\"item in item-visible\">"  +
                         " <div class=\"image\">" +
                         "<img src=\"/assets/images/users/user2.jpg\" alt=\"" + currentUserName + "\">" +
                         "</div>" +
@@ -268,7 +313,16 @@ function MessageManage() {
             return messageContent;
         }
     }
+    /**
+     * datetime日期转换
+     */
+    this.timeFormatter = function(value) {
 
+        var da = new Date(value);
+
+        return da.getFullYear() + "-" + (da.getMonth() + 1) + "-" + da.getDate() + " " + da.getHours() + ":" + da.getMinutes() + ":" + da.getSeconds();
+
+    }
 //###########################   --   END   --   ###############################//
 
 }

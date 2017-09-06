@@ -93,12 +93,12 @@ public class ShortMessageController {
     public EntityDto<MessageDto> readMessage(Model model, @PathVariable Long id) {
         UserInfo currentUser = CommonTool.getUser();
         UserInfo user = userService.findOne(id);
-        //更新信息为已读
-        shortMessageService.updateIsReadToTrue(user,currentUser,  0);
+
         List<ShortMessage> shortMessageList;
 
            shortMessageList = shortMessageService.showMessageRecord(currentUser, user);
-
+        //更新信息为已读
+        shortMessageService.updateIsReadToTrue(user,currentUser,  0);
         return new EntityDto<>(RequestStatus.SUCCESS, new MessageDto(RequestStatus.SUCCESS, shortMessageList, currentUser));
     }
 
@@ -121,7 +121,6 @@ public class ShortMessageController {
      * @param model
      * @return
      */
-
     @RequestMapping(value = {"/showNewMessage"}, method = RequestMethod.GET)
     @ResponseBody
     public ListDto<ShortMessage> showNewMessage(Model model) {
@@ -129,22 +128,6 @@ public class ShortMessageController {
         List<ShortMessage> shortMessages = shortMessageService.findByToUserAndIsRead(currentUser, 0);
         removeDuplicate(shortMessages);
         return new ListDto<>(RequestStatus.SUCCESS, shortMessages);
-    }
-
-    /**
-     * 删除新信息中显示重复的联系人
-     *
-     * @param list
-     */
-    public void removeDuplicate(List<ShortMessage> list) {
-        for (int i = list.size() - 1; i >= 0; i--) {
-            for (int j = i + 1; j < list.size(); j++) {
-                if (list.get(j).getFromUser().equals(list.get(i).getFromUser())) {
-                    list.remove(i);
-                }
-            }
-        }
-
     }
 
     /**
@@ -195,5 +178,36 @@ public class ShortMessageController {
 //            }
 //        }
         return new ListDto<ShortMessage>(RequestStatus.SUCCESS, currentUserShortMessage);
+    }
+
+    @RequestMapping(value = {"/updateMessage/{id}"}, method = RequestMethod.GET)
+    @ResponseBody
+    public EntityDto<MessageDto> updateMessage(Model model, @PathVariable Long id) {
+        UserInfo currentUser = CommonTool.getUser();
+        UserInfo user = userService.findOne(id);
+        List<ShortMessage> shortMessageList;
+
+        shortMessageList = shortMessageService.findByFromUserAndToUserAndIsRead(user,currentUser,0);
+        //更新信息为已读
+        shortMessageService.updateIsReadToTrue(user,currentUser,  0);
+
+
+        return new EntityDto<>(RequestStatus.SUCCESS, new MessageDto(RequestStatus.SUCCESS, shortMessageList, currentUser));
+    }
+
+    /**
+     * 删除新信息中显示重复的联系人
+     *
+     * @param list
+     */
+    public void removeDuplicate(List<ShortMessage> list) {
+        for (int i = list.size() - 1; i >= 0; i--) {
+            for (int j = i + 1; j < list.size(); j++) {
+                if (list.get(j).getFromUser().equals(list.get(i).getFromUser())) {
+                    list.remove(i);
+                }
+            }
+        }
+
     }
 }

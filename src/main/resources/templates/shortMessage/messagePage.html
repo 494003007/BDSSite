@@ -220,7 +220,10 @@
     messageManage.showContact();
     if ($.cookie("otherId")!=0){
         messageManage.showMessageContent($.cookie("otherId"));
+        setInterval("messageManage.updateContent("+$.cookie("otherId")+")",2000)
     }
+
+
 </script>
 <!-- END TEMPLATE -->
 <!-- END SCRIPTS -->

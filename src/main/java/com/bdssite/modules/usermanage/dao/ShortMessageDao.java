@@ -31,7 +31,11 @@ public interface ShortMessageDao extends ExtJpaRepository<ShortMessage,Long> {
     void updateIsReadToTrue(UserInfo fromUser,UserInfo toUser,int isRead);
     List<ShortMessage> findByToUserAndFromUserOrToUserAndFromUserOrderBySendTimeDesc(UserInfo toUser0,UserInfo fromUser0,UserInfo toUser1,UserInfo fromUser1);
 
+    List<ShortMessage> findByFromUserAndToUserAndIsRead(UserInfo fromUser,UserInfo toUser,int isRead);
     void deleteByIdIn(Collection<Long> ids);
+
     ShortMessage findFirstByToUserAndFromUserOrToUserAndFromUserOrderByIdDesc(UserInfo toUser0,UserInfo fromUser0,UserInfo toUser1,UserInfo fromUser1);
+
+
     List<ShortMessage> findByIdIn(Collection<Long> ids);
 }
