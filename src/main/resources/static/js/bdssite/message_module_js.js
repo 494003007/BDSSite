@@ -1,6 +1,6 @@
 var messageManage = new MessageManage();
 messageManage.showNewMessage();
-setInterval("messageManage.showNewMessage();",3000)
+setInterval("messageManage.showNewMessage();",1500)
 
 
 /**
@@ -108,7 +108,7 @@ function MessageManage() {
             if (currentUser['uid'] == entityList[i]['fromUser']['uid']) {
                 content += (
                     "<a href=\"# \" onclick=\'messageManage.showMessageContent(" + entityList[i]['toUser']['uid'] + ")\' class=\"list-group-item\">" +
-                    "<div class=\"list-group-status status-online\"></div>" +
+                    "<div id='status"+entityList[i]['toUser']['uid']+"' class=\"list-group-status status-online\"></div>" +
                     "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\"" + entityList[i]['toUser'][name] + "\">" +
                     "<span class=\"contacts-title\">" + entityList[i]['toUser']['name'] + "</span>" +
                     "<p>" + _this.cutContentByLenth(entityList[i]['content'], 20) + "</p>" +
@@ -118,7 +118,7 @@ function MessageManage() {
             else if (currentUser['uid'] == entityList[i]['toUser']['uid']) {
                 content += (
                     "<a href=\"#\" onclick=\'messageManage.showMessageContent(" + entityList[i]['fromUser']['uid'] + ")\' class=\"list-group-item\">" +
-                    "<div class=\"list-group-status status-online\"></div>" +
+                    "<div id='status"+entityList[i]['fromUser']['uid']+"' class=\"list-group-status status-online\"></div>" +
                     "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\"" + entityList[i]['fromUser'][name] + "\">" +
                     "<span class=\"contacts-title\">" + entityList[i]['fromUser']['name'] + "</span>" +
                     "<p>" + _this.cutContentByLenth(entityList[i]['content'], 20) + "</p>" +
@@ -136,7 +136,9 @@ function MessageManage() {
      */
     this.showMessageContent = function (id) {
         _this = this
-        $.cookie("otherId",id)
+        $("#status"+ $.cookie("otherId")).removeClass("status-away").addClass("status-online")
+        $.cookie("otherId",id, {path: '/'})
+        $("#status"+ $.cookie("otherId")).removeClass("status-online").addClass("status-away")
         $.ajax(
             {
                 url: '/shortMessage/readMessage/' + id,
@@ -161,6 +163,8 @@ function MessageManage() {
     this.fillMessageContent = function (entity) {
         _this = this
         content = _this.makeUpcontent(entity)
+
+        $("#chatUserName").text(" • "+entity["otherUser"]["name"])
         $("#messageContent").html(content)
         $("#messageSend").html(
             "<div class=\"input-group-btn\">" +
@@ -255,7 +259,7 @@ function MessageManage() {
             var elm = $(this);
             setInterval(function () {
                 elm.addClass("item-visible");
-            }, index * 300);
+            }, index * 100);
         });
     }
 //###########################   --   END   --   ###############################//
@@ -267,6 +271,7 @@ function MessageManage() {
      * @param id
      */
     this.sendMessage = function (id,currentUserName) {
+        _this = this
         $.ajax({
             url: '/shortMessage/sendMessage/'+id,
             type: 'POST',
@@ -282,7 +287,7 @@ function MessageManage() {
                         "<div class=\"text\">" +
                         "<div class=\"heading\">" +
                         "<a href=\"#\">" + currentUserName + "</a>" +
-                        "<span class=\"date\">" + Date.now() + "</span>" +
+                        "<span class=\"date\">" + _this.timeFormatter(Date.now()) + "</span>" +
                         " </div>" +
                         $("#messagePost").val() +
                         "</div>" +

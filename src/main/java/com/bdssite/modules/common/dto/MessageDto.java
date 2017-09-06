@@ -16,21 +16,17 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class MessageDto extends BaseDto {
+public class MessageDto  {
     public UserInfo currentUser;
     public UserInfo otherUser;
     public Collection<MessageDto.MessageInfo> messageInfo = new ArrayList();
 
 
-    public MessageDto(RequestStatus status, List<ShortMessage> list, UserInfo currentUser) {
-        super(status);
+    public MessageDto( List<ShortMessage> list, UserInfo currentUser,UserInfo otherUser) {
+
         this.currentUser = currentUser;
+        this.setOtherUser(otherUser);
         if(list != null &&list.size()!=0) {
-            if(((ShortMessage)list.get(0)).getToUser().getUid() == currentUser.getUid()) {
-                this.otherUser = ((ShortMessage)list.get(0)).getFromUser();
-            } else {
-                this.otherUser = ((ShortMessage)list.get(0)).getToUser();
-            }
 
             Iterator var4 = list.iterator();
 

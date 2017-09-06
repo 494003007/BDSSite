@@ -38,10 +38,10 @@
                 <!-- START CONTENT FRAME TOP -->
                 <div class="content-frame-top">
                     <div class="page-title">
-                        <h2><span class="fa fa-comments"></span> Messages</h2>
+                        <h2 ><span class="fa fa-comments"></span>信息 <div id="chatUserName" style="display: inline"></div></h2>
                     </div>
                     <div class="pull-right">
-                        <button class="btn btn-danger"><span class="fa fa-book"></span> Contacts</button>
+                        <button class="btn btn-danger"><span class="fa fa-book"></span> 通讯录</button>
                         <button class="btn btn-default content-frame-right-toggle"><span class="fa fa-bars"></span>
                         </button>
                     </div>
@@ -220,7 +220,7 @@
     messageManage.showContact();
     if ($.cookie("otherId")!=0){
         messageManage.showMessageContent($.cookie("otherId"));
-        setInterval("messageManage.updateContent("+$.cookie("otherId")+")",2000)
+        setInterval("messageManage.updateContent("+$.cookie("otherId")+")",1500)
     }
 
 

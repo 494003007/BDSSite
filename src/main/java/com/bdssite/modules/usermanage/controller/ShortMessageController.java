@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Ed_cc on 2017/8/16.
@@ -92,14 +89,18 @@ public class ShortMessageController {
     @ResponseBody
     public EntityDto<MessageDto> readMessage(Model model, @PathVariable Long id) {
         UserInfo currentUser = CommonTool.getUser();
-        UserInfo user = userService.findOne(id);
+        UserInfo otherUser = userService.findOne(id);
 
         List<ShortMessage> shortMessageList;
 
-           shortMessageList = shortMessageService.showMessageRecord(currentUser, user);
+           shortMessageList = shortMessageService.showMessageRecord(currentUser, otherUser);
         //更新信息为已读
-        shortMessageService.updateIsReadToTrue(user,currentUser,  0);
-        return new EntityDto<>(RequestStatus.SUCCESS, new MessageDto(RequestStatus.SUCCESS, shortMessageList, currentUser));
+        shortMessageService.updateIsReadToTrue(otherUser,currentUser,  0);
+        MessageDto messageDto = new MessageDto( shortMessageList, currentUser,otherUser);
+        if (messageDto.getOtherUser()==null){
+            messageDto.setOtherUser(userService.findOne(id));
+        }
+        return new EntityDto<>(RequestStatus.SUCCESS, messageDto);
     }
 
     //TODO:删除聊天记录
@@ -160,7 +161,7 @@ public class ShortMessageController {
             }
         }
 
-
+        Collections.reverse(currentUserShortMessage);
 //        List<UserInfo> contact = new ArrayList<>();
 //        for (ShortMessage shortMessage:currentUserShortMessage){
 //            UserInfo toUser=shortMessage.getToUser();
@@ -184,15 +185,15 @@ public class ShortMessageController {
     @ResponseBody
     public EntityDto<MessageDto> updateMessage(Model model, @PathVariable Long id) {
         UserInfo currentUser = CommonTool.getUser();
-        UserInfo user = userService.findOne(id);
+        UserInfo otherUser = userService.findOne(id);
         List<ShortMessage> shortMessageList;
 
-        shortMessageList = shortMessageService.findByFromUserAndToUserAndIsRead(user,currentUser,0);
+        shortMessageList = shortMessageService.findByFromUserAndToUserAndIsRead(otherUser,currentUser,0);
         //更新信息为已读
-        shortMessageService.updateIsReadToTrue(user,currentUser,  0);
+        shortMessageService.updateIsReadToTrue(otherUser,currentUser,  0);
 
 
-        return new EntityDto<>(RequestStatus.SUCCESS, new MessageDto(RequestStatus.SUCCESS, shortMessageList, currentUser));
+        return new EntityDto<>(RequestStatus.SUCCESS, new MessageDto( shortMessageList, currentUser,otherUser));
     }
 
     /**
