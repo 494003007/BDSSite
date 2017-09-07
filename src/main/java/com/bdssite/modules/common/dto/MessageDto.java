@@ -6,30 +6,27 @@
 package com.bdssite.modules.common.dto;
 
 import com.bdssite.modules.common.RequestStatus;
-import com.bdssite.modules.common.dto.BaseDto;
 import com.bdssite.modules.usermanage.entity.ShortMessage;
 import com.bdssite.modules.usermanage.entity.UserInfo;
+
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class MessageDto extends BaseDto {
+public class MessageDto  {
     public UserInfo currentUser;
     public UserInfo otherUser;
     public Collection<MessageDto.MessageInfo> messageInfo = new ArrayList();
 
 
-    public MessageDto(RequestStatus status, List<ShortMessage> list, UserInfo currentUser) {
-        super(status);
+    public MessageDto( List<ShortMessage> list, UserInfo currentUser,UserInfo otherUser) {
+
         this.currentUser = currentUser;
-        if(list != null ) {
-            if(((ShortMessage)list.get(0)).getToUser().getUid() == currentUser.getUid()) {
-                this.otherUser = ((ShortMessage)list.get(0)).getFromUser();
-            } else {
-                this.otherUser = ((ShortMessage)list.get(0)).getToUser();
-            }
+        this.setOtherUser(otherUser);
+        if(list != null &&list.size()!=0) {
 
             Iterator var4 = list.iterator();
 
@@ -69,8 +66,8 @@ public class MessageDto extends BaseDto {
     class MessageInfo {
         Long fromUserId;
         String messageContent;
-        Date sendTime;
-        MessageInfo(String messageContent, Long fromUserId, java.sql.Date sendTime) {
+        Timestamp sendTime;
+        MessageInfo(String messageContent, Long fromUserId, Timestamp sendTime) {
             this.fromUserId = fromUserId;
             this.messageContent = messageContent;
             this.sendTime = sendTime;
@@ -91,11 +88,11 @@ public class MessageDto extends BaseDto {
         public void setMessageContent(String messageContent) {
             this.messageContent = messageContent;
         }
-        public Date getSendTime() {
+        public Timestamp getSendTime() {
             return this.sendTime;
         }
 
-        public void setSendTime(Date sendTime) {
+        public void setSendTime(Timestamp sendTime) {
             this.sendTime = sendTime;
         }
 

@@ -1,11 +1,11 @@
 package com.bdssite.modules.usermanage.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  * 站内信
@@ -21,7 +21,7 @@ public class ShortMessage implements Serializable {
     private String content;
     //发送时间
     @CreationTimestamp
-    private Date sendTime;
+    private Timestamp sendTime;
 
     public int getIsRead() {
         return isRead;
@@ -72,11 +72,11 @@ public class ShortMessage implements Serializable {
         this.content = content;
     }
 
-    public Date getSendTime() {
+    public Timestamp getSendTime() {
         return sendTime;
     }
 
-    public void setSendTime(Date sendTime) {
+    public void setSendTime(Timestamp sendTime) {
         this.sendTime = sendTime;
     }
 }

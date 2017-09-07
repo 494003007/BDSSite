@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Ed_cc on 2017/8/16.
@@ -92,14 +89,18 @@ public class ShortMessageController {
     @ResponseBody
     public EntityDto<MessageDto> readMessage(Model model, @PathVariable Long id) {
         UserInfo currentUser = CommonTool.getUser();
-        UserInfo user = userService.findOne(id);
-        //更新信息为已读
-        shortMessageService.updateIsReadToTrue(user,currentUser,  0);
+        UserInfo otherUser = userService.findOne(id);
+
         List<ShortMessage> shortMessageList;
 
-           shortMessageList = shortMessageService.showMessageRecord(currentUser, user);
-
-        return new EntityDto<>(RequestStatus.SUCCESS, new MessageDto(RequestStatus.SUCCESS, shortMessageList, currentUser));
+           shortMessageList = shortMessageService.showMessageRecord(currentUser, otherUser);
+        //更新信息为已读
+        shortMessageService.updateIsReadToTrue(otherUser,currentUser,  0);
+        MessageDto messageDto = new MessageDto( shortMessageList, currentUser,otherUser);
+        if (messageDto.getOtherUser()==null){
+            messageDto.setOtherUser(userService.findOne(id));
+        }
+        return new EntityDto<>(RequestStatus.SUCCESS, messageDto);
     }
 
     //TODO:删除聊天记录
@@ -121,7 +122,6 @@ public class ShortMessageController {
      * @param model
      * @return
      */
-
     @RequestMapping(value = {"/showNewMessage"}, method = RequestMethod.GET)
     @ResponseBody
     public ListDto<ShortMessage> showNewMessage(Model model) {
@@ -129,22 +129,6 @@ public class ShortMessageController {
         List<ShortMessage> shortMessages = shortMessageService.findByToUserAndIsRead(currentUser, 0);
         removeDuplicate(shortMessages);
         return new ListDto<>(RequestStatus.SUCCESS, shortMessages);
-    }
-
-    /**
-     * 删除新信息中显示重复的联系人
-     *
-     * @param list
-     */
-    public void removeDuplicate(List<ShortMessage> list) {
-        for (int i = list.size() - 1; i >= 0; i--) {
-            for (int j = i + 1; j < list.size(); j++) {
-                if (list.get(j).getFromUser().equals(list.get(i).getFromUser())) {
-                    list.remove(i);
-                }
-            }
-        }
-
     }
 
     /**
@@ -177,7 +161,7 @@ public class ShortMessageController {
             }
         }
 
-
+        Collections.reverse(currentUserShortMessage);
 //        List<UserInfo> contact = new ArrayList<>();
 //        for (ShortMessage shortMessage:currentUserShortMessage){
 //            UserInfo toUser=shortMessage.getToUser();
@@ -195,5 +179,36 @@ public class ShortMessageController {
 //            }
 //        }
         return new ListDto<ShortMessage>(RequestStatus.SUCCESS, currentUserShortMessage);
+    }
+
+    @RequestMapping(value = {"/updateMessage/{id}"}, method = RequestMethod.GET)
+    @ResponseBody
+    public EntityDto<MessageDto> updateMessage(Model model, @PathVariable Long id) {
+        UserInfo currentUser = CommonTool.getUser();
+        UserInfo otherUser = userService.findOne(id);
+        List<ShortMessage> shortMessageList;
+
+        shortMessageList = shortMessageService.findByFromUserAndToUserAndIsRead(otherUser,currentUser,0);
+        //更新信息为已读
+        shortMessageService.updateIsReadToTrue(otherUser,currentUser,  0);
+
+
+        return new EntityDto<>(RequestStatus.SUCCESS, new MessageDto( shortMessageList, currentUser,otherUser));
+    }
+
+    /**
+     * 删除新信息中显示重复的联系人
+     *
+     * @param list
+     */
+    public void removeDuplicate(List<ShortMessage> list) {
+        for (int i = list.size() - 1; i >= 0; i--) {
+            for (int j = i + 1; j < list.size(); j++) {
+                if (list.get(j).getFromUser().equals(list.get(i).getFromUser())) {
+                    list.remove(i);
+                }
+            }
+        }
+
     }
 }

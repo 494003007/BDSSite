@@ -47,6 +47,10 @@ public class ShortMessageService extends BaseService<ShortMessageDao, ShortMessa
         return dao.findFirstByToUserAndFromUserOrToUserAndFromUserOrderByIdDesc(user1, user2, user2, user1);
     }
 
+    public List<ShortMessage>  findByFromUserAndToUserAndIsRead(UserInfo fromUser,UserInfo toUser,int isRead){
+       return dao.findByFromUserAndToUserAndIsRead(fromUser,toUser,isRead);
+    }
+
     public List<ShortMessage> findByIdIn(Collection<Long> ids) {
         return dao.findByIdIn(ids);
     }

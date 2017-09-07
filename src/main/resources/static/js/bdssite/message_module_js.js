@@ -1,5 +1,6 @@
 var messageManage = new MessageManage();
-messageManage.showNewMessage()
+messageManage.showNewMessage();
+setInterval("messageManage.showNewMessage();",1500)
 
 
 /**
@@ -12,7 +13,6 @@ function MessageManage() {
      * 请求新信息
      */
     this.showNewMessage = function () {
-
 
         _this = this
         $.ajax(
@@ -27,7 +27,7 @@ function MessageManage() {
                     }
                 },
                 error: function (e) {
-                    alert("获取用户信息失败");
+                    alert("与服务器失去连接");
                 }
 
             }
@@ -108,7 +108,7 @@ function MessageManage() {
             if (currentUser['uid'] == entityList[i]['fromUser']['uid']) {
                 content += (
                     "<a href=\"# \" onclick=\'messageManage.showMessageContent(" + entityList[i]['toUser']['uid'] + ")\' class=\"list-group-item\">" +
-                    "<div class=\"list-group-status status-online\"></div>" +
+                    "<div id='status"+entityList[i]['toUser']['uid']+"' class=\"list-group-status status-online\"></div>" +
                     "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\"" + entityList[i]['toUser'][name] + "\">" +
                     "<span class=\"contacts-title\">" + entityList[i]['toUser']['name'] + "</span>" +
                     "<p>" + _this.cutContentByLenth(entityList[i]['content'], 20) + "</p>" +
@@ -118,7 +118,7 @@ function MessageManage() {
             else if (currentUser['uid'] == entityList[i]['toUser']['uid']) {
                 content += (
                     "<a href=\"#\" onclick=\'messageManage.showMessageContent(" + entityList[i]['fromUser']['uid'] + ")\' class=\"list-group-item\">" +
-                    "<div class=\"list-group-status status-online\"></div>" +
+                    "<div id='status"+entityList[i]['fromUser']['uid']+"' class=\"list-group-status status-online\"></div>" +
                     "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\"" + entityList[i]['fromUser'][name] + "\">" +
                     "<span class=\"contacts-title\">" + entityList[i]['fromUser']['name'] + "</span>" +
                     "<p>" + _this.cutContentByLenth(entityList[i]['content'], 20) + "</p>" +
@@ -136,6 +136,9 @@ function MessageManage() {
      */
     this.showMessageContent = function (id) {
         _this = this
+        $("#status"+ $.cookie("otherId")).removeClass("status-away").addClass("status-online")
+        $.cookie("otherId",id, {path: '/'})
+        $("#status"+ $.cookie("otherId")).removeClass("status-online").addClass("status-away")
         $.ajax(
             {
                 url: '/shortMessage/readMessage/' + id,
@@ -158,42 +161,10 @@ function MessageManage() {
      * @param entity
      */
     this.fillMessageContent = function (entity) {
-        var currentUser = $.cookie("userData")
-        currentUser = JSON.parse(currentUser);
-        content = "";
-        for (var i in entity['messageInfo']) {
-            if (entity['messageInfo'][i]['fromUserId'] == currentUser['uid']) {
-                content +=
-                    " <div style=\"max-width:70%;float:right\" class=\"item in\">" +
-                    " <div class=\"image\">" +
-                    "<img src=\"/assets/images/users/user2.jpg\" alt=\"" + entity['currentUser']['name'] + "\">" +
-                    "</div>" +
-                    "<div class=\"text\">" +
-                    "<div class=\"heading\">" +
-                    "<a href=\"#\">" + entity['currentUser']['name'] + "</a>" +
-                    "<span class=\"date\">" + entity['messageInfo'][i]['sendTime'] + "</span>" +
-                    " </div>" +
-                    entity['messageInfo'][i]['messageContent'] +
-                    "</div>" +
-                    "</div>"
-            }
-            else {
-                content +=
-                    " <div style=\"max-width:70%\" class=\"item\">" +
-                    "<div class=\"image\">" +
-                    "<img src=\"/assets/images/users/user.jpg\" alt=\"" + entity['otherUser']['name'] + "\">" +
-                    "</div>" +
-                    "<div class=\"text\">" +
-                    "<div class=\"heading\">" +
-                    "<a href=\"#\">" + entity['otherUser']['name'] + "</a>" +
-                    "<span class=\"date\">" + entity['messageInfo'][i]['sendTime'] + "</span>" +
-                    "</div>" +
-                    entity['messageInfo'][i]['messageContent'] +
-                    "</div>" +
-                    "</div>"
-            }
+        _this = this
+        content = _this.makeUpcontent(entity)
 
-        }
+        $("#chatUserName").text(" • "+entity["otherUser"]["name"])
         $("#messageContent").html(content)
         $("#messageSend").html(
             "<div class=\"input-group-btn\">" +
@@ -205,13 +176,91 @@ function MessageManage() {
             "<button class=\"btn btn-default\" onclick='messageManage.sendMessage("+ entity["otherUser"]["uid"]+",\""+entity['currentUser']['name']+"\")'>Send</button>" +
             "</div>"
         )
+        _this.setMessageVisible();
+
+
+    }
+    /**
+     * 请求更新聊天内容
+     */
+    this.updateContent = function (id) {
+        $.ajax({
+            url: '/shortMessage/updateMessage/' + id,
+            type:'GET',
+            async:false,
+            success:function (data) {
+                if (data){
+                    _this.fillUpdateContent(data['entity'])
+                }
+
+            },
+            error:function (e) {
+
+            }
+        })
+    }
+    /**
+     * 填充更新的聊天内容
+     */
+    this.fillUpdateContent = function (entity) {
+        _this = this
+        content = _this.makeUpcontent(entity)
+        $("#messageContent").prepend(content)
+        _this.setMessageVisible();
+    }
+    /**
+     * 拼接聊天内容
+     */
+    this.makeUpcontent = function (entity) {
+        var currentUser = $.cookie("userData")
+        currentUser = JSON.parse(currentUser);
+            content = "";
+            for (var i in entity['messageInfo']) {
+                if (entity['messageInfo'][i]['fromUserId'] == currentUser['uid']) {
+                    content +=
+                        " <div style=\"max-width:70%;float:right\" class=\"item in\">" +
+                        " <div class=\"image\">" +
+                        "<img src=\"/assets/images/users/user2.jpg\" alt=\"" + entity['currentUser']['name'] + "\">" +
+                        "</div>" +
+                        "<div class=\"text\">" +
+                        "<div class=\"heading\">" +
+                        "<a href=\"#\">" + entity['currentUser']['name'] + "</a>" +
+                        "<span class=\"date\">" + _this.timeFormatter(entity['messageInfo'][i]['sendTime'] )+ "</span>" +
+                        " </div>" +
+                        entity['messageInfo'][i]['messageContent'] +
+                        "</div>" +
+                        "</div>"
+                }
+                else {
+                    content +=
+                        " <div style=\"max-width:70%\" class=\"item\">" +
+                        "<div class=\"image\">" +
+                        "<img src=\"/assets/images/users/user.jpg\" alt=\"" + entity['otherUser']['name'] + "\">" +
+                        "</div>" +
+                        "<div class=\"text\">" +
+                        "<div class=\"heading\">" +
+                        "<a href=\"#\">" + entity['otherUser']['name'] + "</a>" +
+                        "<span class=\"date\">" + _this.timeFormatter(entity['messageInfo'][i]['sendTime']) + "</span>" +
+                        "</div>" +
+                        entity['messageInfo'][i]['messageContent'] +
+                        "</div>" +
+                        "</div>"
+                }
+
+            }
+            return content
+        }
+    /**
+     * 聊天内容模块可见
+     */
+    this.setMessageVisible =function () {
         $(".messages .item").each(function (index) {
+
             var elm = $(this);
             setInterval(function () {
                 elm.addClass("item-visible");
-            }, index * 300);
+            }, index * 100);
         });
-
     }
 //###########################   --   END   --   ###############################//
 
@@ -222,6 +271,7 @@ function MessageManage() {
      * @param id
      */
     this.sendMessage = function (id,currentUserName) {
+        _this = this
         $.ajax({
             url: '/shortMessage/sendMessage/'+id,
             type: 'POST',
@@ -230,14 +280,14 @@ function MessageManage() {
             success: function (data) {
                 if (data) {
                     $("#messageContent").prepend(
-                        " <div class=\"item in item-visible\">" +
+                        " <div style=\"max-width:70%;float:right\" class=\"item in item-visible\">"  +
                         " <div class=\"image\">" +
                         "<img src=\"/assets/images/users/user2.jpg\" alt=\"" + currentUserName + "\">" +
                         "</div>" +
                         "<div class=\"text\">" +
                         "<div class=\"heading\">" +
                         "<a href=\"#\">" + currentUserName + "</a>" +
-                        "<span class=\"date\">" + Date.now() + "</span>" +
+                        "<span class=\"date\">" + _this.timeFormatter(Date.now()) + "</span>" +
                         " </div>" +
                         $("#messagePost").val() +
                         "</div>" +
@@ -268,7 +318,16 @@ function MessageManage() {
             return messageContent;
         }
     }
+    /**
+     * datetime日期转换
+     */
+    this.timeFormatter = function(value) {
 
+        var da = new Date(value);
+
+        return da.getFullYear() + "-" + (da.getMonth() + 1) + "-" + da.getDate() + " " + da.getHours() + ":" + da.getMinutes() + ":" + da.getSeconds();
+
+    }
 //###########################   --   END   --   ###############################//
 
 }
