@@ -80,7 +80,7 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
-		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<!-- https://mvnrepository.com/artifact/javax.mail	/mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -143,6 +143,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<!--redis支持-->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
 	</dependencies>

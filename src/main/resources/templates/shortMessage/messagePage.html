@@ -72,7 +72,7 @@
                 <!-- START CONTENT FRAME BODY -->
                 <div class="content-frame-body content-frame-body-left">
                     <!-- Message Content Begin-->
-                    <div id="messageContent" style="height: 80% ; overflow-y:auto;" class="messages messages-img">
+                    <div id="messageContent" style="height: 60% ; overflow-y:auto;" class="messages messages-img">
 
                     </div>
                     <!-- Message Content End-->
@@ -219,8 +219,9 @@
 
     messageManage.showContact();
     if ($.cookie("otherId")!=0){
+        alert("----------------")
         messageManage.showMessageContent($.cookie("otherId"));
-        setInterval("messageManage.updateContent("+$.cookie("otherId")+")",1500)
+
     }
 
 
