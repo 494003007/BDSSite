@@ -69,8 +69,8 @@ public class MajorAndSubjectGeneratorMain {
     public void subjectGenerate() throws Exception{
         String content = getUrlContent("http://gkcx.eol.cn/schoolhtm/specialty/10032/list.htm");
         Pattern pat = Pattern.compile("<a target=\"_blank\" href=\"(.*?)\">&nbsp;(.*?)</a>");
-        Pattern subjectPartPat = Pattern.compile("<[pbr]*?>\\s*(主要课程|专业核心课程与主要实践环节|主干学科|专业核心能力)：(.*?)<[/pbr]*?>");
-        Pattern subjectPat = Pattern.compile("([^：]*?)(?:、|。|等，|以及|，| |,|\\.)+");
+        Pattern subjectPartPat = Pattern.compile("<[pbr]*?>\\s*(主要课程|专业核心课程与主要实践环节|主干学科|专业核心能力)[：:](.*?)<[/pbr]*?>");
+        Pattern subjectPat = Pattern.compile("([^：:]*?)(?:、|。|等，|以及|，| |,|\\.)+");
         Matcher mat = pat.matcher(content);
         while(mat.find()){
             Major major = ms.findByName(mat.group(2));

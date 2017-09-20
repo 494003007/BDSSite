@@ -265,7 +265,7 @@ body.page-container-boxed .page-container {
   float: left;
   list-style: none;
   display: block;
-  z-index: 2;
+  z-index: 3;
 }
 .x-navigation {
   background: #1b1e24;

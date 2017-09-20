@@ -236,7 +236,7 @@
                     var moreRow = num % 6;
                     var defaultRow = Math.floor(num / 6);
                     $.each(list,function () {
-                        buttonDom.push($("<button type=\"button\" onclick='delSubject(" + this['id'] + ")' class=\"btn btn-primary btn-block\"><span class=\"fa fa-minus\"></span> " + this['name'] + "</button>"));
+                        buttonDom.push($("<button type=\"button\" onclick='this.remove()' class=\"btn btn-primary btn-block\"><span class=\"fa fa-minus\"></span> " + this['name'] + "</button>"));
                     });
                     majorDiv.append($("<p>请按实际情况划去关键词</p>"));
                     for(var i = 0; i < 6 ; i++){
@@ -248,15 +248,17 @@
                     }
                     $('#findByMajor').fadeIn(500);
                 },
-                error:function (e) {
+                error:function () {
                     alert("获取专业列表失败.");
                 }
 
             });
         });
-
     }
 
+    function subjectWordChoose() {
+        $("");
+    }
 </script>
 <!-- END TEMPLATE -->
 <!-- END SCRIPTS -->
