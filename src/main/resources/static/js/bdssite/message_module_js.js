@@ -1,6 +1,6 @@
 var messageManage = new MessageManage();
 messageManage.showNewMessage();
-setInterval("messageManage.showNewMessage();",1500)
+setInterval("messageManage.showNewMessage();",8000)
 
 
 /**
@@ -19,7 +19,7 @@ function MessageManage() {
             {
                 url: '/shortMessage/showNewMessage',
                 type: 'GET',
-                async: false,
+                async: true,
                 success: function (data) {
                     if (data) {
                         _this.fillNewMessage(data['entityList'])
@@ -82,7 +82,7 @@ function MessageManage() {
             {
                 url: '/shortMessage/showContact',
                 type: 'GET',
-                async: false,
+                async: true,
                 success: function (data) {
                     if (data) {
                         _this.fillContact(data['entityList'])
@@ -139,11 +139,12 @@ function MessageManage() {
         $("#status"+ $.cookie("otherId")).removeClass("status-away").addClass("status-online")
         $.cookie("otherId",id, {path: '/'})
         $("#status"+ $.cookie("otherId")).removeClass("status-online").addClass("status-away")
+        setInterval("messageManage.updateContent("+$.cookie("otherId")+")",8000)
         $.ajax(
             {
                 url: '/shortMessage/readMessage/' + id,
                 type: 'GET',
-                async: false,
+                async: true,
                 success: function (data) {
                     if (data) {
                         _this.fillMessageContent(data['entity'])
@@ -187,7 +188,7 @@ function MessageManage() {
         $.ajax({
             url: '/shortMessage/updateMessage/' + id,
             type:'GET',
-            async:false,
+            async:true,
             success:function (data) {
                 if (data){
                     _this.fillUpdateContent(data['entity'])
@@ -275,7 +276,7 @@ function MessageManage() {
         $.ajax({
             url: '/shortMessage/sendMessage/'+id,
             type: 'POST',
-            async: false,
+            async: true,
             data: {content:$("#messagePost").val()},
             success: function (data) {
                 if (data) {
