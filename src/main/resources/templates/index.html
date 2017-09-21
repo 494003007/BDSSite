@@ -155,21 +155,23 @@
 </div>
 
 <!-- START THIS PAGE PLUGINS-->
-<script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
-<script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
-<script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+<script type='text/javascript' src='/js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="/js/plugins/scrolltotop/scrolltopcontrol.js"></script>
 
-<script type="text/javascript" src="js/plugins/morris/raphael-min.js"></script>
-<script type="text/javascript" src="js/plugins/morris/morris.min.js"></script>
-<script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
-<script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
-<script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
-<script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
-<script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>
-<script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>
+<script type="text/javascript" src="/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="/js/plugins/morris/morris.min.js"></script>
+<script type="text/javascript" src="/js/plugins/rickshaw/d3.v3.js"></script>
+<script type="text/javascript" src="/js/plugins/rickshaw/rickshaw.min.js"></script>
+<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+<script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
+<script type='text/javascript' src='/js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+<script type="text/javascript" src="/js/plugins/owl/owl.carousel.min.js"></script>
 
-<script type="text/javascript" src="js/plugins/moment.min.js"></script>
-<script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/js/plugins/moment.min.js"></script>
+<script type="text/javascript" src="/js/plugins/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery/jquery.tagsinput.min.js"></script>
+
 <!-- END THIS PAGE PLUGINS-->
 
 <!-- START TEMPLATE -->
@@ -246,6 +248,7 @@
                         }
                         majorDiv.append(temp);
                     }
+                    majorDiv.append("<button onclick='searchBox()'>搜索</button>");
                     $('#findByMajor').fadeIn(500);
                 },
                 error:function () {
@@ -256,8 +259,12 @@
         });
     }
 
-    function subjectWordChoose() {
-        $("");
+    function searchBox(words) {
+        var dom = $("<div class='col-md-8 col-md-offset-2'></div>");
+        dom.append("<label class=\"col-md-4 control-label\">关键词</label>");
+        dom.append("<div class=\"col-md-8\"><input type=\"text\" class=\"tagsinput\" value=\"First,Second,Third\"/><span class=\"help-block\">Default textarea field</span></div>");
+        $("#findByMajor").append(dom);
+        $(".tagsinput").tagsInput();
     }
 </script>
 <!-- END TEMPLATE -->
