@@ -324,20 +324,6 @@ public class AuthorizationManageController {
 //        return "/usermanage/operateLogList";
     }
 
-//    @RequestMapping(value = "operateLogs", method = RequestMethod.GET)
-//    @ResponseBody
-//    public PagingDto<OperateLog> operateLogs(Integer limit, Integer offset){
-//        if(limit == null){
-//            limit = 10;
-//        }
-//        if (offset == null){
-//            offset = 0;
-//        }else{
-//            offset /= limit;
-//        }
-//        Page<OperateLog> result = operateLogService.queryAllOperateLogPaging(limit,offset);
-//        return new PagingDto<>(RequestStatus.SUCCESS,result);
-//    }
 
 
     @RequestMapping(value = "operateLogs", method = RequestMethod.GET)
