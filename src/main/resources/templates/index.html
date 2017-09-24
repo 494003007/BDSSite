@@ -238,7 +238,7 @@
                     var moreRow = num % 6;
                     var defaultRow = Math.floor(num / 6);
                     $.each(list,function () {
-                        buttonDom.push($("<button type=\"button\" onclick='this.remove()' class=\"btn btn-primary btn-block\"><span class=\"fa fa-minus\"></span> " + this['name'] + "</button>"));
+                        buttonDom.push($("<button type=\"button\" data-value='" + this['name'] + "' onclick='this.remove()' class=\"btn btn-primary btn-block\"><span class=\"fa fa-minus\"></span> " + this['name'] + "</button>"));
                     });
                     majorDiv.append($("<p>请按实际情况划去关键词</p>"));
                     for(var i = 0; i < 6 ; i++){
@@ -248,7 +248,7 @@
                         }
                         majorDiv.append(temp);
                     }
-                    majorDiv.append("<button onclick='searchBox()'>搜索</button>");
+                    majorDiv.append("<button onclick=\'searchBox()\'>搜索</button>");
                     $('#findByMajor').fadeIn(500);
                 },
                 error:function () {
@@ -260,10 +260,19 @@
     }
 
     function searchBox(words) {
+        var keyButton = $("button[data-value]");
+        var keyWords = "";
+        if(keyButton.length > 0){
+            keyButton.each(function (index, element) {
+                keyWords += element.getAttribute("data-value") + "," ;
+            })
+        }
+        var fbm = $("#majorPane");
+        fbm.html("");
         var dom = $("<div class='col-md-8 col-md-offset-2'></div>");
         dom.append("<label class=\"col-md-4 control-label\">关键词</label>");
-        dom.append("<div class=\"col-md-8\"><input type=\"text\" class=\"tagsinput\" value=\"First,Second,Third\"/><span class=\"help-block\">Default textarea field</span></div>");
-        $("#findByMajor").append(dom);
+        dom.append("<div class=\"col-md-8\"><input type=\"text\" class=\"tagsinput\" value=\"" + keyWords + "\"/><span class=\"help-block\">Default textarea field</span></div>");
+        fbm.append(dom);
         $(".tagsinput").tagsInput();
     }
 </script>

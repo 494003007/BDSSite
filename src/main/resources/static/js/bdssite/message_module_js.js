@@ -9,6 +9,7 @@ var messageManage = new MessageManage();
  */
 function MessageManage() {
 
+    this.alert = new AlertBox("messageAlert");
 //###########################   --  START  --   ###############################//
     /**
      * 请求新信息
@@ -22,14 +23,17 @@ function MessageManage() {
                 type: 'GET',
                 async: true,
                 success: function (data) {
-                    if (data) {
+                    if (data['entityList']) {
                         _this.fillNewMessage(data['entityList']);
                         _this.fillNewMessageCount(data['entityList'])
+                    }else{
+                        _this.alert.addNewAlert("warning","未登陆","登陆后才可使用私信，请登录或注册");
+                        clearInterval(_this.interval);
                     }
                 },
                 error: function () {
                     clearInterval(_this.interval);
-                    alert("与服务器失去连接");
+                    _this.alert.addNewAlert("danger","与服务器失去连接","请检查您的网络或稍等一段时间");
                 }
 
             }
@@ -187,6 +191,7 @@ function MessageManage() {
      * 请求更新聊天内容
      */
     this.updateContent = function (id) {
+        var _this = this;
         $.ajax({
             url: '/shortMessage/updateMessage/' + id,
             type:'GET',
@@ -217,7 +222,7 @@ function MessageManage() {
     this.makeUpcontent = function (entity) {
         var currentUser = $.cookie("userData");
         currentUser = JSON.parse(currentUser);
-            content = "";
+            var content = "";
             for (var i in entity['messageInfo']) {
                 if (entity['messageInfo'][i]['fromUserId'] == currentUser['uid']) {
                     content +=
@@ -275,11 +280,12 @@ function MessageManage() {
      */
     this.sendMessage = function (id,currentUserName) {
         var _this = this;
+        var messagePost = $("#messagePost");
         $.ajax({
             url: '/shortMessage/sendMessage/'+id,
             type: 'POST',
             async: true,
-            data: {content:$("#messagePost").val()},
+            data: {content:messagePost.val()},
             success: function (data) {
                 if (data) {
                     $("#messageContent").prepend(
@@ -292,11 +298,11 @@ function MessageManage() {
                         "<a href=\"#\">" + currentUserName + "</a>" +
                         "<span class=\"date\">" + _this.timeFormatter(Date.now()) + "</span>" +
                         " </div>" +
-                        $("#messagePost").val() +
+                        messagePost.val() +
                         "</div>" +
                         "</div>"
                     );
-                    $("#messagePost").val("")
+                    messagePost.val("")
                 }
             },
             error: function (e) {

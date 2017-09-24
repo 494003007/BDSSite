@@ -43,6 +43,7 @@ public class MajorAndSubjectGeneratorMain {
 
         HashMap<String,String> muMap = new HashMap<>();
         String content = getUrlContent("http://gkcx.eol.cn/schoolhtm/specialty/10032/list.htm");
+        content = content.substring(content.indexOf("<div class=\"main center grid margin15\">"),content.indexOf("<div class=\"center ads two grid index_foolder_ad\">"));
         Pattern pat = Pattern.compile("<a target=\"_blank\" href=\"(.*?)\">&nbsp;(.*?)</a>");
         Matcher mat = pat.matcher(content);
         Pattern indexPat = Pattern.compile("recomzytype=(.*?)\"");
@@ -56,27 +57,32 @@ public class MajorAndSubjectGeneratorMain {
             return;
         }
         while(mat.find()){
-            if(!hasNext||mat.start()<indexMat.start()){
-                createMajor(mat.group(2),indexMajor);
-            }else{
+            if(mat.group(2).equals("哲学")){
+                System.out.println("");
+            }
+            if (hasNext && mat.start() >= indexMat.start()) {
                 indexMajor = createMajor(indexMat.group(1),null);
                 hasNext = indexMat.find();
             }
+            createMajor(mat.group(2),indexMajor);
         }
 
     }
 
     public void subjectGenerate() throws Exception{
         String content = getUrlContent("http://gkcx.eol.cn/schoolhtm/specialty/10032/list.htm");
+        content = content.substring(content.indexOf("<div class=\"main center grid margin15\">"),content.indexOf("<div class=\"center ads two grid index_foolder_ad\">"));
         Pattern pat = Pattern.compile("<a target=\"_blank\" href=\"(.*?)\">&nbsp;(.*?)</a>");
-        Pattern subjectPartPat = Pattern.compile("<[pbr]*?>\\s*(主要课程|专业核心课程与主要实践环节|主干学科|专业核心能力)[：:](.*?)<[/pbr]*?>");
+        Pattern subjectPartPat = Pattern.compile("<[/pbr ]*?>\\s*(主要课程|专业核心课程与主要实践环节|主干学科|专业核心能力|主干课程)[：:](.*?)<[/pbr ]*?>");
         Pattern subjectPat = Pattern.compile("([^：:]*?)(?:、|。|等，|以及|，| |,|\\.)+");
         Matcher mat = pat.matcher(content);
         while(mat.find()){
+
             Major major = ms.findByName(mat.group(2));
             try{
-                content = getUrlContent("http://gkcx.eol.cn/" + mat.group(1));
-                Matcher subjectPartMatcher = subjectPartPat.matcher(content);
+                String rs = getUrlContent("http://gkcx.eol.cn/" + mat.group(1));
+
+                Matcher subjectPartMatcher = subjectPartPat.matcher(rs);
                 while(subjectPartMatcher.find()){
                     Matcher subjectMatcher = subjectPat.matcher(subjectPartMatcher.group(0));
                     while(subjectMatcher.find()){
@@ -90,7 +96,7 @@ public class MajorAndSubjectGeneratorMain {
         }
     }
 
-    public Major createMajor(String name,@Nullable Major parent){
+    private Major createMajor(String name, @Nullable Major parent){
         Major major = ms.findByName(name);
         if(major==null){
             major = new Major();
@@ -104,7 +110,7 @@ public class MajorAndSubjectGeneratorMain {
         return major;
     }
 
-    public Subject createSubject(String name,Major major){
+    private Subject createSubject(String name, Major major){
         Subject sub = ss.findByName(name);
         if (sub==null){
             sub = new Subject();
