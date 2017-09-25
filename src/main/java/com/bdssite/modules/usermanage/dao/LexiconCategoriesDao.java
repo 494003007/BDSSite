@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface LexiconCategoriesDao extends ExtJpaRepository<LexiconCategories, Long> {
+//    public LexiconCategories findByClassification(String classification);
+//    public LexiconCategories findByDescription(String description);
 }
