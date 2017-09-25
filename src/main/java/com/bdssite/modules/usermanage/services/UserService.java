@@ -35,4 +35,7 @@ public class UserService extends BaseService<UserDao, UserInfo, Long> {
     public Page<UserInfo> queryAllUserInfoPaging(int limit, int offset){
         return dao.findAll(new PageRequest(offset,limit));
     }
+    public List<UserInfo> queryAllUserFollowing(int limit, int offset){
+        return dao.findUserFollowing(new PageRequest(offset,limit));
+    }
 }

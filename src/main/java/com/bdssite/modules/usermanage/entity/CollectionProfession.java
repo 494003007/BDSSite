@@ -24,8 +24,9 @@ public class  CollectionProfession implements Serializable {
     //关注公司
     @Column(unique=true)
     private String concernCompany;
-//
-//    用户 -- 收藏关系：多对多关系;
+
+    private UserInfo reportUser;
+    //用户 -- 收藏关系：多对多关系;
     @ManyToMany
     @JoinTable(name="SysCollectionUser",joinColumns={@JoinColumn(name="collectionId")},inverseJoinColumns={@JoinColumn(name="uid")})
     private List<UserInfo> userInfos;
@@ -68,5 +69,13 @@ public class  CollectionProfession implements Serializable {
 
     public void setConcernCompany(String concernCompany) {
         this.concernCompany = concernCompany;
+    }
+
+    public UserInfo getReportUser() {
+        return reportUser;
+    }
+
+    public void setReportUser(UserInfo reportUser) {
+        this.reportUser = reportUser;
     }
 }

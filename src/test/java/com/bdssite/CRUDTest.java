@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,18 +59,7 @@ public class CRUDTest {
     @Transactional
     @Rollback
     public void majorTest(){
-        Major parentMajor = new Major();
-        parentMajor.setName("父学科");
-        Major childMajor = new Major();
-        childMajor.setName("子学科1");
-        Major childMajor2 = new Major();
-        childMajor2.setName("子学科2");
-        majorService.save(parentMajor);
-        childMajor.setParentMajor(parentMajor);
-        childMajor2.setParentMajor(parentMajor);
-        majorService.save(childMajor);
-        majorService.save(childMajor2);
-
+        System.out.println("11111111111111111111");
 
     }
 
@@ -77,10 +67,7 @@ public class CRUDTest {
     @Transactional
     @Rollback
     public void shortMessageServiceTest() {
-        UserInfo userInfo = userService.findByName("cai");
-        List<ShortMessage> shortMessages = shortMessageService.findByToUserAndIsRead(userInfo,1);
-        removeDuplicate(shortMessages);
-        System.out.println("----------------------------");
+        System.out.println("22222222222222222222");
     }
 
     public  void  removeDuplicate(List<ShortMessage> list)  {
@@ -92,5 +79,12 @@ public class CRUDTest {
             }
         }
 
+    }
+
+
+    @Test
+    public void testFollowing(){
+        List<UserInfo> page= userService.queryAllUserFollowing(3,0);
+        System.out.printf("test---------");
     }
 }

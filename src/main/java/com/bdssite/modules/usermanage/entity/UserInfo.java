@@ -118,6 +118,7 @@ public class UserInfo implements Serializable{
     *
     *
     * */
+
     @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns ={@JoinColumn(name = "roleId") })
     private List<SysRole> roles;// 一个用户具有多个角色
 
@@ -138,6 +139,12 @@ public class UserInfo implements Serializable{
     @OneToMany(mappedBy = "toUser")
     @JsonIgnore
     private List<ShortMessage> sendMessage;
+
+
+    @ManyToMany
+    @JoinTable(name = "followingUsers", joinColumns = { @JoinColumn(name = "followingUid",referencedColumnName = "uid") }, inverseJoinColumns ={@JoinColumn(name = "followedUid",referencedColumnName = "uid") })
+    @JsonIgnore
+    private List<UserInfo> followingUsers;
 
 
     //操作日志
@@ -398,4 +405,11 @@ public class UserInfo implements Serializable{
     }
 
 
+    public List<UserInfo> getFollowingUsers() {
+        return followingUsers;
+    }
+
+    public void setFollowingUsers(List<UserInfo> followingUsers) {
+        this.followingUsers = followingUsers;
+    }
 }

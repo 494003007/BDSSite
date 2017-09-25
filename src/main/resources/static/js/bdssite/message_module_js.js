@@ -1,4 +1,5 @@
 var messageManage = new MessageManage();
+var messageAlert = new AlertBox("message_alert");
 messageManage.showNewMessage();
 setInterval("messageManage.showNewMessage();",8000)
 
@@ -27,7 +28,7 @@ function MessageManage() {
                     }
                 },
                 error: function (e) {
-                    alert("与服务器失去连接");
+                    messageAlert.addNewAlert("error","出现错误","与服务器失去连接");
                 }
 
             }
