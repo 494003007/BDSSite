@@ -171,7 +171,7 @@
 <script type="text/javascript" src="/js/plugins/moment.min.js"></script>
 <script type="text/javascript" src="/js/plugins/daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="/js/plugins/jquery/jquery.tagsinput.min.js"></script>
-
+<script type="text/javascript" src="/js/bdssite/search_module.js"></script>
 <!-- END THIS PAGE PLUGINS-->
 
 <!-- START TEMPLATE -->
@@ -270,11 +270,23 @@
         var fbm = $("#majorPane");
         fbm.html("");
         var dom = $("<div class='col-md-8 col-md-offset-2'></div>");
-        dom.append("<label class=\"col-md-4 control-label\">关键词</label>");
-        dom.append("<div class=\"col-md-8\"><input type=\"text\" class=\"tagsinput\" value=\"" + keyWords + "\"/><span class=\"help-block\">Default textarea field</span></div>");
+        dom.append("<label class=\"col-md-2 control-label\">关键词</label>");
+        dom.append("<div class=\"col-md-10\"><input type=\"text\" class=\"tagsinput\" value=\"" + keyWords + "\"/><span class=\"help-block\">Default textarea field</span></div>");
+        dom.append("<label class=\"col-md-2 control-label\">学历要求</label>");
+        dom.append("<div class=\"col-md-10\"><select class='form-control select bootstrap-select' name='study'>" +
+            "<option value='不限'>不限</option>" +
+            "<option value='专科及以上'>专科及以上</option>" +
+            "<option value='本科及以上'>本科及以上</option>" +
+            "<option value='硕士生及以上'>硕士生及以上</option>" +
+            "<option value='博士生及以上'>博士生及以上</option>" +
+            "</select></div>");
+        dom.append("<div class=\"col-md-10\"><button class='btn' onclick='search()' type = 'button'>搜索</button></div>");
         fbm.append(dom);
-        $(".tagsinput").tagsInput();
+        $(".tagsinput").tagsInput({
+            'width':'100%'
+        });
     }
+
 </script>
 <!-- END TEMPLATE -->
 <!-- END SCRIPTS -->

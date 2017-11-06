@@ -23,4 +23,5 @@ public class majorAndSubjectGener {
     public void generateSubject() throws Exception {
         msg.subjectGenerate();
     }
+
 }

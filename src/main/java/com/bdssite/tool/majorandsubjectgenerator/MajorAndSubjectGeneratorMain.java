@@ -73,8 +73,8 @@ public class MajorAndSubjectGeneratorMain {
         String content = getUrlContent("http://gkcx.eol.cn/schoolhtm/specialty/10032/list.htm");
         content = content.substring(content.indexOf("<div class=\"main center grid margin15\">"),content.indexOf("<div class=\"center ads two grid index_foolder_ad\">"));
         Pattern pat = Pattern.compile("<a target=\"_blank\" href=\"(.*?)\">&nbsp;(.*?)</a>");
-        Pattern subjectPartPat = Pattern.compile("<[/pbr ]*?>\\s*(主要课程|专业核心课程与主要实践环节|主干学科|专业核心能力|主干课程)[：:](.*?)<[/pbr ]*?>");
-        Pattern subjectPat = Pattern.compile("([^：:]*?)(?:、|。|等，|以及|，| |,|\\.)+");
+        Pattern subjectPartPat = Pattern.compile("<[/pbr ]*?>(?:\\s|　)*(?:主要课程|专业核心课程与主要实践环节|主干学科|专业核心能力|主干课程)[：:](.*?)<[/pbr ]*?>");
+        Pattern subjectPat = Pattern.compile("([^：:]*?)(?:、|。|等|等，|以及|，| |,|\\.)+");
         Matcher mat = pat.matcher(content);
         while(mat.find()){
 
@@ -84,7 +84,7 @@ public class MajorAndSubjectGeneratorMain {
 
                 Matcher subjectPartMatcher = subjectPartPat.matcher(rs);
                 while(subjectPartMatcher.find()){
-                    Matcher subjectMatcher = subjectPat.matcher(subjectPartMatcher.group(0));
+                    Matcher subjectMatcher = subjectPat.matcher(subjectPartMatcher.group(1));
                     while(subjectMatcher.find()){
                         createSubject(subjectMatcher.group(1),major);
                     }

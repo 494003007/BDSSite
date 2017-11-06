@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -68,11 +70,10 @@ public class SearchAPIController {
         }
         return sb.toString();
     }
-    @RequestMapping(value = "search",method = RequestMethod.POST)
-    @ResponseBody
-    public String search(@RequestParam Map<String, Object> params){
+    @RequestMapping(value = "search",method = RequestMethod.GET)
+    public void search(@RequestParam Map<String, Object> params,HttpServletResponse response){
 
-        StringBuilder builder = new StringBuilder();
+
         try {
             URL url = new URL(searchUrlAppend(params));
             HttpURLConnection httpUrlConn = (HttpURLConnection) url.openConnection();
@@ -84,26 +85,22 @@ public class SearchAPIController {
             httpUrlConn.setRequestMethod("GET");
             httpUrlConn.connect();
 
-            // 将返回的输入流转换成字符串
-            InputStream inputStream = httpUrlConn.getInputStream();
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            InputStream is = httpUrlConn.getInputStream();
+            OutputStream os = response.getOutputStream();
 
-            String str = null;
-            while ((str = bufferedReader.readLine()) != null) {
-                builder.append(str);
+            byte[] temp = new byte[1024];
+            int length;
+            while ((length = is.read(temp)) != -1) {
+                os.write(temp, 0, length);
             }
-            bufferedReader.close();
-            inputStreamReader.close();
             // 释放资源
-            inputStream.close();
-            inputStream = null;
-            httpUrlConn.disconnect();
+            is.close();
 
+            httpUrlConn.disconnect();
+            os.flush();
+            os.close();
         } catch (Exception e) {
             System.out.println(e.getStackTrace());
         }
-        System.out.println(builder.toString());
-        return builder.toString();
     }
 }
