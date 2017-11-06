@@ -220,6 +220,7 @@ function MessageManage() {
      * 拼接聊天内容
      */
     this.makeUpcontent = function (entity) {
+        var _this = this;
         var currentUser = $.cookie("userData");
         currentUser = JSON.parse(currentUser);
             var content = "";
