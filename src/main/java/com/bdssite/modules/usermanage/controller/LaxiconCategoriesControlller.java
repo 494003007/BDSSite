@@ -32,7 +32,7 @@ public class LaxiconCategoriesControlller {
 
     @RequestMapping(value = "lexiconList", method = RequestMethod.GET)
     public String lexiconList(Map<String, Object> map){
-        return "/usermanage/lexiconCategories";
+        return "/usermanage/lexiconCategoriesList";
     }
 
     //获取词

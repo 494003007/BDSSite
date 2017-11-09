@@ -1,33 +1,43 @@
 package com.bdssite.modules.usermanage.controller;
 
 import com.bdssite.modules.common.RequestStatus;
+import com.bdssite.modules.usermanage.entity.*;
+import com.bdssite.modules.usermanage.services.*;
 import com.bdssite.tool.CommonTool;
 import com.bdssite.modules.common.dto.ListDto;
 import com.bdssite.modules.common.dto.OperationDto;
 import com.bdssite.modules.common.dto.EntityDto;
 import com.bdssite.modules.common.dto.PagingDto;
-import com.bdssite.modules.usermanage.entity.SysPermission;
-import com.bdssite.modules.usermanage.entity.SysRole;
-import com.bdssite.modules.usermanage.entity.UserInfo;
-import com.bdssite.modules.usermanage.services.OperateLogService;
-import com.bdssite.modules.usermanage.services.PermissionService;
-import com.bdssite.modules.usermanage.services.RoleService;
-import com.bdssite.modules.usermanage.services.UserService;
-import com.bdssite.modules.usermanage.entity.OperateLog;
+import org.hibernate.Hibernate;
+import org.hibernate.LobHelper;
+import org.hibernate.Session;
+import org.hibernate.boot.internal.SessionFactoryOptionsImpl;
+import org.hibernate.internal.SessionImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import javax.validation.Valid;
+import java.io.*;
+import java.sql.Blob;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -46,6 +56,7 @@ public class AuthorizationManageController {
     private RoleService roleService;
     @Autowired
     private OperateLogService operateLogService;
+
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -235,6 +246,73 @@ public class AuthorizationManageController {
         userService.delete(id);
         return new OperationDto(RequestStatus.SUCCESS);
     }
+    /**************      用户头像增删查改      **************/
+    @RequestMapping(method = RequestMethod.POST, value = "/updateUserIcon",consumes = "multipart/form-data")
+    @ResponseBody
+    public OperationDto updateUserIcon(HttpServletRequest request, @RequestParam("user_icon") MultipartFile multipartFile){
+            UserInfo userInfo = CommonTool.getUser();
+            if(multipartFile!=null&&multipartFile.getContentType().equals("image/jpeg")){
+                String path="./src/main/resources/static/";// 文件路径
+                try {
+                    InputStream i = multipartFile.getInputStream();
+
+                    if(userInfo.getUserIcon()==null||userInfo.getUserIcon().equals("")){
+                        //保存头像路径
+                        userInfo.setUserIcon("img/usericon"+userInfo.getUid()+".jpg");
+                        userService.save(userInfo);
+                    }
+                    //保存图片到本地
+                    File file = new File(path+userInfo.getUserIcon());
+                    FileOutputStream o = new FileOutputStream(file,false);
+
+                    int a;
+                    while ((a = i.read())!=-1){
+                        o.write(a);
+                    }
+                    i.close();
+                    o.flush();
+                    o.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return new OperationDto(RequestStatus.SUCCESS);
+            }else {
+                return new OperationDto(RequestStatus.OPERATION_FALSE);
+            }
+
+
+
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/getUserIcon")
+    @ResponseBody
+    public void getUserIcon(HttpServletResponse response) {
+        UserInfo userInfo = CommonTool.getUser();
+        //头像路径文件夹
+        String path="./src/main/resources/static/";
+        try {
+            OutputStream o = response.getOutputStream();
+            FileInputStream i;
+            if(userInfo.getUserIcon()==null||userInfo.getUserIcon().equals("")){
+                //默认头像路径
+                i=new FileInputStream(path+"img/userIcon/default_icon.jpg");
+            }else {
+                i=new FileInputStream(path+"img/userIcon/"+userInfo.getUid()+".jpg");
+            }
+            int a;
+            while((a=i.read())!=-1){
+                o.write(a);
+            }
+            o.flush();
+            o.close();
+            i.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     /**************      权限角色增删查改      **************/
 
     @ResponseBody

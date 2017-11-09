@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout :: header (pageTitle='词库管理')">
+<head th:replace="fragments/layout :: header (pageTitle='权限管理')">
     <!-- META SECTION -->
     <title>Joli Admin - Responsive Bootstrap Admin Template</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -39,12 +39,12 @@
         <!-- START BREADCRUMB -->
         <ul class="breadcrumb">
             <li><a href="index">首页</a></li>
-            <li class="active">词库列表</li>
+            <li class="active">权限列表</li>
         </ul>
         <!-- END BREADCRUMB -->
 
         <div class="page-title">
-            <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a> 词库列表</h2>
+            <h2><a href="/"><span class="fa fa-arrow-circle-o-left"></span></a> 权限列表</h2>
         </div>
 
         <!--状态提示框-->
@@ -56,11 +56,11 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div id="toolbar">
-                                <button id="remove" class="btn btn-default" onclick="newLexiconmodel()">
-                                    <i class="glyphicon glyphicon-plus"></i> 新增职业
-                                </button>
+                                <!--<button id="remove" class="btn btn-default" onclick="newPermissionModel()">-->
+                                    <!--<i class="glyphicon glyphicon-plus"></i> 新增权限-->
+                                <!--</button>-->
                             </div>
-                            <table id="lexiconDateTable" class="table">
+                            <table id="LexiconDataTable" class="table">
                             </table>
                         </div>
                     </div>
@@ -103,16 +103,13 @@
                             <input type="text" name="parentNode" class="form-control" id="parentNode"/>
                         </div>
                     </div>
-
-
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button id="modalButton" type="button" onclick="lexiconDataUpdate()" class="btn btn-primary">
-                        提交更改
-                    </button>
-                </div>
-                <div style="z-index: 1501"></div>
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+                    <!--<button id="modalButton" type="button" onclick="permissionDataUpdate()" class="btn btn-primary">-->
+                        <!--提交更改-->
+                    <!--</button>-->
+                <!--</div>-->
             </form>
         </div><!-- /.modal-content -->
     </div>
@@ -156,7 +153,7 @@
 <!-- END TEMPLATE -->
 <!-- END SCRIPTS -->
 <script>
-    $('#lexiconDateTable').bootstrapTable({
+    $('#LexiconDataTable').bootstrapTable({
         url: "/lexiconCategories/lexicons",
         dataType: "json",
         pagination: true,
@@ -172,13 +169,13 @@
             title: '职业描述'
         }, {
             field: 'parentNode',
-            title: '父节点',
+            title: '父节点'
         }, {
             field: 'id',
             title: '操作',
             formatter: function (value, row, index) {
                 var e = '<button class="btn" onclick="lexiconModalDisplay(' + value + ')" >编辑</button> ';
-                var d = '<button class="btn" onclick="lexiconDelete(' + value + ')" >删除</button>';
+                var d = '<button class="btn" onclick="permissionDelete(' + value + ')" >删除</button>';
                 return e + d;
             }
         }],
@@ -186,68 +183,75 @@
     });
     var alertBox = new AlertBox('alertBoxDiv');
 
-    function lexiconModalDisplay(lexiconId) {
+    function lexiconModalDisplay(permissionId) {
         $('#id').attr("disabled", false);
+
         fillFormUseAjax({
-            url: '/lexiconCategories/lexicons/' + lexiconId
+            url: '/lexiconCategories/lexicons/' + permissionId
         }, $('#lexiconForm'));
+//        $("#formModal").css("display","block");
+//        $("#lexiconModalDialog").modal("show");
         $("#lexiconModal").modal("show");
         $("#lexiconModalDialog").css("z-index", "1500");
     }
 
-    function lexiconDataUpdate() {
-        ajaxFormSubmit({
-            url: '/lexiconCategories/lexiconsUpdate',
-            type: 'post',
-            success: function (data) {
-                $("#lexiconModal").modal("hide");
-                if (data['statusCode'] === 1000) {
-                    alertBox.addNewAlert('success', "操作成功", "你所做的修改已生效");
-                    $('#lexiconDateTable').bootstrapTable('refresh');
-
-                } else {
-                    alertBox.addNewAlert('danger', "操作失败", data['message']);
-                    $('#lexiconDateTable').bootstrapTable('refresh');
-                }
-            },
-            error: function (e) {
-
-            }
-        }, 'lexiconForm')
-    }
-
-    function lexiconDelete(lexiconId) {
-        if (!window.confirm("确认删除该权限吗")) {
-            return false;
-        }
-        $.ajax({
-            url: '/lexiconCategories/lexiconsUpdate',
-            type: 'POST',
-            data: {
-                id: lexiconId
-            },
-            success: function (data) {
-                if (data['statusCode'] === 1000) {
-                    alertBox.addNewAlert('success', "操作成功", "已删除所选记录");
-                    $('#lexiconDateTable').bootstrapTable('refresh');
-                } else {
-                    alertBox.addNewAlert('danger', "操作失败", data['message']);
-                    $('#lexiconDateTable').bootstrapTable('refresh');
-                }
+//    function permissionDataUpdate() {
+//        ajaxFormSubmit({
+//            url: '/AuthorizationManage/permissionUpdate',
+//            type: 'post',
+//            success: function (data) {
+//                $("#lexiconModal").modal("hide");
+//                if (data['statusCode'] === 1000) {
+//                    alertBox.addNewAlert('success', "操作成功", "你所做的修改已生效");
+//                    $('#LexiconDataTable').bootstrapTable('refresh');
+//
+//                } else {
+//                    alertBox.addNewAlert('danger', "操作失败", data['message']);
+//                    $('#LexiconDataTable').bootstrapTable('refresh');
+//                }
 //                reflashUserData();
-            },
-            error: function (e) {
-                console.log("fillFormUseAjax:Error:Ajax request error");
-            }
-        });
-    }
+//
+//            },
+//            error: function (e) {
+//
+//            }
+//        }, 'lexiconForm')
+//    }
 
-    function newLexiconmodel() {
-        $('#lexiconForm')[0].reset();
-        $('#id').attr("disabled", true);
-        $("#lexiconModal").modal("show");
-        $("#lexiconModalDialog").css("z-index", "1500");
-    }
+//    function permissionDelete(permissionId) {
+//        if (!window.confirm("确认删除该权限吗")) {
+//            return false;
+//        }
+//        $.ajax({
+//            url: '/AuthorizationManage/permissionDelete',
+//            type: 'POST',
+//            data: {
+//                id: permissionId
+//            },
+//            success: function (data) {
+//                if (data['statusCode'] === 1000) {
+//                    alertBox.addNewAlert('success', "操作成功", "已删除所选记录");
+//                    $('#LexiconDataTable').bootstrapTable('refresh');
+//                } else {
+//                    alertBox.addNewAlert('danger', "操作失败", data['message']);
+//                    $('#LexiconDataTable').bootstrapTable('refresh');
+//                }
+//                reflashUserData();
+//            },
+//            error: function (e) {
+//                console.log("fillFormUseAjax:Error:Ajax request error");
+//            }
+//        });
+//    }
+
+//    function newPermissionModel() {
+//        $('#lexiconForm')[0].reset();
+//        $('#id').attr("disabled", true);
+//        $('#parentId').attr("disabled", true);
+//        $('#parentIds').attr("disabled", true);
+//        $("#lexiconModal").modal("show");
+//        $("#lexiconModalDialog").css("z-index", "1500");
+//    }
 </script>
 </body>
 </html>

@@ -96,6 +96,7 @@ function ajaxFormSubmit(ajaxOption, formId) {
         type: ajaxOption['type']?ajaxOption['type']:'GET',
         contentType: false,
         data:form,
+        cache: false,
         success:ajaxOption['success'],
         processData:false,
         error:ajaxOption['error'] ? ajaxOption['error'] : function (e) {

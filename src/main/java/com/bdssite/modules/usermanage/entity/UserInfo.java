@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Blob;
 import java.sql.Date;
 
 import java.util.List;
@@ -87,6 +88,7 @@ public class UserInfo implements Serializable{
 //    @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date last_login_time;//最后一次登陆
 
+
     @NotNull(message = "user.state.notnull")
     @Column(nullable = false)
     private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
@@ -151,6 +153,17 @@ public class UserInfo implements Serializable{
     @JsonIgnore
     @OneToMany(mappedBy = "operateUser")
     private List<OperateLog> operateLogs;
+
+    //用户头像
+    private String userIcon;
+
+    public String getUserIcon() {
+        return userIcon;
+    }
+
+    public void setUserIcon(String userIcon) {
+        this.userIcon = userIcon;
+    }
 
     public List<ShortMessage> getReceiveMessage() {
         return receiveMessage;
