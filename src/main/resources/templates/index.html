@@ -92,7 +92,7 @@
                 <div class="col-md-3">
 
                     <!-- START WIDGET MESSAGES -->
-                    <div class="widget widget-default widget-item-icon" onclick="location.href='pages-messages.html';">
+                    <div class="widget widget-default widget-item-icon" onclick="location.href='/shortMessage/messagePage';">
                         <div class="widget-item-left">
                             <span class="fa fa-envelope"></span>
                         </div>
@@ -132,7 +132,40 @@
 
                         </div>
                     </div>
-
+                    <div id="searchBox" class="panel panel-default container">
+                        <div class="rows">
+                            <div class='col-md-8 col-md-offset-2'>
+                                <label class="col-md-1 control-label" for="study">学历要求</label>
+                                <div class="col-md-5">
+                                    <select class='form-control select bootstrap-select' name='study' id="study">
+                                        <option value='不限'>不限</option>
+                                        <option value='专科及以上'>专科及以上</option>
+                                        <option value='本科及以上'>本科及以上</option>
+                                        <option value='硕士生及以上'>硕士生及以上</option>
+                                        <option value='博士生及以上'>博士生及以上</option>
+                                    </select>
+                                </div>
+                                <label class="col-md-1 control-label" for="place">工作地点要求</label>
+                                <div class="col-md-5">
+                                    <select id="place" class='form-control select bootstrap-select' name='workPlace'>
+                                        <option value='不限'>不限</option>
+                                        <option value='专科及以上'>深圳</option>
+                                        <option value='本科及以上'>珠海</option>
+                                        <option value='硕士生及以上'>**</option>
+                                        <option value='博士生及以上'></option>
+                                    </select>
+                                </div>
+                                <label class="col-md-2 control-label" for="keywords">关键词</label>
+                                <div class="col-md-10">
+                                    <input id="keywords" name="keywords" type="text" class="tagsinput" value="" />
+                                    <span class="help-block">Default textarea field</span>
+                                </div>
+                                <div class="col-md-10">
+                                    <button class='btn' onclick='search()' type = 'button'>搜索</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-1"></div>
             </div>
@@ -166,6 +199,7 @@
 <script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
 <script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
 <script type='text/javascript' src='/js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+<script type='text/javascript' src='/js/plugins/bootstrap/bootstrap-select.js'></script>
 <script type="text/javascript" src="/js/plugins/owl/owl.carousel.min.js"></script>
 
 <script type="text/javascript" src="/js/plugins/moment.min.js"></script>
@@ -267,21 +301,7 @@
                 keyWords += element.getAttribute("data-value") + "," ;
             })
         }
-        var fbm = $("#majorPane");
-        fbm.html("");
-        var dom = $("<div class='col-md-8 col-md-offset-2'></div>");
-        dom.append("<label class=\"col-md-2 control-label\">关键词</label>");
-        dom.append("<div class=\"col-md-10\"><input type=\"text\" class=\"tagsinput\" value=\"" + keyWords + "\"/><span class=\"help-block\">Default textarea field</span></div>");
-        dom.append("<label class=\"col-md-2 control-label\">学历要求</label>");
-        dom.append("<div class=\"col-md-10\"><select class='form-control select bootstrap-select' name='study'>" +
-            "<option value='不限'>不限</option>" +
-            "<option value='专科及以上'>专科及以上</option>" +
-            "<option value='本科及以上'>本科及以上</option>" +
-            "<option value='硕士生及以上'>硕士生及以上</option>" +
-            "<option value='博士生及以上'>博士生及以上</option>" +
-            "</select></div>");
-        dom.append("<div class=\"col-md-10\"><button class='btn' onclick='search()' type = 'button'>搜索</button></div>");
-        fbm.append(dom);
+        $("#majorPane").hide(600);
         $(".tagsinput").tagsInput({
             'width':'100%'
         });
