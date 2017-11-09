@@ -57,7 +57,8 @@
 
                         </div>
                         <div class="widget-controls">
-                            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+                            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip"
+                               data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
                         </div>
                     </div>
                     <!-- END WIDGET SLIDER -->
@@ -72,7 +73,8 @@
                         <div class="widget-big-int plugin-clock">00:00</div>
                         <div class="widget-subtitle plugin-date">Loading...</div>
                         <div class="widget-controls">
-                            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="left" title="Remove Widget"><span class="fa fa-times"></span></a>
+                            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip"
+                               data-placement="left" title="Remove Widget"><span class="fa fa-times"></span></a>
                         </div>
                         <div class="widget-buttons widget-c3">
                             <div class="col">
@@ -92,7 +94,8 @@
                 <div class="col-md-3">
 
                     <!-- START WIDGET MESSAGES -->
-                    <div class="widget widget-default widget-item-icon" onclick="location.href='/shortMessage/messagePage';">
+                    <div class="widget widget-default widget-item-icon"
+                         onclick="location.href='/shortMessage/messagePage';">
                         <div class="widget-item-left">
                             <span class="fa fa-envelope"></span>
                         </div>
@@ -102,7 +105,8 @@
                             <div class="widget-subtitle">职位推送:2</div>
                         </div>
                         <div class="widget-controls">
-                            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+                            <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip"
+                               data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
                         </div>
                     </div>
                     <!-- END WIDGET MESSAGES -->
@@ -118,10 +122,15 @@
                             <form class="form-horizontal">
                                 <div class="form-group">
                                     <div class="col-md-6">
-                                        <button onclick="displayFindByMajor()" type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 按专业查找</button>
+                                        <button onclick="displayFindByMajor()" type="button"
+                                                class="btn btn-primary btn-block"><span class="fa fa-search"></span>
+                                            按专业查找
+                                        </button>
                                     </div>
                                     <div class="col-md-6">
-                                        <button type="button" class="btn btn-primary btn-block"><span class="fa fa-search"></span> 直接查找</button>
+                                        <button type="button" class="btn btn-primary btn-block"><span
+                                                class="fa fa-search"></span> 直接查找
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -133,10 +142,10 @@
                         </div>
                     </div>
                     <div id="searchBox" class="panel panel-default container">
-                        <div class="rows">
-                            <div class='col-md-8 col-md-offset-2'>
-                                <label class="col-md-1 control-label" for="study">学历要求</label>
-                                <div class="col-md-5">
+                        <div class="row stacked panel-body">
+                            <div class="col-md-6">
+                                <div class="input-group push-down-10">
+                                    <label class="control-label" for="study">学历要求</label>
                                     <select class='form-control select bootstrap-select' name='study' id="study">
                                         <option value='不限'>不限</option>
                                         <option value='专科及以上'>专科及以上</option>
@@ -145,8 +154,10 @@
                                         <option value='博士生及以上'>博士生及以上</option>
                                     </select>
                                 </div>
-                                <label class="col-md-1 control-label" for="place">工作地点要求</label>
-                                <div class="col-md-5">
+                                <div class="input-group push-down-10">
+
+                                    <label class=" control-label" for="place">工作地点要求</label>
+
                                     <select id="place" class='form-control select bootstrap-select' name='workPlace'>
                                         <option value='不限'>不限</option>
                                         <option value='专科及以上'>深圳</option>
@@ -154,15 +165,23 @@
                                         <option value='硕士生及以上'>**</option>
                                         <option value='博士生及以上'></option>
                                     </select>
+
+
                                 </div>
-                                <label class="col-md-2 control-label" for="keywords">关键词</label>
-                                <div class="col-md-10">
-                                    <input id="keywords" name="keywords" type="text" class="tagsinput" value="" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="input-group push-down-10">
+                                    <label class="control-label" for="keywords">关键词</label>
+
+                                    <input id="keywords" name="keywords" type="text" class="tagsinput" value=""/>
                                     <span class="help-block">Default textarea field</span>
+
                                 </div>
-                                <div class="col-md-10">
-                                    <button class='btn' onclick='search()' type = 'button'>搜索</button>
-                                </div>
+
+                                <button class='btn' onclick='search()' type='button'>搜索</button>
+
+
                             </div>
                         </div>
                     </div>
@@ -217,67 +236,71 @@
     function displayFindByMajor() {
         majorChooserInit();
     }
+
     function majorChooserInit() {
         $('#findByMajor').hide();
-        ajaxDataDisplay(null,"majorChildDisplay");
+        ajaxDataDisplay(null, "majorChildDisplay");
     }
-    function majorChildDisplay(majorParentId){
-        ajaxDataDisplay(majorParentId,"subjectChoose");
+
+    function majorChildDisplay(majorParentId) {
+        ajaxDataDisplay(majorParentId, "subjectChoose");
     }
-    function ajaxDataDisplay(majorParentId,functionName){
+
+    function ajaxDataDisplay(majorParentId, functionName) {
         var majorDiv = $('#majorPane');
-        $('#findByMajor').fadeOut(500,function () {
+        $('#findByMajor').fadeOut(500, function () {
             majorDiv.html("");
             $.ajax({
-                url:"/searchApi/majors",
+                url: "/searchApi/majors",
                 type: 'POST',
-                data:majorParentId?{'parentId':majorParentId}:{},
-                success:function (data) {
+                data: majorParentId ? {'parentId': majorParentId} : {},
+                success: function (data) {
                     var list = data['entityList'];
                     var num = list.length;
                     var buttonDom = [];
                     var moreRow = num % 6;
                     var defaultRow = Math.floor(num / 6);
-                    $.each(list,function () {
+                    $.each(list, function () {
                         buttonDom.push($("<button type=\"button\" onclick='" + functionName + "(" + this['id'] + ")' class=\"btn btn-primary btn-block\"><span class=\"fa fa-book\"></span> " + this['name'] + "</button>"));
                     });
-                    for(var i = 0; i < 6 ; i++){
+                    for (var i = 0; i < 6; i++) {
                         var temp = $("<div class=\"col-md-2\"></div>");
-                        for(var j = 0;j < (i < moreRow ? defaultRow + 1 : defaultRow );j++){
+                        for (var j = 0; j < (i < moreRow ? defaultRow + 1 : defaultRow ); j++) {
                             temp.append(buttonDom.pop());
                         }
                         majorDiv.append(temp);
                     }
                     $('#findByMajor').fadeIn(500);
                 },
-                error:function (e) {
+                error: function (e) {
                     alert("获取专业列表失败.")
                 }
 
             });
         });
     }
-    function subjectChoose(majorId){
+
+    function subjectChoose(majorId) {
         var majorDiv = $('#majorPane');
-        $('#findByMajor').fadeOut(500,function () {
+        $('#findByMajor').fadeOut(500, function () {
             majorDiv.html("");
             $.ajax({
-                url:"/searchApi/subject/byMajor",
+                url: "/searchApi/subject/byMajor",
                 type: 'POST',
-                data:{'majorId':majorId},
-                success:function (data) {
+                data: {'majorId': majorId},
+                success: function (data) {
                     var list = data['entityList'];
                     var num = list.length;
                     var buttonDom = [];
                     var moreRow = num % 6;
                     var defaultRow = Math.floor(num / 6);
-                    $.each(list,function () {
+                    $.each(list, function () {
                         buttonDom.push($("<button type=\"button\" data-value='" + this['name'] + "' onclick='this.remove()' class=\"btn btn-primary btn-block\"><span class=\"fa fa-minus\"></span> " + this['name'] + "</button>"));
                     });
                     majorDiv.append($("<p>请按实际情况划去关键词</p>"));
-                    for(var i = 0; i < 6 ; i++){
+                    for (var i = 0; i < 6; i++) {
                         var temp = $("<div class=\"col-md-2\"></div>");
-                        for(var j = 0;j < (i < moreRow ? defaultRow + 1 : defaultRow );j++){
+                        for (var j = 0; j < (i < moreRow ? defaultRow + 1 : defaultRow ); j++) {
                             temp.append(buttonDom.pop());
                         }
                         majorDiv.append(temp);
@@ -285,7 +308,7 @@
                     majorDiv.append("<button onclick=\'searchBox()\'>搜索</button>");
                     $('#findByMajor').fadeIn(500);
                 },
-                error:function () {
+                error: function () {
                     alert("获取专业列表失败.");
                 }
 
@@ -296,15 +319,17 @@
     function searchBox(words) {
         var keyButton = $("button[data-value]");
         var keyWords = "";
-        if(keyButton.length > 0){
+        if (keyButton.length > 0) {
             keyButton.each(function (index, element) {
-                keyWords += element.getAttribute("data-value") + "," ;
-            })
+                keyWords += element.getAttribute("data-value") + ",";
+            });
+            $("#keywords").val(keyWords);
         }
+        $("#keywords_tagsinput").remove();
+        $("#keywords").tagsInput();
         $("#majorPane").hide(600);
-        $(".tagsinput").tagsInput({
-            'width':'100%'
-        });
+
+
     }
 
 </script>
