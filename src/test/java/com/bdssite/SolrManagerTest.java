@@ -17,6 +17,6 @@ public class SolrManagerTest {
     private SolrManager solrManager;
     @Test
     public void propertyTest(){
-        System.out.println(solrManager.getUrl());
+        System.out.println(solrManager.getSolrUrl());
     }
 }

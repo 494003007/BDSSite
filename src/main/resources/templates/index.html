@@ -142,6 +142,7 @@
                         </div>
                     </div>
                     <div id="searchBox" class="panel panel-default container">
+                        <form id="jobSearchBox">
                         <div class="row stacked panel-body">
                             <div class="col-md-6">
                                 <div class="input-group push-down-10">
@@ -181,6 +182,52 @@
 
                                 <button class='btn' onclick='search()' type='button'>搜索</button>
 
+
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div id="resultDisplayDiv">
+                        <div class="panel panel-default">
+                            <div class="panel-heading ui-draggable-handle">
+                                <h2 class="panel-title">百度</h2>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-3">年薪</div>
+                                            <div class="col-md-3">工作地点</div>
+                                            <div class="col-md-3">学历</div>
+                                            <div class="col-md-3">经验</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-4">公司</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading ui-draggable-handle">
+                                <h2 class="panel-title">啦啦啦</h2>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="row">
+                                            <div class="col-md-3">年薪</div>
+                                            <div class="col-md-3">工作地点</div>
+                                            <div class="col-md-3">学历</div>
+                                            <div class="col-md-3">经验</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h2>公司名</h2>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -328,10 +375,65 @@
         $("#keywords_tagsinput").remove();
         $("#keywords").tagsInput();
         $("#majorPane").hide(600);
-
-
     }
 
+    function search() {
+        $.ajax({url:"/searchApi/search",
+            type:'GET',
+            data:$("#jobSearchBox").serialize(),
+            dataType: "json",
+            success:function (data) {
+                $("#resultDisplayDiv").html("");
+                $(data.response.docs).each(function (i, val) {
+                    $("#resultDisplayDiv").append(generResultDiv(val));
+                })
+            }
+        });
+    }
+    function generResultDiv(jobObj) {
+        var html = [];
+        html.push('<div class="panel panel-default">');
+        html.push('<div class="panel-heading ui-draggable-handle">');
+        html.push('<h2 class="panel-title">');
+        html.push(jobObj['job_name'][0]);
+        html.push('</h2>');
+        html.push('</div>');
+        html.push('<div class="panel-body">');
+        html.push('<div class="row">');
+        html.push('<div class="col-md-8">');
+        html.push('<div class="row">');
+        html.push('<div class="col-md-3">');
+        if(jobObj["job_negotiation"][0] == "false"){
+            if(jobObj["job_l_highest"] != jobObj["job_l_lowest"]){
+                html.push(jobObj["job_l_lowest"]/10000.0);
+                html.push("-");
+                html.push(jobObj["job_l_highest"]/10000.0);
+            }else{
+                html.push(jobObj["job_l_lowest"]/10000.0);
+            }
+            html.push("万元/年");
+        }else {
+            html.push("面议");
+        }
+
+        html.push('</div>');
+        html.push('<div class="col-md-3">');
+        html.push(jobObj["job_place"][0]);
+        html.push('</div>');
+        html.push('<div class="col-md-3">' + jobObj["job_study"][0] + '</div>');
+        html.push('<div class="col-md-3">' + jobObj["job_experience"][0] + '</div>');
+        html.push('</div>');
+        html.push('</div>');
+        html.push('<div class="col-md-4">');
+        html.push('<div class="row">');
+        html.push('<div class="col-md-4">' + jobObj["job_company"][0] + '</div>');
+        html.push('</div>');
+        html.push('</div>');
+        html.push('</div>');
+        html.push('</div>');
+        html.push('</div>');
+        return html.join("");
+    }
 </script>
 <!-- END TEMPLATE -->
 <!-- END SCRIPTS -->

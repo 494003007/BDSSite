@@ -4,6 +4,7 @@ package com.bdssite.modules.searchmanage.controller;
 
 import com.bdssite.modules.common.RequestStatus;
 import com.bdssite.modules.common.dto.ListDto;
+import com.bdssite.modules.searchmanage.SolrManager;
 import com.bdssite.modules.searchmanage.entity.Major;
 import com.bdssite.modules.searchmanage.entity.Subject;
 import com.bdssite.modules.searchmanage.service.MajorService;
@@ -16,13 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.*;
 
+
+import java.net.URLEncoder;
 import java.util.Map;
 
 
@@ -37,6 +35,9 @@ public class SearchAPIController {
 
     @Autowired
     SubjectService ss;
+
+    @Autowired
+    SolrManager solrManager;
 
     @RequestMapping(value = "subject/byMajor")
     @ResponseBody
@@ -59,48 +60,28 @@ public class SearchAPIController {
         }
     }
 
-    private String searchUrlAppend(Map<String,Object> param){
-        String baseSearchUrl = "http://localhost:8080/solr/collection1/findJob";
+    private String searchUrlAppend(Map<String,Object> param) throws Exception{
+        String baseSearchUrl = "findJob?wt=json&indent=true";
         StringBuilder sb = new StringBuilder(baseSearchUrl);
-        if(param.size()!=0){
-            sb.append('?');
-        }
-        if(param.containsKey("keyWord")){
-           sb.append("q=").append((String) param.get("keyWord"));
+
+        if(param.containsKey("keywords")){
+           String keys = (String) param.get("keywords");
+           if(keys.contains(",")){
+               keys = keys.replaceAll(","," ");
+           }
+           sb.append("&q=").append(URLEncoder.encode(keys,"UTF-8"));
         }
         return sb.toString();
     }
+
     @RequestMapping(value = "search",method = RequestMethod.GET)
-    public void search(@RequestParam Map<String, Object> params,HttpServletResponse response){
+    @ResponseBody
+    public String search(@RequestParam Map<String, Object> params,HttpServletResponse response) throws Exception{
+        String uri = searchUrlAppend(params);
 
 
-        try {
-            URL url = new URL(searchUrlAppend(params));
-            HttpURLConnection httpUrlConn = (HttpURLConnection) url.openConnection();
+        String result = solrManager.excuteAndOutPut(uri);
+        return result;
 
-            httpUrlConn.setDoOutput(false);
-            httpUrlConn.setDoInput(true);
-            httpUrlConn.setUseCaches(false);
-
-            httpUrlConn.setRequestMethod("GET");
-            httpUrlConn.connect();
-
-            InputStream is = httpUrlConn.getInputStream();
-            OutputStream os = response.getOutputStream();
-
-            byte[] temp = new byte[1024];
-            int length;
-            while ((length = is.read(temp)) != -1) {
-                os.write(temp, 0, length);
-            }
-            // 释放资源
-            is.close();
-
-            httpUrlConn.disconnect();
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            System.out.println(e.getStackTrace());
-        }
     }
 }
