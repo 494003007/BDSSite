@@ -61,7 +61,7 @@ public class SearchAPIController {
     }
 
     private String searchUrlAppend(Map<String,Object> param) throws Exception{
-        String baseSearchUrl = "findJob?wt=json&indent=true";
+        String baseSearchUrl = "findJob?wt=json";
         StringBuilder sb = new StringBuilder(baseSearchUrl);
 
         if(param.containsKey("keywords")){
@@ -71,6 +71,21 @@ public class SearchAPIController {
            }
            sb.append("&q=").append(URLEncoder.encode(keys,"UTF-8"));
         }
+        if(param.containsKey("fields")){
+            sb.append("&fl=").append(URLEncoder.encode((String)param.get("fields"),"UTF-8"));
+        }
+        if(param.containsKey("limit")){
+            String limit = (String)param.get("limit");
+            sb.append("&rows=");
+            if(limit.equals("max")){
+                sb.append(Integer.MAX_VALUE);
+            }else{
+                sb.append(limit);
+            }
+        }
+        if(param.containsKey("offset")){
+            sb.append("&start=").append((String)param.get("offset"));
+        }
         return sb.toString();
     }
 
@@ -78,10 +93,7 @@ public class SearchAPIController {
     @ResponseBody
     public String search(@RequestParam Map<String, Object> params,HttpServletResponse response) throws Exception{
         String uri = searchUrlAppend(params);
-
-
-        String result = solrManager.excuteAndOutPut(uri);
-        return result;
-
+        return solrManager.excuteAndOutPut(uri);
     }
+
 }
