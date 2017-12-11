@@ -258,8 +258,9 @@ public class AuthorizationManageController {
 
                     if(userInfo.getUserIcon()==null||userInfo.getUserIcon().equals("")){
                         //保存头像路径
-                        userInfo.setUserIcon("img/usericon"+userInfo.getUid()+".jpg");
+                        userInfo.setUserIcon("img/usericon/"+userInfo.getUid()+".jpg");
                         userService.save(userInfo);
+                        CommonTool.getUser().update(userInfo);
                     }
                     //保存图片到本地
                     File file = new File(path+userInfo.getUserIcon());
