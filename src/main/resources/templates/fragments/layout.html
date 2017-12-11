@@ -59,6 +59,98 @@
 
 </div>
 
+<div th:fragment="searchMoudle">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>建议应届毕业生按专业进行查找，其他人士直接进行检索</h4>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <button onclick="displayFindByMajor()" type="button"
+                                        class="btn btn-primary btn-block"><span class="fa fa-search"></span>
+                                    按专业查找
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary btn-block"><span
+                                        class="fa fa-search"></span> 直接查找
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="findByMajor" class="panel panel-default" style="display: none;">
+                <div class="panel-body" id="majorPane" style="max-height: 400px;overflow-y:auto;">
+
+                </div>
+            </div>
+            <div id="searchBox" class="panel panel-default container">
+                <form id="jobSearchBox">
+                    <div class="row stacked panel-body">
+                        <div class="col-md-2"></div>
+
+                        <div class="col-md-8">
+                            <div class="text-center">
+                                <label class="control-label " for="keywords"><h2>易职搜</h2></label>
+                                <input id="keywords" name="keywords" type="text" class="tagsinput" value=""/>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+
+
+                        </div>
+                    </div>
+                    <div class="row stacked panel-body">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2">
+                            <div class="input-group push-down-10">
+                                <label class="control-label" for="study">学历要求</label>
+                                <select class='form-control select bootstrap-select' name='study' id="study">
+                                    <option value='不限'>不限</option>
+                                    <option value='专科及以上'>专科及以上</option>
+                                    <option value='本科及以上'>本科及以上</option>
+                                    <option value='硕士生及以上'>硕士生及以上</option>
+                                    <option value='博士生及以上'>博士生及以上</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-6">
+                            <div class=" push-down-10">
+
+                                <label class=" control-label" for="place">工作地点要求</label>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <select id="place" class='form-control select bootstrap-select' name='workPlace'>
+                                            <option value='不限'>不限</option>
+                                            <option value='深圳'>深圳</option>
+                                            <option value='珠海'>珠海</option>
+                                            <option value='**'>**</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                    <button class='btn' onclick='search()' type='button'>搜索</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+            <div id="resultDisplayDiv" class="search-results">
+
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
+
+
 <div th:fragment="templateJs">
     <script type="text/javascript" src="/js/settings.js"></script>
 
@@ -139,7 +231,8 @@
                 <div id="messageAlert">
 
                 </div>
-
+                <div id="message_moudle" class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
+                </div>
                 <div class="panel-footer text-center">
                     <a href="#" onclick="messageManage.clickNewMessage(0)">Show all messages</a>
                 </div>

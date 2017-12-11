@@ -44,20 +44,20 @@
                 <div class="col-md-12">
                     <!-- START WIZARD WITH VALIDATION -->
                     <div class="block">
-                        <h4>Wizard with form validation</h4>
+                        <h4>账号注册</h4>
                         <form action="/register" role="form" method="post" class="form-horizontal" id="wizard-validation">
                             <div class="wizard show-submit wizard-validation">
                                 <ul>
                                     <li>
                                         <a href="#step-7">
                                             <span class="stepNumber">1</span>
-                                            <span class="stepDesc">Login<br /><small>Information</small></span>
+                                            <span class="stepDesc">登陆<br /><small>信息</small></span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#step-8">
                                             <span class="stepNumber">2</span>
-                                            <span class="stepDesc">User<br /><small>Personal data</small></span>
+                                            <span class="stepDesc">用户<br /><small>隐私数据</small></span>
                                         </a>
                                     </li>
                                 </ul>
@@ -65,19 +65,19 @@
                                 <div id="step-7">
 
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">Login</label>
+                                        <label class="col-md-2 control-label">登陆名</label>
                                         <div class="col-md-10">
-                                            <input type="text" class="form-control" name="username" placeholder="Login"/>
+                                            <input type="text" class="form-control" name="username" placeholder="LoginName"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">Password</label>
+                                        <label class="col-md-2 control-label">密码</label>
                                         <div class="col-md-10">
                                             <input type="password" class="form-control" name="password" placeholder="Password" id="password"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">Re-Password</label>
+                                        <label class="col-md-2 control-label">再次输入密码</label>
                                         <div class="col-md-10">
                                             <input type="password" class="form-control" name="repassword" placeholder="Re-Password"/>
                                         </div>
@@ -88,7 +88,7 @@
                                 <div id="step-8">
 
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">Name</label>
+                                        <label class="col-md-2 control-label">用户名</label>
                                         <div class="col-md-10">
                                             <input type="text" class="form-control" name="true_name" placeholder="Name"/>
                                         </div>
@@ -100,14 +100,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">City</label>
+                                        <label class="col-md-2 control-label">城市</label>
                                         <div class="col-md-10">
                                             <input type="text" class="form-control" name="city" placeholder="Your address"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">Sex</label>
+                                        <label class="col-md-2 control-label">性别</label>
                                         <div class="col-md-10">
                                             <select th:name="sex" class="form-control select" data-style="btn-success">
                                                 <option th:value="1">男</option>
