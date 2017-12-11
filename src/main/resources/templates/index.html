@@ -201,8 +201,8 @@
                         <div class="sr-item">
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
-                                <a href="#" class="sr-item-title">百度</a>
-                                <div class="sr-item-link">http://themifycloud.com/downloads/free-responsive-bootstrap-joli-angular-js-admin-template-dashboard-web-app/</div>
+                                <a href="#" class="sr-item-title">易职搜</a>
+
                                 <div class="row">
                                     <div class="row">
                                         <div>公司</div>
@@ -216,57 +216,12 @@
                                         <div class="col-md-3">经验</div>
                                     </div>
                                 </div>
+                                <div class="sr-item-link">http://themifycloud.com/downloads/free-responsive-bootstrap-joli-angular-js-admin-template-dashboard-web-app/</div>
                                 <p class="sr-item-links"><a href="#">Translate this page</a> - <a href="#">View cache</a> - <a href="#">Remove from search</a></p>
                             </div>
 
                             <div class="col-md-2"></div>
                         </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading ui-draggable-handle">
-                                <h2 class="panel-title">百度</h2>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <div class="row">
-                                            <div class="col-md-6">年薪</div>
-                                            <div class="col-md-6">工作地点</div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">学历</div>
-                                            <div class="col-md-6">经验</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <div class="col-md-4">公司</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--<div class="panel panel-default">-->
-                            <!--<div class="panel-heading ui-draggable-handle">-->
-                                <!--<h2 class="panel-title">啦啦啦</h2>-->
-                            <!--</div>-->
-                            <!--<div class="panel-body">-->
-                                <!--<div class="row">-->
-                                    <!--<div class="col-md-8">-->
-                                        <!--<div class="row">-->
-                                            <!--<div class="col-md-3">年薪</div>-->
-                                            <!--<div class="col-md-3">工作地点</div>-->
-                                            <!--<div class="col-md-3">学历</div>-->
-                                            <!--<div class="col-md-3">经验</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="col-md-4">-->
-                                        <!--<h2>公司名</h2>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-
-                            <!--</div>-->
-                        <!--</div>-->
                     </div>
                 </div>
                 <div class="col-md-1"></div>
@@ -423,6 +378,7 @@
                 $(data.response.docs).each(function (i, val) {
                     $("#resultDisplayDiv").append(generResultDiv(val));
                 })
+                $(window).resize();
             }
         });
     }
