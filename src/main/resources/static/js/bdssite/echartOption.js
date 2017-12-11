@@ -459,3 +459,73 @@ function generateCityMap(m) {
 
     return option;
 }
+function getphoto(m,s) {
+    var option;
+    var adata = [];
+    var bdata = [];
+    var cdata = [];
+    var data = [];
+    for(key in s){
+        cdata.push(s[key]);
+    }
+    for(key in m ){
+        adata.push(key);
+        bdata.push(m[key]);
+        if (adata.length>20)break;
+    }
+    for (var i =0;i<adata.length;i++){
+        data[i] = parseInt(cdata[i] / bdata[i] / 2);
+    }
+
+    option = {
+        title : {
+            text: '各城市平均年工资',
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['平均年工作']
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                data : adata
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'平均年工资',
+                type:'bar',
+                data:data,
+                markPoint : {
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+                },
+                markLine : {
+                    data : [
+                        {type : 'average', name: '职业平均收入'}
+                    ]
+                }
+            },
+        ]
+    };
+
+    return option;
+}

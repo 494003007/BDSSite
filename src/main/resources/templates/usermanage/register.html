@@ -7,57 +7,57 @@
 </head>
 <body>
 <!--<div class="register-form padding20 block-shadow" style="opacity: 1; transform: scale(1); transition: 0.5s;  overflow:auto;">-->
-    <!--<form method="post">-->
-        <!--<h1 class="text-light">注册</h1>-->
-        <!--<hr class="thin" />-->
-        <!--<br/>-->
-        <!--<div class="input-control text full-size" data-role="input"><label th:for="username">用户名</label><input id="username" name="username" class="" type="text"  /></div><br/><br/>-->
-        <!--<div class="input-control password full-size" data-role="input"><label for="password" >密码</label><input id="password" name="password" type="text" /></div><br/><br/>-->
-        <!--<div class="input-control text full-size" data-role="input"><label th:for="name">昵称</label><input id="name" name="name" class="" type="text"  /></div><br/><br/>-->
-        <!--<div class="input-control text full-size" data-role="input"><label th:for="true_name">真实姓名</label><input id="true_name" name="true_name" class="" type="text"  /></div><br/><br/>-->
-        <!--<div class="input-control text full-size" data-role="input"><label th:for="country">城市</label><input id="country" name="country" class="" type="text"  /></div><br/><br/>-->
-        <!--<div class="input-control text full-size" data-role="input"><label th:for="email">电子邮箱</label><input id="email" name="email" class="" type="text"  /></div><br/><br/>-->
-        <!--<div class="input-control full-size select" data-role="input"><label th:for="sex">性别</label>-->
-            <!--<select th:name="sex">-->
-                <!--<option th:value="1">男</option>-->
-                <!--<option th:value="0">女</option>-->
-            <!--</select>-->
-        <!--</div><br/><br/>-->
+<!--<form method="post">-->
+<!--<h1 class="text-light">注册</h1>-->
+<!--<hr class="thin" />-->
+<!--<br/>-->
+<!--<div class="input-control text full-size" data-role="input"><label th:for="username">用户名</label><input id="username" name="username" class="" type="text"  /></div><br/><br/>-->
+<!--<div class="input-control password full-size" data-role="input"><label for="password" >密码</label><input id="password" name="password" type="text" /></div><br/><br/>-->
+<!--<div class="input-control text full-size" data-role="input"><label th:for="name">昵称</label><input id="name" name="name" class="" type="text"  /></div><br/><br/>-->
+<!--<div class="input-control text full-size" data-role="input"><label th:for="true_name">真实姓名</label><input id="true_name" name="true_name" class="" type="text"  /></div><br/><br/>-->
+<!--<div class="input-control text full-size" data-role="input"><label th:for="country">城市</label><input id="country" name="country" class="" type="text"  /></div><br/><br/>-->
+<!--<div class="input-control text full-size" data-role="input"><label th:for="email">电子邮箱</label><input id="email" name="email" class="" type="text"  /></div><br/><br/>-->
+<!--<div class="input-control full-size select" data-role="input"><label th:for="sex">性别</label>-->
+<!--<select th:name="sex">-->
+<!--<option th:value="1">男</option>-->
+<!--<option th:value="0">女</option>-->
+<!--</select>-->
+<!--</div><br/><br/>-->
 
-        <!--<br/>-->
+<!--<br/>-->
 
-        <!--<div class="form-actions">-->
-            <!--<button type="submit" class="button primary">注册</button>-->
-            <!--<a href="/login" class="button">登陆</a>-->
-            <!--<p th:text="${msg}" th:if="${msg}"></p>-->
-        <!--</div>-->
-    <!--</form>-->
+<!--<div class="form-actions">-->
+<!--<button type="submit" class="button primary">注册</button>-->
+<!--<a href="/login" class="button">登陆</a>-->
+<!--<p th:text="${msg}" th:if="${msg}"></p>-->
+<!--</div>-->
+<!--</form>-->
 <!--</div>-->
 
 
 
 <!-- START PAGE CONTAINER -->
 <div class="page-container">
-    <div class="page-content">
+    <div class="page-content" style="margin-left:0;">
         <div class="page-content-wrap">
             <div class="row">
                 <div class="col-md-12">
                     <!-- START WIZARD WITH VALIDATION -->
                     <div class="block">
-                        <h4>Wizard with form validation</h4>
+                        <h4>账号注册</h4>
                         <form action="/register" role="form" method="post" class="form-horizontal" id="wizard-validation">
                             <div class="wizard show-submit wizard-validation">
                                 <ul>
                                     <li>
                                         <a href="#step-7">
                                             <span class="stepNumber">1</span>
-                                            <span class="stepDesc">Login<br /><small>Information</small></span>
+                                            <span class="stepDesc">登陆<br /><small>信息</small></span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#step-8">
                                             <span class="stepNumber">2</span>
-                                            <span class="stepDesc">User<br /><small>Personal data</small></span>
+                                            <span class="stepDesc">用户<br /><small>隐私数据</small></span>
                                         </a>
                                     </li>
                                 </ul>
@@ -65,20 +65,20 @@
                                 <div id="step-7">
 
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">Login</label>
-                                        <div class="col-md-10">
-                                            <input type="text" class="form-control" name="username" placeholder="Login"/>
+                                        <label class="col-md-2 control-label">登陆名</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" name="username" placeholder="LoginName"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">Password</label>
-                                        <div class="col-md-10">
+                                        <label class="col-md-2 control-label">密码</label>
+                                        <div class="col-md-8">
                                             <input type="password" class="form-control" name="password" placeholder="Password" id="password"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">Re-Password</label>
-                                        <div class="col-md-10">
+                                        <label class="col-md-2 control-label">再次输入密码</label>
+                                        <div class="col-md-8">
                                             <input type="password" class="form-control" name="repassword" placeholder="Re-Password"/>
                                         </div>
                                     </div>
@@ -88,27 +88,27 @@
                                 <div id="step-8">
 
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">Name</label>
-                                        <div class="col-md-10">
+                                        <label class="col-md-2 control-label">用户名</label>
+                                        <div class="col-md-8">
                                             <input type="text" class="form-control" name="true_name" placeholder="Name"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">E-mail</label>
-                                        <div class="col-md-10">
+                                        <div class="col-md-8">
                                             <input type="text" class="form-control" name="email" placeholder="Your email"/>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">City</label>
-                                        <div class="col-md-10">
+                                        <label class="col-md-2 control-label">城市</label>
+                                        <div class="col-md-8">
                                             <input type="text" class="form-control" name="city" placeholder="Your address"/>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">Sex</label>
-                                        <div class="col-md-10">
+                                        <label class="col-md-2 control-label">性别</label>
+                                        <div class="col-md-8">
                                             <select th:name="sex" class="form-control select" data-style="btn-success">
                                                 <option th:value="1">男</option>
                                                 <option th:value="0">女</option>

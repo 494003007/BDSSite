@@ -1,8 +1,10 @@
 package com.bdssite.modules.usermanage.controller;
 
 
+import com.bdssite.modules.usermanage.entity.ShortMessage;
 import com.bdssite.modules.usermanage.entity.UserInfo;
 import com.bdssite.modules.usermanage.services.RoleService;
+import com.bdssite.modules.usermanage.services.ShortMessageService;
 import com.bdssite.modules.usermanage.services.UserService;
 
 import org.apache.shiro.SecurityUtils;
@@ -49,6 +51,9 @@ public class AccountManageController {
     @Autowired
     private UserService userService;
     @Autowired
+    private ShortMessageService shortMessageService;
+
+    @Autowired
     private RoleService roleService;
     @RequestMapping(value = "register",method = RequestMethod.GET)
     public String registerPage(Model model, @ModelAttribute UserInfo user){
@@ -64,6 +69,13 @@ public class AccountManageController {
         salt = user.getUsername() + salt;
         user.setPassword(new Md5Hash(user.getPassword(), salt, 2).toString());
         userService.save(user);
+        user =userService.findByUsername(user.getUsername());
+        UserInfo admin =userService.findByUsername("admin");
+        ShortMessage shortMessage = new ShortMessage();
+        shortMessage.setContent("欢迎来到 [易职搜]!");
+        shortMessage.setFromUser(admin);
+        shortMessage.setToUser(user);
+        shortMessageService.save(shortMessage);
         System.out.println(user.toString());
         return "redirect:/login";
     }
