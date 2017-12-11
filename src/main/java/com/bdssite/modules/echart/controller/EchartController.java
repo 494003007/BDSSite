@@ -15,7 +15,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("echart")
 public class EchartController {
-    @RequestMapping(value = "page",method = RequestMethod.GET)
+    @RequestMapping(value = "cityMap",method = RequestMethod.GET)
     public String echartPage(@RequestParam Map<String, Object> params, HttpServletResponse response) throws Exception{
 
         return "/echartPage/cityMapPage";
