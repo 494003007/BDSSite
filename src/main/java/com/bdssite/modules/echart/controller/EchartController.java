@@ -21,4 +21,10 @@ public class EchartController {
         return "/echartPage/cityMapPage";
 
     }
+    @RequestMapping(value = "photo",method = RequestMethod.GET)
+    public String photo(@RequestParam Map<String, Object> params, HttpServletResponse response) throws Exception{
+
+        return "/echartPage/photo";
+
+    }
 }
