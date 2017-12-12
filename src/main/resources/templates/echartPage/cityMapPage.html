@@ -36,31 +36,6 @@
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <h4>建议应届毕业生按专业进行查找，其他人士直接进行检索</h4>
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <div class="col-md-6">
-                                        <button onclick="displayFindByMajor()" type="button"
-                                                class="btn btn-primary btn-block"><span class="fa fa-search"></span>
-                                            按专业查找
-                                        </button>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button type="button" class="btn btn-primary btn-block"><span
-                                                class="fa fa-search"></span> 直接查找
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div id="findByMajor" class="panel panel-default" style="display: none;">
-                        <div class="panel-body" id="majorPane" style="max-height: 400px;overflow-y:auto;">
-
-                        </div>
-                    </div>
                     <div id="searchBox" class="panel panel-default container">
                         <form id="jobSearchBox">
                             <div class="row stacked panel-body">
@@ -68,62 +43,26 @@
 
                                 <div class="col-md-8">
                                     <div class="text-center">
-                                        <label class="control-label " for="keywords"><h2>易职搜</h2></label>
+                                        <label class="control-label " for="keywords"><h2>查询职业在不同城市的密度分布</h2></label>
                                         <input id="keywords" name="keywords" type="text" class="tagsinput" value=""/>
+                                        <button class="btn" style="margin-top: 10px" onclick="search()" type="button">搜索</button>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
 
-
                                 </div>
                             </div>
-                            <div class="row stacked panel-body">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-2">
-                                    <div class="input-group push-down-10">
-                                        <label class="control-label" for="study">学历要求</label>
-                                        <select class='form-control select bootstrap-select' name='study' id="study">
-                                            <option value='不限'>不限</option>
-                                            <option value='专科及以上'>专科及以上</option>
-                                            <option value='本科及以上'>本科及以上</option>
-                                            <option value='硕士生及以上'>硕士生及以上</option>
-                                            <option value='博士生及以上'>博士生及以上</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2"></div>
-                                <div class="col-md-6">
-                                    <div class=" push-down-10">
 
-                                        <label class=" control-label" for="place">工作地点要求</label>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <select id="place" class='form-control select bootstrap-select' name='workPlace'>
-                                                    <option value='不限'>不限</option>
-                                                    <option value='深圳'>深圳</option>
-                                                    <option value='珠海'>珠海</option>
-                                                    <option value='**'>**</option>
-                                                    </select>
-                                            </div>
-                                            <div class="col-md-4"></div>
-                                            <button class='btn' onclick='search()' type='button'>搜索</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
                         </form>
                     </div>
                     <div id="resultDisplayDiv" class="search-results">
 
+                        <div class="col-md-12 ">
+                            <div id="main" style="width: 100%;height:800px;"></div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="col-md-1"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-1"></div>
-                    <div class="col-md-10" id="main" style="width: 1200px;height:800px;"></div>
                 <div class="col-md-1"></div>
             </div>
 
@@ -176,10 +115,10 @@
 
 <script>
     function search() {
-
+        var myChart = echarts.init(document.getElementById('main'));
         $.ajax({url:"/searchApi/search",
             type:'GET',
-            data:$("#jobSearchBox").serialize()+"&limit=max&fields=job_place",
+            data:$("#jobSearchBox").serialize()+"&limit=10000&fields=job_place",
             dataType: "json",
             success:function (data) {
                 var m = {};
@@ -193,12 +132,15 @@
 
                 });
 
-                var myChart = echarts.init(document.getElementById('main'));
+
                 myChart.setOption(generateCityMap(m));
             }
         });
-
+        $(window).resize(function() {
+            myChart.resize();
+        });
     }
+
     function displayFindByMajor() {
         majorChooserInit();
     }
