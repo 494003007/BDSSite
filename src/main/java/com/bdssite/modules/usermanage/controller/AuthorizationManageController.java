@@ -26,8 +26,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +49,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping(value = "/AuthorizationManage")
-public class AuthorizationManageController {
+public class AuthorizationManageController implements ServletContextAware {
     @Autowired
     private PermissionService permissionService;
     @Autowired
@@ -56,7 +58,12 @@ public class AuthorizationManageController {
     private RoleService roleService;
     @Autowired
     private OperateLogService operateLogService;
+    private ServletContext servletContext;
 
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
