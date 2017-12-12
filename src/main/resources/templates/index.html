@@ -277,6 +277,7 @@
 
     function majorChooserInit() {
         $('#findByMajor').hide();
+        $('#majorPane').show();
         ajaxDataDisplay(null, "majorChildDisplay");
     }
 
@@ -364,7 +365,7 @@
             $("#keywords").val(keyWords);
         }
         $("#keywords_tagsinput").remove();
-        $("#keywords").tagsInput();
+        $("#keywords").tagsInput({width: '100%',height:'auto',defaultText: "请输入关键词"});
         $("#majorPane").hide(600);
     }
 

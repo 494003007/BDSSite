@@ -253,10 +253,10 @@ public class AuthorizationManageController implements ServletContextAware {
     /**************      用户头像增删查改      **************/
     @RequestMapping(method = RequestMethod.POST, value = "/updateUserIcon",consumes = "multipart/form-data")
     @ResponseBody
-    public OperationDto updateUserIcon(ServletContext context,HttpServletRequest request, @RequestParam("user_icon") MultipartFile multipartFile){
+    public OperationDto updateUserIcon(HttpServletRequest request, @RequestParam("user_icon") MultipartFile multipartFile){
             UserInfo userInfo = CommonTool.getUser();
             if(multipartFile!=null&&multipartFile.getContentType().equals("image/jpeg")){
-                String path= context.getRealPath("/upload");// 文件路径
+                String path= servletContext.getRealPath("/upload");// 文件路径
                 try {
                     InputStream i = multipartFile.getInputStream();
 
@@ -292,16 +292,18 @@ public class AuthorizationManageController implements ServletContextAware {
 
     @RequestMapping(method = RequestMethod.GET, value = "/getUserIcon")
     @ResponseBody
-    public void getUserIcon(HttpServletResponse response,ServletContext context,Long id) {
+    public void getUserIcon(HttpServletResponse response,Long id){
         UserInfo userInfo = CommonTool.getUser();
         if(id != null){
             userInfo = userService.findByUid(id);
         }
         //头像路径文件夹
-        String path=context.getRealPath("/upload");
+        String path=servletContext.getRealPath("/upload");
+        OutputStream outputStream = null;
+        FileInputStream i = null;
         try {
-            OutputStream o = response.getOutputStream();
-            FileInputStream i;
+            outputStream = response.getOutputStream();
+
             if(userInfo.getUserIcon()==null||userInfo.getUserIcon().equals("")){
                 //默认头像路径
                 i=new FileInputStream(path+"img/userIcon/default_icon.jpg");
@@ -310,15 +312,23 @@ public class AuthorizationManageController implements ServletContextAware {
             }
             int a;
             while((a=i.read())!=-1){
-                o.write(a);
+                outputStream.write(a);
             }
-            o.flush();
-            o.close();
-            i.close();
+            outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try{
+                if(outputStream != null){
+                    outputStream.close();
+                }
+                if(i != null){
+                    i.close();
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         }
-
     }
 
     /**************      权限角色增删查改      **************/
