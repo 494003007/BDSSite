@@ -51,7 +51,13 @@
                     <div class="panel panel-default">
                         <div class="panel-body profile" style="background: url('/assets/images/gallery/music-4.jpg') center center no-repeat;">
                             <div class="profile-image">
-                                <img id="userIcon" onclick="changeForm('','iconForm')" src="/AuthorizationManage/getUserIcon?id=0" alt="Nadia Ali"/>
+                                <div style="display: inline-block;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;">
+                                    <img id="userIcon" onclick="changeForm('','iconForm')" src="/AuthorizationManage/getUserIcon?id=0" alt="Nadia Ali"/>
+                                </div>
+
                             </div>
                             <div class="profile-data">
                                 <div class="profile-data-name" id="top_name">Nadia Ali</div>
@@ -380,9 +386,12 @@
                                 <div class="panel-body">
                                     <div class="form-group">
                                         <label class="col-md-3 col-xs-12 control-label"></label>
-                                        <div class="col-md-6 col-xs-12">
+                                        <div class="col-md-6 col-xs-12" style="display: inline-block;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;">
 
-                                            <img id="userIconChange" src="/AuthorizationManage/getUserIcon?id=0">
+                                            <img style="width: 200px" id="userIconChange" src="/AuthorizationManage/getUserIcon?id=0">
                                         </div>
                                     </div>
 

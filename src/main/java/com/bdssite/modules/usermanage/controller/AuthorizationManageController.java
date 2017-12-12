@@ -31,10 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
+import javax.servlet.http.*;
 import javax.validation.Valid;
 import java.io.*;
 import java.sql.Blob;
@@ -256,17 +253,18 @@ public class AuthorizationManageController implements ServletContextAware {
     /**************      用户头像增删查改      **************/
     @RequestMapping(method = RequestMethod.POST, value = "/updateUserIcon",consumes = "multipart/form-data")
     @ResponseBody
-    public OperationDto updateUserIcon(HttpServletRequest request, @RequestParam("user_icon") MultipartFile multipartFile){
+    public OperationDto updateUserIcon(ServletContext context,HttpServletRequest request, @RequestParam("user_icon") MultipartFile multipartFile){
             UserInfo userInfo = CommonTool.getUser();
             if(multipartFile!=null&&multipartFile.getContentType().equals("image/jpeg")){
-                String path="./src/main/resources/static/";// 文件路径
+                String path= context.getRealPath("/upload");// 文件路径
                 try {
                     InputStream i = multipartFile.getInputStream();
 
                     if(userInfo.getUserIcon()==null||userInfo.getUserIcon().equals("")){
                         //保存头像路径
-                        userInfo.setUserIcon("img/usericon"+userInfo.getUid()+".jpg");
+                        userInfo.setUserIcon("img/usericon/"+userInfo.getUid()+".jpg");
                         userService.save(userInfo);
+                        CommonTool.getUser().update(userInfo);
                     }
                     //保存图片到本地
                     File file = new File(path+userInfo.getUserIcon());
@@ -294,10 +292,13 @@ public class AuthorizationManageController implements ServletContextAware {
 
     @RequestMapping(method = RequestMethod.GET, value = "/getUserIcon")
     @ResponseBody
-    public void getUserIcon(HttpServletResponse response) {
+    public void getUserIcon(HttpServletResponse response,ServletContext context,Long id) {
         UserInfo userInfo = CommonTool.getUser();
+        if(id != null){
+            userInfo = userService.findByUid(id);
+        }
         //头像路径文件夹
-        String path="./src/main/resources/static/";
+        String path=context.getRealPath("/upload");
         try {
             OutputStream o = response.getOutputStream();
             FileInputStream i;

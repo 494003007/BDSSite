@@ -33,68 +33,38 @@
 
         <!-- PAGE CONTENT WRAPPER -->
         <div class="page-content-wrap">
-            <!-- START CONTENT FRAME -->
-            <div class="content-frame">
-                <!-- START CONTENT FRAME TOP -->
-                <div class="content-frame-top">
-                    <div class="page-title">
-                        <h2 ><span class="fa fa-comments"></span>信息 <div id="chatUserName" style="display: inline"></div></h2>
-                    </div>
-                    <div class="pull-right">
-                        <button class="btn btn-danger"><span class="fa fa-book"></span> 通讯录</button>
-                        <button class="btn btn-default content-frame-right-toggle"><span class="fa fa-bars"></span>
-                        </button>
-                    </div>
-                </div>
-                <!-- END CONTENT FRAME TOP -->
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div id="searchBox" class="panel panel-default container">
+                        <form id="jobSearchBox">
+                            <div class="row stacked panel-body">
+                                <div class="col-md-2"></div>
 
-                <!-- START CONTENT FRAME RIGHT -->
-                <div class="content-frame-right">
-
-                    <div id="contactList" class="list-group list-group-contacts border-bottom push-down-10">
-
-                    </div>
-
-                    <div class="block">
-                        <h4>Status</h4>
-                        <div class="list-group list-group-simple">
-                            <a href="#" class="list-group-item"><span class="fa fa-circle text-success"></span>
-                                Online</a>
-                            <a href="#" class="list-group-item"><span class="fa fa-circle text-warning"></span> Away</a>
-                            <a href="#" class="list-group-item"><span class="fa fa-circle text-muted"></span>
-                                Offline</a>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- END CONTENT FRAME RIGHT -->
-
-                <!-- START CONTENT FRAME BODY -->
-                <div class="content-frame-body content-frame-body-left">
-                    <!-- Message Content Begin-->
-                    <div id="messageContent" style="height: 60% ; overflow-y:auto;" class="messages messages-img">
-
-                    </div>
-                    <!-- Message Content End-->
-                    <div class="panel panel-default push-up-10">
-                        <div class="panel-body panel-body-search">
-                            <div class="input-group" id="messageSend">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default"><span class="fa fa-camera"></span></button>
-                                    <button class="btn btn-default"><span class="fa fa-chain"></span></button>
+                                <div class="col-md-8">
+                                    <div class="text-center">
+                                        <label class="control-label " for="keywords"><h2>查询职业在不同城市的密度分布</h2></label>
+                                        <input id="keywords" name="keywords" type="text" class="tagsinput" value=""/>
+                                        <button class="btn" style="margin-top: 10px" onclick="search()" type="button">搜索</button>
+                                    </div>
                                 </div>
-                                <input type="text" class="form-control"  placeholder="Your message..."/>
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default">Send</button>
+                                <div class="col-md-2">
+
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
+                        </form>
+                    </div>
+                    <div id="resultDisplayDiv" class="search-results">
+
+                        <div class="col-md-12 ">
+                            <div id="main" style="width: 100%;height:800px;"></div>
+                        </div>
+
+                    </div>
                 </div>
-                <!-- END CONTENT FRAME BODY -->
+                <div class="col-md-1"></div>
             </div>
-            <!-- END PAGE CONTENT FRAME -->
 
         </div>
         <!-- END PAGE CONTENT WRAPPER -->
@@ -125,10 +95,17 @@
 <script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
 <script type='text/javascript' src='/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
 <script type='text/javascript' src='/js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+<script type='text/javascript' src='/js/plugins/bootstrap/bootstrap-select.js'></script>
 <script type="text/javascript" src="/js/plugins/owl/owl.carousel.min.js"></script>
 
 <script type="text/javascript" src="/js/plugins/moment.min.js"></script>
+<script type="text/javascript" src="/js/plugins/echart/echarts.min.js"></script>
+<script type="text/javascript" src="/js/plugins/echart/bmap.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=XRKucgEG23GEIIyqpx67uUqv9Ly6dEcE"></script>
 <script type="text/javascript" src="/js/plugins/daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/js/bdssite/search_module.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery/jquery.tagsinput.min.js"></script>
+<script type="text/javascript" src="/js/bdssite/echartOption.js"></script>
 <!-- END THIS PAGE PLUGINS-->
 
 <!-- START TEMPLATE -->
@@ -137,6 +114,33 @@
 </div>
 
 <script>
+    function search() {
+        var myChart = echarts.init(document.getElementById('main'));
+        $.ajax({url:"/searchApi/search",
+            type:'GET',
+            data:$("#jobSearchBox").serialize()+"&limit=10000&fields=job_place",
+            dataType: "json",
+            success:function (data) {
+                var m = {};
+                var result;
+                $.each(data.response.docs, function(i, field){
+
+                    if(m[field.job_place] != undefined)
+                        m[field.job_place]=m[field.job_place]+1;
+                    else
+                        m[field.job_place]=1;
+
+                });
+
+
+                myChart.setOption(generateCityMap(m));
+            }
+        });
+        $(window).resize(function() {
+            myChart.resize();
+        });
+    }
+
     function displayFindByMajor() {
         majorChooserInit();
     }
@@ -217,11 +221,6 @@
     }
 
 
-    messageManage.showContact();
-    if ($.cookie("otherId")!=0){
-        messageManage.showMessageContent($.cookie("otherId"));
-
-    }
 
 
 </script>

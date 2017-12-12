@@ -1071,10 +1071,14 @@ body.page-container-boxed .page-container {
 }
 .profile .profile-image img {
   width: 100px;
-  border: 3px solid #FFF;
-  -moz-border-radius: 20%;
-  -webkit-border-radius: 20%;
-  border-radius: 20%;
+
+}
+.profile .profile-image div {
+    width: 100px;
+    border: 3px solid #FFF;
+    -moz-border-radius: 20%;
+    -webkit-border-radius: 20%;
+    border-radius: 20%;
 }
 .profile .profile-data {
   width: 100%;
