@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -34,13 +37,13 @@ public class FollowingUserController {
     }
     @RequestMapping(value = "/followingUserAdd/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public OperationDto followingUserAdd(@PathVariable long id){
-        List<UserInfo> currentUserFollowing = CommonTool.getUser().getFollowingUsers();
+    public OperationDto followingUserAdd(@PathVariable long id, HttpSession session){
+        List<UserInfo> currentUserFollowing = CommonTool.getUser(session).getFollowingUsers();
         UserInfo userFollowed = userService.findOne(id);
         if(!currentUserFollowing.contains(userFollowed))
         {
             currentUserFollowing.add(userFollowed);
-            userService.save(CommonTool.getUser());
+            userService.save(CommonTool.getUser(session));
         }
 
         return new OperationDto(RequestStatus.SUCCESS);
@@ -48,13 +51,13 @@ public class FollowingUserController {
 
     @RequestMapping(value = "/followingUserDelete/{id}",method = RequestMethod.GET)
     @ResponseBody
-    public OperationDto followingUserDelete(@PathVariable long id){
-        List<UserInfo> currentUserFollowing = CommonTool.getUser().getFollowingUsers();
+    public OperationDto followingUserDelete(@PathVariable long id,HttpSession session){
+        List<UserInfo> currentUserFollowing = CommonTool.getUser(session).getFollowingUsers();
         UserInfo userFollowed = userService.findOne(id);
         if(currentUserFollowing.contains(userFollowed))
         {
             currentUserFollowing.remove(userFollowed);
-            userService.save(CommonTool.getUser());
+            userService.save(CommonTool.getUser(session));
         }
 
         return new OperationDto(RequestStatus.SUCCESS);

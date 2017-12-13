@@ -70,8 +70,8 @@ public class AuthorizationManageController implements ServletContextAware {
 
     @RequestMapping(value = "/currentUser", method = RequestMethod.POST)
     @ResponseBody
-    public UserInfo userInfo(){
-        return CommonTool.getUser();
+    public UserInfo userInfo(HttpSession session){
+        return CommonTool.getUser(session);
     }
 
     /**************      权限增删查改      **************/
@@ -234,12 +234,12 @@ public class AuthorizationManageController implements ServletContextAware {
 
     @RequestMapping(value = "userInfoUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public OperationDto userInfoUpdate(Map<String, Object> map,@Valid UserInfo userInfo,BindingResult result){
+    public OperationDto userInfoUpdate(Map<String, Object> map,@Valid UserInfo userInfo,BindingResult result,HttpSession session){
 
         System.out.println(result.getAllErrors());
 
             userService.save(userInfo.getUid(),userInfo);
-            CommonTool.getUser().update(userInfo);
+            CommonTool.updateUser(session,userInfo);
             return new OperationDto(RequestStatus.SUCCESS);
 
     }
@@ -253,8 +253,8 @@ public class AuthorizationManageController implements ServletContextAware {
     /**************      用户头像增删查改      **************/
     @RequestMapping(method = RequestMethod.POST, value = "/updateUserIcon",consumes = "multipart/form-data")
     @ResponseBody
-    public OperationDto updateUserIcon(HttpServletRequest request, @RequestParam("user_icon") MultipartFile multipartFile){
-            UserInfo userInfo = CommonTool.getUser();
+    public OperationDto updateUserIcon(HttpServletRequest request, @RequestParam("user_icon") MultipartFile multipartFile,HttpSession session){
+            UserInfo userInfo = CommonTool.getUser(session);
             if(multipartFile!=null&&multipartFile.getContentType().equals("image/jpeg")){
                 String path= servletContext.getRealPath("/upload");// 文件路径
                 try {
@@ -264,7 +264,7 @@ public class AuthorizationManageController implements ServletContextAware {
                         //保存头像路径
                         userInfo.setUserIcon("img/usericon/"+userInfo.getUid()+".jpg");
                         userService.save(userInfo);
-                        CommonTool.getUser().update(userInfo);
+                        CommonTool.updateUser(session,userInfo);
                     }
                     //保存图片到本地
                     File file = new File(path+userInfo.getUserIcon());
@@ -292,8 +292,8 @@ public class AuthorizationManageController implements ServletContextAware {
 
     @RequestMapping(method = RequestMethod.GET, value = "/getUserIcon")
     @ResponseBody
-    public void getUserIcon(HttpServletResponse response,Long id){
-        UserInfo userInfo = CommonTool.getUser();
+    public void getUserIcon(HttpServletResponse response,Long id,HttpSession session){
+        UserInfo userInfo = CommonTool.getUser(session);
         if(id != null){
             userInfo = userService.findByUid(id);
         }

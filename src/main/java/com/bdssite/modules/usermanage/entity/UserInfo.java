@@ -8,6 +8,7 @@ package com.bdssite.modules.usermanage.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -88,6 +89,25 @@ public class UserInfo implements Serializable{
 //    @DateTimeFormat( pattern = "yyyy-MM-dd" )
     private Date last_login_time;//最后一次登陆
 
+    private String pushUrl;
+
+    private String searchKey;
+
+    public String getPushUrl() {
+        return pushUrl;
+    }
+
+    public void setPushUrl(String pushUrl) {
+        this.pushUrl = pushUrl;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
 
     @NotNull(message = "user.state.notnull")
     @Column(nullable = false)
@@ -398,6 +418,7 @@ public class UserInfo implements Serializable{
                             newclass = byte.class;
                         }else
                             newclass = String.class;
+
                         Method methd = userInfoClass.getDeclaredMethod("set"+c+f.getName().substring(1),newclass);
                         try {
                             methd.invoke(this,f.get(userInfo));

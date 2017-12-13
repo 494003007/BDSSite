@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -51,10 +52,10 @@ public class ShortMessageController {
      */
     @RequestMapping(value = {"/sendMessage/{id}"}, method = RequestMethod.POST)
     @ResponseBody
-    public OperationDto sendMessage(Model model,String content, @PathVariable Long id) {
+    public OperationDto sendMessage(Model model,HttpSession session,String content, @PathVariable Long id) {
         UserInfo toUser = userService.findOne(id);
         ShortMessage shortMessage1 = new ShortMessage();
-        shortMessage1.setFromUser(CommonTool.getUser());
+        shortMessage1.setFromUser(CommonTool.getUser(session));
         shortMessage1.setToUser(toUser);
         shortMessage1.setContent(content);
         shortMessageService.save(shortMessage1);
@@ -70,8 +71,8 @@ public class ShortMessageController {
      */
     @RequestMapping(value = {"/markNotReadMessage/{id}"}, method = RequestMethod.GET)
     @ResponseBody
-    public EntityDto<ShortMessage> markNotReadMessage(Model model, @PathVariable Long id) {
-        UserInfo currentUser = CommonTool.getUser();
+    public EntityDto<ShortMessage> markNotReadMessage(Model model, HttpSession session, @PathVariable Long id) {
+        UserInfo currentUser = CommonTool.getUser(session);
         ShortMessage shortMessage = shortMessageService.findLastNewMessage(currentUser, userService.findOne(id));
         shortMessage.setIsRead(0);
         shortMessageService.save(shortMessage);
@@ -87,8 +88,8 @@ public class ShortMessageController {
      */
     @RequestMapping(value = {"/readMessage/{id}"}, method = RequestMethod.GET)
     @ResponseBody
-    public EntityDto<MessageDto> readMessage(Model model, @PathVariable Long id) {
-        UserInfo currentUser = CommonTool.getUser();
+    public EntityDto<MessageDto> readMessage(Model model,HttpSession session, @PathVariable Long id) {
+        UserInfo currentUser = CommonTool.getUser(session);
         UserInfo otherUser = userService.findOne(id);
 
         List<ShortMessage> shortMessageList;
@@ -106,7 +107,7 @@ public class ShortMessageController {
     //TODO:删除聊天记录
     @RequestMapping(value = {"/deleteMessage"}, method = RequestMethod.POST)
     @ResponseBody
-    public OperationDto deleteMessage(Model model, @PathVariable Long id, String messageIds) {
+    public OperationDto deleteMessage(Model model,HttpSession session, @PathVariable Long id, String messageIds) {
         String[] stringArray = CommonTool.stringToStringArray(messageIds);
         Collection<Long> idsCollection = new ArrayList<>();
         for (String str : stringArray) {
@@ -124,8 +125,8 @@ public class ShortMessageController {
      */
     @RequestMapping(value = {"/showNewMessage"}, method = RequestMethod.GET)
     @ResponseBody
-    public ListDto<ShortMessage> showNewMessage(Model model) {
-        UserInfo currentUser = CommonTool.getUser();
+    public ListDto<ShortMessage> showNewMessage(Model model,HttpSession session) {
+        UserInfo currentUser = CommonTool.getUser(session);
         List<ShortMessage> shortMessages = shortMessageService.findByToUserAndIsRead(currentUser, 0);
         removeDuplicate(shortMessages);
         return new ListDto<>(RequestStatus.SUCCESS, shortMessages);
@@ -138,8 +139,8 @@ public class ShortMessageController {
      */
     @RequestMapping(value = {"/showContact"}, method = RequestMethod.GET)
     @ResponseBody
-    public ListDto<ShortMessage> showContact(Model model) {
-        UserInfo currentUser = CommonTool.getUser();
+    public ListDto<ShortMessage> showContact(Model model,HttpSession session) {
+        UserInfo currentUser = CommonTool.getUser(session);
         List<ShortMessage> currentUserShortMessage = shortMessageService.findByFromUserOrToUser(currentUser, currentUser);
 
         for (int i = currentUserShortMessage.size() - 1; i >= 0; i--) {
@@ -183,8 +184,8 @@ public class ShortMessageController {
 
     @RequestMapping(value = {"/updateMessage/{id}"}, method = RequestMethod.GET)
     @ResponseBody
-    public EntityDto<MessageDto> updateMessage(Model model, @PathVariable Long id) {
-        UserInfo currentUser = CommonTool.getUser();
+    public EntityDto<MessageDto> updateMessage(Model model,HttpSession session, @PathVariable Long id) {
+        UserInfo currentUser = CommonTool.getUser(session);
         UserInfo otherUser = userService.findOne(id);
         List<ShortMessage> shortMessageList;
 

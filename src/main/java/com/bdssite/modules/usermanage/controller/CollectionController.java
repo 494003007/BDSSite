@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
+import java.net.HttpCookie;
+
 /**
  * Created by Ed_cc on 2017/9/18.
  */
@@ -31,10 +34,10 @@ public class CollectionController {
         return "collectionPage";
     }
     @RequestMapping(value = "/addCollection",method = RequestMethod.POST)
-    public OperationDto addCollection(CollectionProfession collectionProfession){
-        if (!CommonTool.getUser().getCollectionProfessions().contains(collectionProfession)){
-            CommonTool.getUser().getCollectionProfessions().add(collectionProfession);
-            userService.save(CommonTool.getUser());
+    public OperationDto addCollection(CollectionProfession collectionProfession, HttpSession httpSession){
+        if (!CommonTool.getUser(httpSession).getCollectionProfessions().contains(collectionProfession)){
+            CommonTool.getUser(httpSession).getCollectionProfessions().add(collectionProfession);
+            userService.save(CommonTool.getUser(httpSession));
         }
         return new OperationDto(RequestStatus.SUCCESS);
     }

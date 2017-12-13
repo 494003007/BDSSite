@@ -18,6 +18,8 @@ public class ShortMessage implements Serializable {
     private Long id;
 
     //内容
+    @Lob
+    @Basic(fetch=FetchType.LAZY)
     private String content;
     //发送时间
     @CreationTimestamp

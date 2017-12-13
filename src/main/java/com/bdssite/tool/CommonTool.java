@@ -4,6 +4,7 @@ import com.bdssite.modules.usermanage.entity.UserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,11 +18,22 @@ public class CommonTool {
      * 在控制器中调用以获取当前User实体
      * @return User实体
      */
-    public static UserInfo getUser(){
-        Subject currentUser = SecurityUtils.getSubject();
-        return (UserInfo)currentUser.getPrincipal();
+    public static UserInfo getUser(HttpSession session){
+        //Subject currentUser = SecurityUtils.getSubject();
+        //return (UserInfo)currentUser.getPrincipal();
+        return (UserInfo) session.getAttribute("user");
     }
 
+    /**
+     *
+     * @param session
+     * @param userInfo
+     * @return
+     */
+    public static boolean updateUser(HttpSession session,UserInfo userInfo){
+        session.setAttribute("user",userInfo);
+        return true;
+    }
     /**
      * 将iterable转换为list的工具方法
      * @param iterable  欲转换的iterable

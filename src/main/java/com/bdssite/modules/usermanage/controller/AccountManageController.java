@@ -99,7 +99,7 @@ public class AccountManageController {
             }
             try{
                 subject.login(upt);
-                httpSession.setAttribute(username, userService.findByUsername(username));
+                httpSession.setAttribute("user", userService.findByUsername(username));
                 return "redirect:index";
             }catch (IncorrectCredentialsException e){
                 System.out.println("IncorrectCredentialsException -- > 密码不正确：");

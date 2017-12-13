@@ -36,23 +36,27 @@ public class CRUDTest {
     private ShortMessageService shortMessageService;
 
     @Test
-    @Transactional
-    @Rollback
+   // @Transactional
+   // @Rollback
     public void userServiceTest() {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUsername("testaaaaaaaa");
-        userInfo.setPassword("sasasa");
-        userInfo.setState((byte)0);
-        userInfo.setSalt("aaaaaa");
-        userInfo.setEmail("aaa@qqqq.aaa");
-        userInfo.setName("cai");
-        userService.save(userInfo);
+        for (int i=0;i<1000;i++){
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUsername("test"+i);
+            userInfo.setPassword("472173d37a8d187794a02ef0f5331add");
+            userInfo.setState((byte)0);
+            userInfo.setSalt("Z+ziKvwCYFNZGx8dOLbDwQ==");
+            userInfo.setEmail("test"+i+"@qq.com");
+            userInfo.setName("test"+i);
+            userService.save(userInfo);
+        }
 
-        UserInfo cai = userService.findByName("cai");
 
-        System.out.println("userServiceTest:" + cai);
-
-        Assert.assertNotNull(cai.getName());
+//
+//        UserInfo cai = userService.findByName("cai");
+//
+//        System.out.println("userServiceTest:" + cai);
+//
+//        Assert.assertNotNull(cai.getName());
     }
 
     @Test
