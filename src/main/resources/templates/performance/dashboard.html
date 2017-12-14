@@ -65,9 +65,9 @@
                     <div class="panel-body padding-0">
                         <div class="chart-holder" id="memory" style="display:inline-block;height: 200px;width: 200px"></div>
                         <div id="memoryData"  style="display: inline-block;position: absolute;top: 35px;">
-                            <h2>总内存:600Mib</h2>
-                            <h2>未使用:600Mib</h2>
-                            <h2>已使用:600Mib</h2>
+                            <h3>总内存:600Mib</h3>
+                            <h3>未使用:600Mib</h3>
+                            <h3>已使用:600Mib</h3>
                         </div>
                     </div>
                 </div>
@@ -89,9 +89,9 @@
                     <div class="panel-body padding-0">
                         <div class="chart-holder" id="heapMemory" style="display:inline-block;height: 200px;width: 200px"></div>
                         <div id="heapMemoryData"  style="display: inline-block;position: absolute;top: 35px;">
-                            <h2>最大值:600Mib</h2>
-                            <h2>已分配:600Mib</h2>
-                            <h2>已使用:600Mib</h2>
+                            <h3>最大值:600Mib</h3>
+                            <h3>已分配:600Mib</h3>
+                            <h3>已使用:600Mib</h3>
                         </div>
                     </div>
                 </div>
@@ -113,9 +113,9 @@
                     <div class="panel-body padding-0">
                         <div class="chart-holder" id="nonHeapMemory" style="display:inline-block;height: 200px;width: 200px"></div>
                         <div id="nonHeapMemoryData"  style="display: inline-block;position: absolute;top: 35px;">
-                            <h2>最大值:600Mib</h2>
-                            <h2>已分配:600Mib</h2>
-                            <h2>已使用:600Mib</h2>
+                            <h3>最大值:600Mib</h3>
+                            <h3>已分配:600Mib</h3>
+                            <h3>已使用:600Mib</h3>
                         </div>
                     </div>
                 </div>
@@ -137,9 +137,9 @@
                     <div class="panel-body padding-0">
                         <div class="chart-holder" id="thread" style="height: 200px;display:inline-block;width: 200px"></div>
                         <div id="threadData"  style="display: inline-block;position: absolute;top: 35px;padding-left: 20px">
-                            <h2>总线程数:</h2>
-                            <h2>守护线程:</h2>
-                            <h2>用户线程:</h2>
+                            <h3>总线程数:</h3>
+                            <h3>守护线程:</h3>
+                            <h3>用户线程:</h3>
                         </div>
                     </div>
                 </div>
@@ -243,9 +243,9 @@
                 return value + 'Mbi';
             }
         });
-        memData.append("<h2>总内存:" + kbiToMbi(dataJ['mem']) + "Mib</h2>\n" +
-            "<h2>未使用:" + kbiToMbi(dataJ['mem.free']) + "Mib</h2>\n" +
-            "<h2>已使用:" + kbiToMbi(dataJ['mem'] - dataJ['mem.free']) + "Mib</h2>");
+        memData.append("<h3>总内存:" + kbiToMbi(dataJ['mem']) + "Mib</h3>\n" +
+            "<h3>未使用:" + kbiToMbi(dataJ['mem.free']) + "Mib</h3>\n" +
+            "<h3>已使用:" + kbiToMbi(dataJ['mem'] - dataJ['mem.free']) + "Mib</h3>");
     }
 
     function threadChart() {
@@ -264,9 +264,9 @@
                 return value + '个';
             }
         });
-        threadData.append("<h2>总线程数:" + dataJ['threads'] + "个</h2>\n" +
-            "<h2>守护线程:" + dataJ['threads.daemon'] + "个</h2>" +
-            "<h2>用户线程:" + (dataJ['threads'] - dataJ['threads.daemon']) + "个</h2>");
+        threadData.append("<h3>总线程数:" + dataJ['threads'] + "个</h3>\n" +
+            "<h3>守护线程:" + dataJ['threads.daemon'] + "个</h3>" +
+            "<h3>用户线程:" + (dataJ['threads'] - dataJ['threads.daemon']) + "个</h3>");
     }
 
     function heapMemoryChart() {
@@ -285,9 +285,9 @@
                 return value + 'Mbi';
             }
         });
-        memData.append("<h2>最大值:" + kbiToMbi(dataJ['heap']) + "Mib</h2>\n" +
-            "<h2>已分配:" + kbiToMbi(dataJ['heap.committed']) + "Mib</h2>\n" +
-            "<h2>已使用:" + kbiToMbi(dataJ['heap.used']) + "Mib</h2>");
+        memData.append("<h3>最大值:" + kbiToMbi(dataJ['heap']) + "Mib</h3>\n" +
+            "<h3>已分配:" + kbiToMbi(dataJ['heap.committed']) + "Mib</h3>\n" +
+            "<h3>已使用:" + kbiToMbi(dataJ['heap.used']) + "Mib</h3>");
     }
 
     function nonHeapMemoryChart() {
@@ -306,9 +306,9 @@
                 return value + 'Mbi';
             }
         });
-        memData.append("<h2>最大值:" + kbiToMbi(dataJ['nonheap']) + "Mib</h2>\n" +
-            "<h2>已分配:" + kbiToMbi(dataJ['nonheap.committed']) + "Mib</h2>\n" +
-            "<h2>已使用:" + kbiToMbi(dataJ['nonheap.used']) + "Mib</h2>");
+        memData.append("<h3>最大值:" + kbiToMbi(dataJ['nonheap']) + "Mib</h3>\n" +
+            "<h3>已分配:" + kbiToMbi(dataJ['nonheap.committed']) + "Mib</h3>\n" +
+            "<h3>已使用:" + kbiToMbi(dataJ['nonheap.used']) + "Mib</h3>");
     }
 </script>
 <!-- END SCRIPTS -->
