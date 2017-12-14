@@ -82,6 +82,7 @@ public class UserInfoController implements ServletContextAware {
         System.out.println(result.getAllErrors());
 
         userService.save(userInfo.getUid(),userInfo);
+        userInfo = userService.findByUid(userInfo.getUid());
         CommonTool.updateUser(session,userInfo);
         return new OperationDto(RequestStatus.SUCCESS);
 
