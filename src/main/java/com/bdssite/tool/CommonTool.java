@@ -19,11 +19,13 @@ public class CommonTool {
      * @return User实体
      */
     public static UserInfo getUser(HttpSession session){
-        //Subject currentUser = SecurityUtils.getSubject();
-        //return (UserInfo)currentUser.getPrincipal();
+
         return (UserInfo) session.getAttribute("user");
     }
-
+ public static UserInfo getCurrentUser(){
+     Subject currentUser = SecurityUtils.getSubject();
+     return (UserInfo)currentUser.getPrincipal();
+ }
     /**
      *
      * @param session

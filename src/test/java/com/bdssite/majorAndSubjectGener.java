@@ -1,6 +1,6 @@
 package com.bdssite;
 
-import com.bdssite.tool.majorandsubjectgenerator.MajorAndSubjectGeneratorMain;
+import com.bdssite.tool.ThesaurusGenerator.majorandsubjectgenerator.MajorAndSubjectGeneratorMain;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

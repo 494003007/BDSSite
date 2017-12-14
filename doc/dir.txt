@@ -1,0 +1,59 @@
+├─BDSSite
+├─doc   开发相关文档路径
+├─sql   sql数据存放
+└─src   后台代码目录
+  ├─main
+  │  ├─java
+  │  │  └─com
+  │  │      └─bdssite
+  │  │          ├─config  程序运行基本配置，对搜索工具solr的依赖，Redis的配置，文件上传
+  │  │          |           异常的信息返回，shiro权限管理配置，消息转换器配置等系统全局配
+  │  │          |           置，支撑整个系统的运行
+  │  │          ├─timingPushTask 系统定时器  定时推送等
+  │  │          ├─modules
+  │  │          │  ├─common 常用工具模块
+  │  │          │  │  ├─controller  系统控制器 页面错误响应,性能总览等
+  │  │          │  │  ├─dto        系统数据传输对象(Data Transfer Object)
+  │  │          │  │  └─repository  系统底层服务   主要为jpa数据交互和逻辑层些基础类
+  │  │          │  ├─echart          数据可视化模块
+  │  │          │  │  ├─controller   数据可视化控制器
+  │  │          │  │  ├─dao         数据可视化数据交互
+  │  │          │  │  ├─entity       数据可视化实体
+  │  │          │  │  └─services     数据可视化服务
+  │  │          │  ├─searchmanage   搜索管理模块   solr模块的搜索管理工具类
+  │  │          │  │  ├─controller   搜索管理控制器  对搜索业务的管理
+  │  │          │  │  ├─dao         搜索管理数据交互  搜索词的数据交互
+  │  │          │  │  ├─entity       搜索管理实体
+  │  │          │  │  └─service      搜索管理服务
+  │  │          │  └─usermanage     用户管理模块
+  │  │          │      ├─controller   用户管理控制器   用户，角色，权限管理，个人信息修改
+  │  │          │      ├─dao         用户管理数据交互
+  │  │          │      ├─entity       用户管理实体
+  │  │          │      └─services     用户管理服务
+  │  │          └─tool                 工具模块
+  │  │              ├─formgenerator
+  │  │              │  ├─generator   前端数据代码生成器
+  │  │              │  └─Tool
+  │  │              └─ThesaurusGenerator 基础词库爬取
+  │  └─resources    资源文件目录
+  │      ├─config   系统缓存配置
+  │      ├─static    静态文件目录
+  │      │  ├─assets 前端工具文件夹
+  │      │  ├─audio 音频文件夹
+  │      │  ├─css   css文件夹
+  │      │  ├─fonts 字体文件夹
+  │      │  ├─img   图片文件夹
+  │      │  └─js    js文件夹
+  │      └─templates html页面文件夹
+  │          ├─collection 收藏页面文件夹
+  │          ├─echartPage  数据可视化页面文件夹
+  │          ├─error      系统错误页面文件夹
+  │          ├─fragments  页面片段文件夹
+  │          ├─performance  性能总览页面文件夹
+  │          ├─search      搜索页面文件夹
+  │          ├─shortMessage 推送页面文件夹
+  │          └─usermanage   用户管理文件夹
+  └─test
+      └─java
+         └─com
+              └─bdssite    项目测试文件夹

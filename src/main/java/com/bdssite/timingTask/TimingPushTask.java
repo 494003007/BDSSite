@@ -1,4 +1,4 @@
-package com.bdssite.modules.searchmanage.service;
+package com.bdssite.timingTask;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Joey_Tsai on 2017/12/12.
  */
 @Component
-public class TimingPushService {
+public class TimingPushTask {
     @Autowired
     private UserService userService;
     @Autowired

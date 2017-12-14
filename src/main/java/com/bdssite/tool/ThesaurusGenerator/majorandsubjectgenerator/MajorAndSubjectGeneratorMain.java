@@ -1,4 +1,4 @@
-package com.bdssite.tool.majorandsubjectgenerator;
+package com.bdssite.tool.ThesaurusGenerator.majorandsubjectgenerator;
 
 import com.bdssite.modules.searchmanage.entity.Major;
 import com.bdssite.modules.searchmanage.entity.Subject;
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
