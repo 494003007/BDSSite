@@ -8,10 +8,12 @@ import com.bdssite.modules.usermanage.entity.UserInfo;
 import com.bdssite.modules.usermanage.services.UserService;
 import com.bdssite.tool.CommonTool;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
@@ -27,10 +29,16 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/AuthorizationManage")
-public class UserInfoController {
+public class UserInfoController implements ServletContextAware {
     @Autowired
     private  UserService userService;
     private ServletContext servletContext;
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
+    @Value("${icon_path}")
+    private String path;
     /**************      用户增删查改      **************/
 
     @RequestMapping(value = "personCenter", method = RequestMethod.GET)
@@ -91,18 +99,14 @@ public class UserInfoController {
     public OperationDto updateUserIcon(HttpServletRequest request, @RequestParam("user_icon") MultipartFile multipartFile, HttpSession session){
         UserInfo userInfo = CommonTool.getUser(session);
         if(multipartFile!=null&&multipartFile.getContentType().equals("image/jpeg")){
-            String path= servletContext.getRealPath("/upload");// 文件路径
+
+
             try {
                 InputStream i = multipartFile.getInputStream();
 
-
-                //保存头像路径
-                userInfo.setUserIcon("/img/usericon/"+userInfo.getUid()+".jpg");
-                userService.save(userInfo);
-                CommonTool.updateUser(session,userInfo);
-
                 //保存图片到本地
-                File file = new File(path+userInfo.getUserIcon());
+                File file = new File(path+userInfo.getUid()+".jpg");
+                if(!file.getParentFile().exists())file.getParentFile().mkdirs();
                 FileOutputStream o = new FileOutputStream(file,false);
 
                 int a;
@@ -112,6 +116,10 @@ public class UserInfoController {
                 i.close();
                 o.flush();
                 o.close();
+                //保存头像路径
+                userInfo.setUserIcon(userInfo.getUid()+".jpg");
+                userService.save(userInfo);
+                CommonTool.updateUser(session,userInfo);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -132,8 +140,7 @@ public class UserInfoController {
         if(id != null){
             userInfo = userService.findByUid(id);
         }
-        //头像路径文件夹
-        String path=servletContext.getRealPath("/upload");
+
         OutputStream outputStream = null;
         FileInputStream i = null;
         try {
@@ -141,7 +148,7 @@ public class UserInfoController {
 
             if(userInfo.getUserIcon()==null||userInfo.getUserIcon().equals("")){
                 //默认头像路径
-                i=new FileInputStream(path+"/img/userIcon/default_icon.jpg");
+                i=new FileInputStream(path+"default_icon.jpg");
             }else {
                 i=new FileInputStream(path+userInfo.getUserIcon());
             }

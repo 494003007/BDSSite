@@ -56,7 +56,7 @@ public class TimingPushTask {
         public void run(){
             List<UserInfo> list=userService.queryAllUserInfoPaging(limit,offset).getContent();
             for (UserInfo user:list){
-                if(user.getPushUrl()==null||user.getPushUrl().equals(""))continue;
+                if(user.getPushUrl()==null||user.getPushUrl().equals("")||user.getUid()==admin.getUid())continue;
                 ShortMessage shortMessage = new ShortMessage();
                 String jsonStr = solrManager.excuteAndOutPut(user.getPushUrl());
 

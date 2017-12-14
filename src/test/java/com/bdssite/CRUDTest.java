@@ -50,13 +50,6 @@ public class CRUDTest {
             userService.save(userInfo);
         }
 
-
-//
-//        UserInfo cai = userService.findByName("cai");
-//
-//        System.out.println("userServiceTest:" + cai);
-//
-//        Assert.assertNotNull(cai.getName());
     }
 
     @Test

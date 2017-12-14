@@ -28,7 +28,7 @@ public class GlobalExceptionHandlerConfig {
     }
     @ExceptionHandler(value = Exception.class)
     //在返回自定义相应类的情况下必须有，这是@ControllerAdvice注解的规定
-    public String  exceptionHandler(Exception e) {
+    public void   exceptionHandler(Exception e) {
 
         OperateLog operateLog = new OperateLog();
         operateLog.setOperateUser(CommonTool.getCurrentUser());
@@ -37,7 +37,5 @@ public class GlobalExceptionHandlerConfig {
         operateLog.setOperateTime(new Date(System.currentTimeMillis()));
         operateLogService.save(operateLog);
 
-
-        return "#";
     }
 }
