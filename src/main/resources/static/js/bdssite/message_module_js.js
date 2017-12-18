@@ -229,7 +229,7 @@ function MessageManage() {
                     content +=
                         " <div style=\"max-width:70%;float:right\" class=\"item in\">" +
                         " <div class=\"image\">" +
-                        "<img src=\"/assets/images/users/user2.jpg\" alt=\"" + entity['currentUser']['name'] + "\">" +
+                        "<img src=\"/AuthorizationManage/getUserIcon?id="+entity['messageInfo'][i]['fromUserId']+"\" alt=\"" + entity['currentUser']['name'] + "\">" +
                         "</div>" +
                         "<div class=\"text\">" +
                         "<div class=\"heading\">" +
@@ -244,7 +244,7 @@ function MessageManage() {
                     content +=
                         " <div style=\"max-width:70%\" class=\"item\">" +
                         "<div class=\"image\">" +
-                        "<img src=\"/assets/images/users/user.jpg\" alt=\"" + entity['otherUser']['name'] + "\">" +
+                        "<img src=\"/AuthorizationManage/getUserIcon?id="+entity['messageInfo'][i]['fromUserId']+"\" alt=\"" + entity['otherUser']['name'] + "\">" +
                         "</div>" +
                         "<div class=\"text\">" +
                         "<div class=\"heading\">" +
@@ -281,6 +281,8 @@ function MessageManage() {
      */
     this.sendMessage = function (id,currentUserName) {
         var _this = this;
+        var currentUser = $.cookie("userData");
+        currentUser = JSON.parse(currentUser);
         var messagePost = $("#messagePost");
         $.ajax({
             url: '/shortMessage/sendMessage/'+id,
@@ -292,7 +294,7 @@ function MessageManage() {
                     $("#messageContent").prepend(
                         " <div style=\"max-width:70%;float:right\" class=\"item in item-visible\">"  +
                         " <div class=\"image\">" +
-                        "<img src=\"/assets/images/users/user2.jpg\" alt=\"" + currentUserName + "\">" +
+                        "<img src=\"/AuthorizationManage/getUserIcon?id="+currentUser['uid']+"\" alt=\"" + currentUserName + "\">" +
                         "</div>" +
                         "<div class=\"text\">" +
                         "<div class=\"heading\">" +
