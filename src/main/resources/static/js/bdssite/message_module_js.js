@@ -54,7 +54,7 @@ function MessageManage() {
                 "<div class=\"list-group-status status-online\"></div>" +
                 "<img src=\"/assets/images/users/user2.jpg\" class=\"pull-left\" alt=\"System\"/>" +
                 "<span class=\"contacts-title\" id=\"otherUserId\"" + entityList[i]['fromUser']['uid'] + ">" + entityList[i]['fromUser']['name'] + "</span>" +
-                "<p>" + _this.cutContentByLenth(entityList[i]['content'], 25) + "</p>" +
+                "<p>&nbsp;" + _this.cutContentByLenth(entityList[i]['content'], 25) + "</p>" +
                 "</a>"
             )
         }
