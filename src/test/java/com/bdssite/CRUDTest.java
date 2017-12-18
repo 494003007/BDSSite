@@ -39,16 +39,7 @@ public class CRUDTest {
    // @Transactional
    // @Rollback
     public void userServiceTest() {
-        for (int i=0;i<1000;i++){
-            UserInfo userInfo = new UserInfo();
-            userInfo.setUsername("test"+i);
-            userInfo.setPassword("472173d37a8d187794a02ef0f5331add");
-            userInfo.setState((byte)0);
-            userInfo.setSalt("Z+ziKvwCYFNZGx8dOLbDwQ==");
-            userInfo.setEmail("test"+i+"@qq.com");
-            userInfo.setName("test"+i);
-            userService.save(userInfo);
-        }
+
 
     }
 

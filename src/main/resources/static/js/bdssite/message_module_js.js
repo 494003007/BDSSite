@@ -117,7 +117,7 @@ function MessageManage() {
                     "<div id='status"+entityList[i]['toUser']['uid']+"' class=\"list-group-status status-online\"></div>" +
                     "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\"" + entityList[i]['toUser'][name] + "\">" +
                     "<span class=\"contacts-title\">" + entityList[i]['toUser']['name'] + "</span>" +
-                    "<p>" + _this.cutContentByLenth(entityList[i]['content'], 20) + "</p>" +
+                    "<p>&nbsp;" + _this.cutContentByLenth(entityList[i]['content'], 20) + "</p>" +
                     "</a>"
                 )
             }
@@ -127,7 +127,7 @@ function MessageManage() {
                     "<div id='status"+entityList[i]['fromUser']['uid']+"' class=\"list-group-status status-online\"></div>" +
                     "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\"" + entityList[i]['fromUser'][name] + "\">" +
                     "<span class=\"contacts-title\">" + entityList[i]['fromUser']['name'] + "</span>" +
-                    "<p>" + _this.cutContentByLenth(entityList[i]['content'], 20) + "</p>" +
+                    "<p>&nbsp;" + _this.cutContentByLenth(entityList[i]['content'], 20) + "</p>" +
                     "</a>"
                 )
 
