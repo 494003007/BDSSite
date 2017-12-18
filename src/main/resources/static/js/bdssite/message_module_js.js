@@ -52,7 +52,7 @@ function MessageManage() {
             content += (
                 "<a href=\"#\" onclick='messageManage.clickNewMessage(" + entityList[i]['fromUser']['uid'] + ")' class=\"list-group-item\">" +
                 "<div class=\"list-group-status status-online\"></div>" +
-                "<img src=\"/assets/images/users/user2.jpg\" class=\"pull-left\" alt=\"System\"/>" +
+                "<img src=\"/AuthorizationManage/getUserIcon?id="+entityList[i]['fromUser']['uid']+"\" class=\"pull-left\" alt=\"System\"/>" +
                 "<span class=\"contacts-title\" id=\"otherUserId\"" + entityList[i]['fromUser']['uid'] + ">" + entityList[i]['fromUser']['name'] + "</span>" +
                 "<p>&nbsp;" + _this.cutContentByLenth(entityList[i]['content'], 25) + "</p>" +
                 "</a>"
@@ -115,7 +115,7 @@ function MessageManage() {
                 content += (
                     "<a href=\"# \" onclick=\'messageManage.showMessageContent(" + entityList[i]['toUser']['uid'] + ")\' class=\"list-group-item\">" +
                     "<div id='status"+entityList[i]['toUser']['uid']+"' class=\"list-group-status status-online\"></div>" +
-                    "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\"" + entityList[i]['toUser'][name] + "\">" +
+                    "<img src=\"/AuthorizationManage/getUserIcon?id="+entityList[i]['toUser']['uid']+"\" class=\"pull-left\" alt=\"" + entityList[i]['toUser'][name] + "\">" +
                     "<span class=\"contacts-title\">" + entityList[i]['toUser']['name'] + "</span>" +
                     "<p>&nbsp;" + _this.cutContentByLenth(entityList[i]['content'], 20) + "</p>" +
                     "</a>"
@@ -125,7 +125,7 @@ function MessageManage() {
                 content += (
                     "<a href=\"#\" onclick=\'messageManage.showMessageContent(" + entityList[i]['fromUser']['uid'] + ")\' class=\"list-group-item\">" +
                     "<div id='status"+entityList[i]['fromUser']['uid']+"' class=\"list-group-status status-online\"></div>" +
-                    "<img src=\"/assets/images/users/user.jpg\" class=\"pull-left\" alt=\"" + entityList[i]['fromUser'][name] + "\">" +
+                    "<img src=\"/AuthorizationManage/getUserIcon?id="+entityList[i]['fromUser']['uid']+"\" class=\"pull-left\" alt=\"" + entityList[i]['fromUser'][name] + "\">" +
                     "<span class=\"contacts-title\">" + entityList[i]['fromUser']['name'] + "</span>" +
                     "<p>&nbsp;" + _this.cutContentByLenth(entityList[i]['content'], 20) + "</p>" +
                     "</a>"
